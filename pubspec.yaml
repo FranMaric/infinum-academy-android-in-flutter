@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  flutter_svg: ^0.22.0
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +23,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/triangle.png 
-    - assets/top_left_illustration.png 
-    - assets/top_right_illustration.png 
+    - assets/ic_triangle.svg 
+    - assets/top_left_illustration.svg 
+    - assets/top_right_illustration.svg 
+    - assets/bottom_right_illustration.svg 
+    - assets/bottom_left_illustration.svg 
