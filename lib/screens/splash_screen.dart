@@ -38,7 +38,7 @@ class SplashScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SvgPicture.asset("assets/ic_triangle.svg"),
-                    SizedBox(
+                    const SizedBox(
                       width: 19,
                     ),
                     Text(

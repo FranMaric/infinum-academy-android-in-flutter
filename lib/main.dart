@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Shows',
       theme: themeData,
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

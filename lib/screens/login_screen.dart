@@ -7,7 +7,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color(0xff3D1D72),
+        color: const Color(0xff3D1D72),
         child: Stack(
           children: [
             Positioned(
@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
               bottom: 10,
               child: Container(
                 // width: double.maxFinite,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color(0xffbbbbbb),
                   borderRadius: BorderRadius.all(
                     Radius.circular(50),
