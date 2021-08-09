@@ -30,12 +30,12 @@ class LoginScreen extends StatelessWidget {
                     Radius.circular(50),
                   ),
                 ),
-                margin: EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                   horizontal: 25,
                 ),
                 child: MaterialButton(
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     "Login",
                     style: TextStyle(
                       color: Colors.white,
