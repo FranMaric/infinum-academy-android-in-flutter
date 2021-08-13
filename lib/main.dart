@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:infinum_academy_android_flutter/ui/splash_screen/splash_screen.dart';
 import 'constants/theme_data.dart';
-import 'constants/routes.dart';
+import 'constants/route_generator.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,8 +14,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Shows',
       theme: themeData,
-      initialRoute: splashScreenRoute,
-      routes: routes,
+      initialRoute: SplashScreen.routeName,
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
