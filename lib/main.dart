@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:infinum_academy_android_flutter/screens/splash_screen.dart';
-import 'package:infinum_academy_android_flutter/values/theme_data.dart';
+import 'constants/theme_data.dart';
+import 'constants/routes.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Shows',
       theme: themeData,
-      home: const SplashScreen(),
+      initialRoute: splashScreenRoute,
+      routes: routes,
     );
   }
 }
