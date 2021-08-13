@@ -9,4 +9,8 @@ analyzer:
 
 linter:
   rules:
+    # I find it more readable to group dependencies in a meaningful way rather than alphabetically
     sort_pub_dependencies: false
+    
+    # I find it more readable to group imports in a meaningful way rather than alphabetically
+    directives_ordering: false
