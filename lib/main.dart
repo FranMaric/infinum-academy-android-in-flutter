@@ -4,10 +4,10 @@ import 'constants/theme_data.dart';
 import 'constants/route_generator.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ShowsApp());
 }
 
-class MyApp extends StatelessWidget {
+class ShowsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
