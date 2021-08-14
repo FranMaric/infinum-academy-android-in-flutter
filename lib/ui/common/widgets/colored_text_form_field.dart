@@ -12,6 +12,7 @@ class ColoredTextFormField extends StatelessWidget {
     this.keyboardType,
     this.validator,
     this.onSaved,
+    this.controller,
   }) : super(key: key);
 
   final Color color;
@@ -21,11 +22,13 @@ class ColoredTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       cursorColor: color,
+      controller: controller,
       keyboardType: keyboardType,
       style: TextStyle(
         color: color,
