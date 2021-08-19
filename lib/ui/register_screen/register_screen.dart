@@ -58,24 +58,12 @@ class RegisterScreen extends StatelessWidget {
                             ColoredTextFormField(
                               labelText: 'Password',
                               controller: passwordController,
-                              validator: (password) {
-                                if (passwordController.text !=
-                                    confirmPasswordController.text) {
-                                  return 'Passwords must match';
-                                }
-                                return passwordValidator(password);
-                              },
+                              validator: registerPasswordValidator,
                             ),
                             ColoredTextFormField(
                               labelText: 'Confirm password',
                               controller: confirmPasswordController,
-                              validator: (confirmPassword) {
-                                if (passwordController.text !=
-                                    confirmPasswordController.text) {
-                                  return 'Passwords must match';
-                                }
-                                return passwordValidator(confirmPassword);
-                              },
+                              validator: registerPasswordValidator,
                             ),
                             LoadingButton(
                               onPressed: () {
@@ -98,5 +86,13 @@ class RegisterScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String? registerPasswordValidator(String? value) {
+    if (passwordController.text != confirmPasswordController.text) {
+      return 'Passwords must match';
+    }
+
+    return passwordValidator(value);
   }
 }
