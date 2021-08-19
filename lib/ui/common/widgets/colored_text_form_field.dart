@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 
 const defaultColor = Colors.white;
 
+const coloredOutlineInputBorder = OutlineInputBorder(
+  borderSide: BorderSide(
+    color: defaultColor,
+  ),
+);
+
+const coloredTextStyle = TextStyle(color: defaultColor);
+
 class ColoredTextFormField extends StatelessWidget {
   const ColoredTextFormField({
     Key? key,
@@ -30,36 +38,18 @@ class ColoredTextFormField extends StatelessWidget {
       cursorColor: color,
       controller: controller,
       keyboardType: keyboardType,
-      style: TextStyle(
-        color: color,
-      ),
+      style: coloredTextStyle,
       validator: validator,
       onSaved: onSaved,
       initialValue: initialValue,
       decoration: InputDecoration(
         hintText: hintText,
         labelText: labelText,
-        labelStyle: TextStyle(
-          color: color,
-        ),
-        hintStyle: TextStyle(
-          color: color,
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: color,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: color,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: color,
-          ),
-        ),
+        labelStyle: coloredTextStyle,
+        hintStyle: coloredTextStyle,
+        border: coloredOutlineInputBorder,
+        enabledBorder: coloredOutlineInputBorder,
+        focusedBorder: coloredOutlineInputBorder,
       ),
     );
   }
