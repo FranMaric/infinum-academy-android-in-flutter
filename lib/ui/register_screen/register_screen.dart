@@ -50,7 +50,7 @@ class RegisterScreen extends StatelessWidget {
                           children: [
                             ColoredTextFormField(
                               labelText: 'Mail',
-                              hintText: 'imenko.prezimenovic@infinum.com',
+                              // hintText: 'imenko.prezimenovic@infinum.com',
                               controller: emailController,
                               keyboardType: TextInputType.emailAddress,
                               validator: emailValidator,
