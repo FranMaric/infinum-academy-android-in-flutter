@@ -8,17 +8,18 @@ import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button
 const horizontalMargin = 20.0;
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  RegisterScreen({Key? key}) : super(key: key);
 
   static const routeName = '/register';
 
+  final _formKey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-
-    final passwordController = TextEditingController();
-    final confirmPasswordController = TextEditingController();
-
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -47,9 +48,10 @@ class RegisterScreen extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const ColoredTextFormField(
+                            ColoredTextFormField(
                               labelText: 'Mail',
                               hintText: 'imenko.prezimenovic@infinum.com',
+                              controller: emailController,
                               keyboardType: TextInputType.emailAddress,
                               validator: emailValidator,
                             ),
