@@ -5,20 +5,18 @@ import 'constants/theme_data.dart';
 import 'constants/route_generator.dart';
 
 void main() {
-  runApp(ShowsApp());
+  runApp(ProviderScope(child: ShowsApp()));
 }
 
 class ShowsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Shows',
-        theme: themeData,
-        initialRoute: SplashScreen.routeName,
-        onGenerateRoute: RouteGenerator.generateRoute,
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Shows',
+      theme: themeData,
+      initialRoute: SplashScreen.routeName,
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
