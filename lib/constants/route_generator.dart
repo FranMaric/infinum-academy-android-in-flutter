@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:infinum_academy_android_flutter/ui/login_screen/login_screen.dart';
-import 'package:infinum_academy_android_flutter/ui/register_screen.dart/register_screen.dart';
+import 'package:infinum_academy_android_flutter/ui/register_screen/register_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/shows_screen/shows_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/splash_screen/splash_screen.dart';
 

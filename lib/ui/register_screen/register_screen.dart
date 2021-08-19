@@ -81,8 +81,6 @@ class RegisterScreen extends StatelessWidget {
                                 if (form?.validate() ?? false) {
                                   debugPrint('VALID REGISTER');
                                 }
-
-                                return ButtonState.loading;
                               },
                               title: 'Register',
                             ),
