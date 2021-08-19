@@ -16,7 +16,7 @@ final registerButtonStateProvider =
     StateProvider<ButtonState>((ref) => ButtonState.enabled);
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({
+  LoginScreen({
     Key? key,
     this.isFromRegister = false,
   }) : super(key: key);
@@ -25,7 +25,10 @@ class LoginScreen extends StatelessWidget {
 
   final bool isFromRegister;
 
-  static final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +63,9 @@ class LoginScreen extends StatelessWidget {
                       child: Form(
                         key: _formKey,
                         onChanged: () {
-                          final form = _formKey.currentState;
-                          if (form?.validate() ?? false) {
+                          if (emailValidator(emailController.text) == null &&
+                              passwordValidator(passwordController.text) ==
+                                  null) {
                             context.read(loginButtonStateProvider).state =
                                 ButtonState.enabled;
                           }
@@ -114,17 +118,19 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const ColoredTextFormField(
+                            ColoredTextFormField(
                               labelText: 'Mail',
+                              controller: emailController,
                               keyboardType: TextInputType.emailAddress,
                               validator: emailValidator,
                             ),
                             const SizedBox(
                               height: 20,
                             ),
-                            const ColoredTextFormField(
+                            ColoredTextFormField(
                               labelText: 'Password',
                               validator: passwordValidator,
+                              controller: passwordController,
                             ),
                           ],
                         ),
@@ -151,6 +157,11 @@ class LoginScreen extends StatelessWidget {
                           margin: const EdgeInsets.only(bottom: 20.0),
                           onPressed: () {
                             //TODO: login
+                            final form = _formKey.currentState;
+                            if (form?.validate() ?? false) {
+                              context.read(loginButtonStateProvider).state =
+                                  ButtonState.loading;
+                            }
                           },
                         ),
                         Visibility(
