@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:infinum_academy_android_flutter/ui/common/no_glow_scroll_behavior.dart';
 import 'package:infinum_academy_android_flutter/ui/common/validators/email_validator.dart';
 import 'package:infinum_academy_android_flutter/ui/common/validators/password_validator.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/colored_text_form_field.dart';
@@ -52,67 +53,81 @@ class LoginScreen extends StatelessWidget {
                     horizontal: horizontalMargin,
                   ),
                   margin: EdgeInsets.only(bottom: isFromRegister ? 85 : 155),
-                  child: Form(
-                    key: _formKey,
-                    onChanged: () {
-                      final form = _formKey.currentState;
-                      if (form?.validate() ?? false) {
-                        context.read(loginButtonStateProvider).state =
-                            ButtonState.enabled;
-                      }
-                    },
+                  alignment: Alignment.center,
+                  child: ScrollConfiguration(
+                    behavior: NoGlowScrollBehavior(),
                     child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SvgPicture.asset("assets/ic_triangle.svg"),
-                                const SizedBox(
-                                  width: 19,
+                      child: Form(
+                        key: _formKey,
+                        onChanged: () {
+                          final form = _formKey.currentState;
+                          if (form?.validate() ?? false) {
+                            context.read(loginButtonStateProvider).state =
+                                ButtonState.enabled;
+                          }
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 10,
+                                bottom: 60,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SvgPicture.asset("assets/ic_triangle.svg"),
+                                  const SizedBox(
+                                    width: 19,
+                                  ),
+                                  Text(
+                                    "Shows",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2
+                                        ?.copyWith(color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                isFromRegister
+                                    ? 'Sucessful registration'
+                                    : 'Login',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 35,
                                 ),
-                                Text(
-                                  "Shows",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2
-                                      ?.copyWith(color: Colors.white),
-                                )
-                              ],
+                              ),
                             ),
-                          ),
-                          Text(
-                            isFromRegister ? 'Sucessful registration' : 'Login',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 35,
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                'In order to continue please log in.',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
-                          ),
-                          const Text(
-                            'In order to continue please log in.',
-                            style: TextStyle(
-                              color: Colors.white,
+                            const ColoredTextFormField(
+                              labelText: 'Mail',
+                              keyboardType: TextInputType.emailAddress,
+                              validator: emailValidator,
                             ),
-                          ),
-                          const ColoredTextFormField(
-                            labelText: 'Mail',
-                            keyboardType: TextInputType.emailAddress,
-                            validator: emailValidator,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const ColoredTextFormField(
-                            labelText: 'Password',
-                            validator: passwordValidator,
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const ColoredTextFormField(
+                              labelText: 'Password',
+                              validator: passwordValidator,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
