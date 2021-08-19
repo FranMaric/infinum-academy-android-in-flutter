@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinum_academy_android_flutter/ui/common/no_glow_scroll_behavior.dart';
 import 'package:infinum_academy_android_flutter/ui/common/validators/email_validator.dart';
 import 'package:infinum_academy_android_flutter/ui/common/validators/password_validator.dart';
@@ -14,6 +15,7 @@ final loginButtonStateProvider =
     StateProvider<ButtonState>((ref) => ButtonState.disabled);
 final registerButtonStateProvider =
     StateProvider<ButtonState>((ref) => ButtonState.enabled);
+final _checkBoxStateProvider = StateProvider((ref) => false);
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({
@@ -131,6 +133,22 @@ class LoginScreen extends StatelessWidget {
                               labelText: 'Password',
                               validator: passwordValidator,
                               controller: passwordController,
+                            ),
+                            CheckboxListTile(
+                              controlAffinity: ListTileControlAffinity.leading,
+                              title: const Text(
+                                'Remember me',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.all(0),
+                              value: context.read(_checkBoxStateProvider).state,
+                              onChanged: (checked) {
+                                debugPrint(checked.toString());
+                                context.read(_checkBoxStateProvider).state =
+                                    true;
+                              },
                             ),
                           ],
                         ),
