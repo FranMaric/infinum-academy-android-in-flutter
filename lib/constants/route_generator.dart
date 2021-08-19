@@ -14,7 +14,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case LoginScreen.routeName:
         if (args == null) {
-          return MaterialPageRoute(builder: (_) => const LoginScreen());
+          return MaterialPageRoute(builder: (_) => LoginScreen());
         }
         if (args is bool) {
           return MaterialPageRoute(
@@ -22,7 +22,7 @@ class RouteGenerator {
         }
         return _errorRoute();
       case RegisterScreen.routeName:
-        return MaterialPageRoute(builder: (_) => const RegisterScreen());
+        return MaterialPageRoute(builder: (_) => RegisterScreen());
       case ShowsScreen.routeName:
         return MaterialPageRoute(builder: (_) => const ShowsScreen());
       default:
