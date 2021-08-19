@@ -100,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(bottom: 10),
                               child: Text(
                                 isFromRegister
-                                    ? 'Sucessful registration'
+                                    ? 'Registration successful!'
                                     : 'Login',
                                 style: const TextStyle(
                                   color: Colors.white,
