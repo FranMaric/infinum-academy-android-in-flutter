@@ -14,3 +14,6 @@ linter:
     
     # I find it more readable to group imports in a meaningful way rather than alphabetically
     directives_ordering: false
+
+    # I want the variable to not be visible outside of the class if it's needed
+    avoid_setters_without_getters: false
