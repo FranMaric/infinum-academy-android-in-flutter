@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:infinum_academy_android_flutter/services/authentication/authentication_client.dart';
 import 'package:infinum_academy_android_flutter/ui/common/no_glow_scroll_behavior.dart';
 import 'package:infinum_academy_android_flutter/ui/common/validators/email_validator.dart';
 import 'package:infinum_academy_android_flutter/ui/common/validators/password_validator.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/colored_text_form_field.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
+import 'package:infinum_academy_android_flutter/ui/login_screen/login_screen.dart';
 
 const horizontalMargin = 20.0;
 
@@ -24,6 +26,22 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void checkIfValidFormAndUpdateRegisterButtonState() {
+      if (registerPasswordValidator(_passwordController.text) == null && emailValidator(_emailController.text) == null) {
+        context.read(_registerButtonStateProvider).state = ButtonState.enabled;
+      } else if (context.read(_registerButtonStateProvider).state == ButtonState.enabled) {
+        context.read(_registerButtonStateProvider).state = ButtonState.disabled;
+      }
+    }
+
+    void showSnackBarNotification(String text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(text),
+        ),
+      );
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -50,13 +68,7 @@ class RegisterScreen extends StatelessWidget {
                     behavior: NoGlowScrollBehavior(),
                     child: SingleChildScrollView(
                       child: Form(
-                        onChanged: () {
-                          if (registerPasswordValidator(_passwordController.text) == null && emailValidator(_emailController.text) == null) {
-                            context.read(_registerButtonStateProvider).state = ButtonState.enabled;
-                          } else if (context.read(_registerButtonStateProvider).state == ButtonState.enabled) {
-                            context.read(_registerButtonStateProvider).state = ButtonState.disabled;
-                          }
-                        },
+                        onChanged: checkIfValidFormAndUpdateRegisterButtonState,
                         key: _formKey,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -129,16 +141,27 @@ class RegisterScreen extends StatelessWidget {
                       horizontal: horizontalMargin,
                     ),
                     child: LoadingButton(
-                      onPressed: () {
-                        final form = _formKey.currentState;
-                        if (form?.validate() ?? false) {
-                          //TODO: register
-                          debugPrint('VALID REGISTER');
-                        }
-                      },
                       title: 'Register',
                       buttonStateProvider: _registerButtonStateProvider,
                       margin: const EdgeInsets.only(bottom: 20),
+                      onPressed: () {
+                        final form = _formKey.currentState;
+                        if (form?.validate() ?? false) {
+                          context.read(_registerButtonStateProvider).state = ButtonState.loading;
+                          context
+                              .read(authProvider)
+                              .register(_emailController.text, _passwordController.text, _confirmPasswordController.text)
+                              .then((result) {
+                            if (result == null) {
+                              // arguments = true because it is coming from register screen
+                              Navigator.of(context).pushReplacementNamed(LoginScreen.routeName, arguments: true);
+                            } else {
+                              showSnackBarNotification(result);
+                              checkIfValidFormAndUpdateRegisterButtonState();
+                            }
+                          });
+                        }
+                      },
                     ),
                   ),
                 ),
