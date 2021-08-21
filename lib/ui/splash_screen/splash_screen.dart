@@ -10,6 +10,15 @@ class SplashScreen extends StatelessWidget {
 
   static const routeName = '/';
 
+  Future<void> checkRememberMeAndNavigateAppropriately(BuildContext context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool(prefsRememberMeKey) ?? false) {
+      Navigator.of(context).pushReplacementNamed(ShowsScreen.routeName);
+    } else {
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 2)).then((_) {
@@ -83,14 +92,5 @@ class SplashScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> checkRememberMeAndNavigateAppropriately(BuildContext context) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getBool(prefsRememberMeKey) ?? false) {
-      Navigator.of(context).pushReplacementNamed(ShowsScreen.routeName);
-    } else {
-      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
-    }
   }
 }
