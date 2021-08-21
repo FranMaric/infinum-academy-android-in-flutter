@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:infinum_academy_android_flutter/ui/common/no_glow_scroll_behavior.dart';
 import 'package:infinum_academy_android_flutter/ui/common/validators/email_validator.dart';
 import 'package:infinum_academy_android_flutter/ui/common/validators/password_validator.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/colored_text_form_field.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
 
 const horizontalMargin = 20.0;
+
+final _registerButtonStateProvider = StateProvider<ButtonState>((ref) => ButtonState.disabled);
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -14,9 +18,9 @@ class RegisterScreen extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,46 +41,104 @@ class RegisterScreen extends StatelessWidget {
                 right: 0,
                 child: SvgPicture.asset("assets/top_right_illustration.svg"),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: horizontalMargin),
-                child: SizedBox.expand(
-                  child: Center(
+              SizedBox.expand(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: horizontalMargin),
+                  margin: const EdgeInsets.only(bottom: 85),
+                  alignment: Alignment.center,
+                  child: ScrollConfiguration(
+                    behavior: NoGlowScrollBehavior(),
                     child: SingleChildScrollView(
                       child: Form(
+                        onChanged: () {
+                          if (registerPasswordValidator(_passwordController.text) == null && emailValidator(_emailController.text) == null) {
+                            context.read(_registerButtonStateProvider).state = ButtonState.enabled;
+                          } else if (context.read(_registerButtonStateProvider).state == ButtonState.enabled) {
+                            context.read(_registerButtonStateProvider).state = ButtonState.disabled;
+                          }
+                        },
                         key: _formKey,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 10,
+                                bottom: 60,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SvgPicture.asset("assets/ic_triangle.svg"),
+                                  const SizedBox(
+                                    width: 19,
+                                  ),
+                                  Text(
+                                    "Shows",
+                                    style: Theme.of(context).textTheme.headline2?.copyWith(color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                'Register',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 35,
+                                ),
+                              ),
+                            ),
                             ColoredTextFormField(
-                              labelText: 'Mail',
+                              labelText: 'Email',
                               // hintText: 'imenko.prezimenovic@infinum.com',
-                              controller: emailController,
+                              controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               validator: emailValidator,
+                              margin: const EdgeInsets.only(bottom: 20),
                             ),
                             ColoredTextFormField(
                               labelText: 'Password',
-                              controller: passwordController,
+                              controller: _passwordController,
                               validator: registerPasswordValidator,
+                              margin: const EdgeInsets.only(bottom: 20),
                             ),
                             ColoredTextFormField(
-                              labelText: 'Confirm password',
-                              controller: confirmPasswordController,
+                              labelText: 'Repeat password',
+                              controller: _confirmPasswordController,
                               validator: registerPasswordValidator,
-                            ),
-                            LoadingButton(
-                              onPressed: () {
-                                final form = _formKey.currentState;
-                                if (form?.validate() ?? false) {
-                                  debugPrint('VALID REGISTER');
-                                }
-                              },
-                              title: 'Register',
+                              margin: const EdgeInsets.only(bottom: 20),
                             ),
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: horizontalMargin,
+                    ),
+                    child: LoadingButton(
+                      onPressed: () {
+                        final form = _formKey.currentState;
+                        if (form?.validate() ?? false) {
+                          //TODO: register
+                          debugPrint('VALID REGISTER');
+                        }
+                      },
+                      title: 'Register',
+                      buttonStateProvider: _registerButtonStateProvider,
+                      margin: const EdgeInsets.only(bottom: 20),
                     ),
                   ),
                 ),
@@ -89,7 +151,7 @@ class RegisterScreen extends StatelessWidget {
   }
 
   String? registerPasswordValidator(String? value) {
-    if (passwordController.text != confirmPasswordController.text) {
+    if (_passwordController.text != _confirmPasswordController.text) {
       return 'Passwords must match';
     }
 
