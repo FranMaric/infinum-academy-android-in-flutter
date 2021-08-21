@@ -5,6 +5,7 @@ final themeData = ThemeData(
   backgroundColor: const Color(0xFF3D1D72),
   focusColor: const Color(0xFFFFFFFF),
   hoverColor: const Color(0xFFFFFFFF),
+  unselectedWidgetColor: Colors.white,
   textTheme: const TextTheme(
     headline2: TextStyle(fontSize: 32.0),
   ),
