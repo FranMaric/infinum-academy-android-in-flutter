@@ -20,6 +20,7 @@ class ApiClient {
       [
         InterceptorsWrapper(
           onRequest: (options, handler) async {
+            /// Headers are not needed for login and register
             if (options.path != '/users' && options.path != '/users/sign_in') {
               final prefs = await SharedPreferences.getInstance();
 
