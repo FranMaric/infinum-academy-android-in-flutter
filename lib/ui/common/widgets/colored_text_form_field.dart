@@ -21,6 +21,7 @@ class ColoredTextFormField extends StatelessWidget {
     this.validator,
     this.onSaved,
     this.controller,
+    this.margin,
   }) : super(key: key);
 
   final Color color;
@@ -31,25 +32,29 @@ class ColoredTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
   final TextEditingController? controller;
+  final EdgeInsets? margin;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      cursorColor: color,
-      controller: controller,
-      keyboardType: keyboardType,
-      style: coloredTextStyle,
-      validator: validator,
-      onSaved: onSaved,
-      initialValue: initialValue,
-      decoration: InputDecoration(
-        hintText: hintText,
-        labelText: labelText,
-        labelStyle: coloredTextStyle,
-        hintStyle: coloredTextStyle,
-        border: coloredOutlineInputBorder,
-        enabledBorder: coloredOutlineInputBorder,
-        focusedBorder: coloredOutlineInputBorder,
+    return Container(
+      margin: margin,
+      child: TextFormField(
+        cursorColor: color,
+        controller: controller,
+        keyboardType: keyboardType,
+        style: coloredTextStyle,
+        validator: validator,
+        onSaved: onSaved,
+        initialValue: initialValue,
+        decoration: InputDecoration(
+          hintText: hintText,
+          labelText: labelText,
+          labelStyle: coloredTextStyle,
+          hintStyle: coloredTextStyle,
+          border: coloredOutlineInputBorder,
+          enabledBorder: coloredOutlineInputBorder,
+          focusedBorder: coloredOutlineInputBorder,
+        ),
       ),
     );
   }
