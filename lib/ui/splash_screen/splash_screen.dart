@@ -85,13 +85,12 @@ class SplashScreen extends StatelessWidget {
     );
   }
 
-  Future<void> checkRememberMeAndNavigateAppropriately(
-      BuildContext context) async {
+  Future<void> checkRememberMeAndNavigateAppropriately(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getBool(prefsRememberMeKey) ?? false) {
-      Navigator.of(context).popAndPushNamed(ShowsScreen.routeName);
+      Navigator.of(context).pushReplacementNamed(ShowsScreen.routeName);
     } else {
-      Navigator.of(context).popAndPushNamed(LoginScreen.routeName);
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
     }
   }
 }
