@@ -42,7 +42,7 @@ class _StatefulCheckboxListTileState extends State<StatefulCheckboxListTile> {
       contentPadding: widget.contentPadding,
       value: _checked,
       activeColor: widget.activeColor ?? Colors.white,
-      checkColor: widget.checkColor ?? themeData.backgroundColor,
+      checkColor: widget.checkColor ?? Theme.of(context).backgroundColor,
       onChanged: (checked) {
         setState(() {
           _checked = checked ?? false;
