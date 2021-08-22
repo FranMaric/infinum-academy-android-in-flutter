@@ -62,4 +62,8 @@ class ApiClient {
       },
     );
   }
+
+  Future<Response<dynamic>> getShows() async {
+    return _dio.get('/shows');
+  }
 }
