@@ -114,12 +114,14 @@ class RegisterScreen extends StatelessWidget {
                             ),
                             ColoredTextFormField(
                               labelText: 'Password',
+                              obscureText: true,
                               controller: _passwordController,
                               validator: registerPasswordValidator,
                               margin: const EdgeInsets.only(bottom: 20),
                             ),
                             ColoredTextFormField(
                               labelText: 'Repeat password',
+                              obscureText: true,
                               controller: _confirmPasswordController,
                               validator: registerPasswordValidator,
                               margin: const EdgeInsets.only(bottom: 20),
