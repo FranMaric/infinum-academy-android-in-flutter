@@ -36,8 +36,9 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/ic_triangle.svg 
-    - assets/top_left_illustration.svg 
-    - assets/top_right_illustration.svg 
-    - assets/bottom_right_illustration.svg 
-    - assets/bottom_left_illustration.svg 
+    - assets/ic_triangle.svg
+    - assets/top_left_illustration.svg
+    - assets/top_right_illustration.svg
+    - assets/bottom_right_illustration.svg
+    - assets/bottom_left_illustration.svg
+    - assets/no_shows_icon.svg
