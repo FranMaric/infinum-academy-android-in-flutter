@@ -41,6 +41,10 @@ class AuthenticationClient {
         prefs.setString(prefsProfilePhotoUrlKey, response.data['user']['image_url'].toString());
         prefs.setBool(prefsRememberMeKey, isRememberMeChecked);
 
+        prefs.setString('access-token', response.headers.value('access-token') ?? '');
+        prefs.setString('client', response.headers.value('client') ?? '');
+        prefs.setString('uid', response.headers.value('uid') ?? '');
+
         return null;
       }
 
