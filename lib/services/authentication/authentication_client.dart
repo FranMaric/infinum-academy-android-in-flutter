@@ -15,7 +15,7 @@ class AuthenticationClient {
 
   Future<String?> register(String email, String password, String confirmationPassword) async {
     try {
-      final response = await _apiClient.register(email, password, confirmationPassword);
+      final response = await _apiClient.register(email.trim(), password.trim(), confirmationPassword.trim());
 
       if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) >= 200) {
         return null;
@@ -32,7 +32,7 @@ class AuthenticationClient {
 
   Future<String?> login(String email, String password, {required bool isRememberMeChecked}) async {
     try {
-      final response = await _apiClient.login(email, password);
+      final response = await _apiClient.login(email.trim(), password.trim());
 
       if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) >= 200) {
         final prefs = await SharedPreferences.getInstance();
