@@ -20,8 +20,6 @@ class AuthenticationClient {
       if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) > 200) {
         return null;
       }
-
-      return 'Something went wrong';
     } on DioError catch (error) {
       try {
         return error.response?.data['errors'][0].toString();
@@ -29,6 +27,7 @@ class AuthenticationClient {
         return 'Something went wrong';
       }
     }
+    return 'Something went wrong';
   }
 
   Future<String?> login(String email, String password, {required bool isRememberMeChecked}) async {
