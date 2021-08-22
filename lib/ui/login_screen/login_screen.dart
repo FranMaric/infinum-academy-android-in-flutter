@@ -133,6 +133,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                             ColoredTextFormField(
                               labelText: 'Password',
+                              obscureText: true,
                               validator: passwordValidator,
                               controller: _passwordController,
                             ),
@@ -192,6 +193,8 @@ class LoginScreen extends StatelessWidget {
                             title: 'Register',
                             buttonStateProvider: _registerButtonStateProvider,
                             margin: const EdgeInsets.only(bottom: 20.0),
+                            enabledBackgroundColor: Theme.of(context).backgroundColor,
+                            enabledTitleColor: Colors.white,
                             onPressed: () {
                               Navigator.of(context).pushNamed(RegisterScreen.routeName);
                             },
