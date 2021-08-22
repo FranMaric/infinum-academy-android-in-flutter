@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/services/api/api_client.dart';
 import 'package:infinum_academy_android_flutter/services/authentication/authentication_client.dart';
+import 'package:infinum_academy_android_flutter/services/shows_repository/shows_repository.dart';
 import 'package:infinum_academy_android_flutter/ui/splash_screen/splash_screen.dart';
 import 'constants/theme_data.dart';
 import 'constants/route_generator.dart';
@@ -18,6 +19,7 @@ class ShowsApp extends StatelessWidget {
 
     context.read(apiClientProvider).init(alice);
     context.read(authProvider).apiClient = context.read(apiClientProvider);
+    context.read(showsRepositoryProvider).apiClient = context.read(apiClientProvider);
 
     return MaterialApp(
       navigatorKey: alice.getNavigatorKey(),
