@@ -42,6 +42,14 @@ class LoginScreen extends StatelessWidget {
       );
     }
 
+    void checkIfValidFormAndUpdateLoginButtonState() {
+      if (emailValidator(_emailController.text) == null && passwordValidator(_passwordController.text) == null) {
+        context.read(_loginButtonStateProvider).state = ButtonState.enabled;
+      } else if (context.read(_loginButtonStateProvider).state == ButtonState.enabled) {
+        context.read(_loginButtonStateProvider).state = ButtonState.disabled;
+      }
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -72,13 +80,7 @@ class LoginScreen extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Form(
                         key: _formKey,
-                        onChanged: () {
-                          if (emailValidator(_emailController.text) == null && passwordValidator(_passwordController.text) == null) {
-                            context.read(_loginButtonStateProvider).state = ButtonState.enabled;
-                          } else if (context.read(_loginButtonStateProvider).state == ButtonState.enabled) {
-                            context.read(_loginButtonStateProvider).state = ButtonState.disabled;
-                          }
-                        },
+                        onChanged: checkIfValidFormAndUpdateLoginButtonState,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,6 +184,7 @@ class LoginScreen extends StatelessWidget {
                                   Navigator.of(context).pushReplacementNamed(ShowsScreen.routeName);
                                 } else {
                                   showSnackBarNotification(result);
+                                  context.read(_loginButtonStateProvider).state = ButtonState.disabled;
                                 }
                               });
                             }

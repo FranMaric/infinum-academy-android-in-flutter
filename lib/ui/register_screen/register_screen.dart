@@ -159,7 +159,7 @@ class RegisterScreen extends StatelessWidget {
                               Navigator.of(context).pushReplacementNamed(LoginScreen.routeName, arguments: true);
                             } else {
                               showSnackBarNotification(result);
-                              checkIfValidFormAndUpdateRegisterButtonState();
+                              context.read(_registerButtonStateProvider).state = ButtonState.disabled;
                             }
                           });
                         }
