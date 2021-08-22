@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:infinum_academy_android_flutter/models/show.dart';
 import 'package:infinum_academy_android_flutter/services/api/shows_exception.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/centered_circular_progress_indicator.dart';
+import 'package:infinum_academy_android_flutter/ui/show_details_screen/widgets/show_details_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/show_tile.dart';
 
 class ShowsList extends ConsumerWidget {
@@ -50,7 +51,7 @@ class ShowsList extends ConsumerWidget {
                 return ShowTile(
                   show: shows[index],
                   onTap: () {
-                    print(shows[index]);
+                    Navigator.of(context).pushNamed(ShowDetailsScreen.routeName, arguments: shows[index]);
                   },
                 );
               },
