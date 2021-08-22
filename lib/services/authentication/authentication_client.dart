@@ -17,7 +17,7 @@ class AuthenticationClient {
     try {
       final response = await _apiClient.register(email, password, confirmationPassword);
 
-      if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) > 200) {
+      if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) >= 200) {
         return null;
       }
     } on DioError catch (error) {
@@ -34,7 +34,7 @@ class AuthenticationClient {
     try {
       final response = await _apiClient.login(email, password);
 
-      if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) > 200) {
+      if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) >= 200) {
         final prefs = await SharedPreferences.getInstance();
 
         prefs.setString(prefsEmailKey, response.data['user']['email'].toString());

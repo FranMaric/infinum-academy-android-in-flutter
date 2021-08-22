@@ -16,7 +16,7 @@ class ShowsRepository {
   Future<List<Show>> getShows() async {
     try {
       final response = await _apiClient.getShows();
-      if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) > 200) {
+      if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) >= 200) {
         final shows = List<Map<String, dynamic>>.from(response.data['shows'] as List).map((show) => Show.fromJson(show)).toList();
 
         return shows;
