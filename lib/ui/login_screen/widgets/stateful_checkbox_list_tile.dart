@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:infinum_academy_android_flutter/constants/theme_data.dart';
 
 class StatefulCheckboxListTile extends StatefulWidget {
   const StatefulCheckboxListTile({
