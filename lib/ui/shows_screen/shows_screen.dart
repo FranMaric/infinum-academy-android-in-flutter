@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/constants/shared_prefs_keys.dart';
-import 'package:infinum_academy_android_flutter/services/shows_repository/shows_repository.dart';
+import 'package:infinum_academy_android_flutter/services/shows_repository.dart';
 import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/shows_list.dart';
 import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/top_rated_chip.dart';
 import 'package:shared_preferences/shared_preferences.dart';

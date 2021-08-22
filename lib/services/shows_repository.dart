@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/models/show.dart';
-import 'package:infinum_academy_android_flutter/services/api/api_client.dart';
-import 'package:infinum_academy_android_flutter/services/api/shows_exception.dart';
+import 'package:infinum_academy_android_flutter/services/api_client.dart';
+import 'package:infinum_academy_android_flutter/services/shows_exception.dart';
 
 final showsRepositoryProvider = Provider((ref) => ShowsRepository());
 
