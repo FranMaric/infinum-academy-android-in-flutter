@@ -10,9 +10,10 @@ const coloredOutlineInputBorder = OutlineInputBorder(
 
 const coloredTextStyle = TextStyle(color: defaultColor);
 
-class ColoredTextFormField extends StatelessWidget {
+class ColoredTextFormField extends StatefulWidget {
   const ColoredTextFormField({
     Key? key,
+    this.obscureText = false,
     this.color = defaultColor,
     this.hintText,
     this.labelText,
@@ -24,6 +25,7 @@ class ColoredTextFormField extends StatelessWidget {
     this.margin,
   }) : super(key: key);
 
+  final bool obscureText;
   final Color color;
   final String? labelText;
   final String? hintText;
@@ -35,25 +37,55 @@ class ColoredTextFormField extends StatelessWidget {
   final EdgeInsets? margin;
 
   @override
+  _ColoredTextFormFieldState createState() => _ColoredTextFormFieldState();
+}
+
+class _ColoredTextFormFieldState extends State<ColoredTextFormField> {
+  late bool _passwordVisible;
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordVisible = widget.obscureText;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin,
+      margin: widget.margin,
       child: TextFormField(
-        cursorColor: color,
-        controller: controller,
-        keyboardType: keyboardType,
+        obscureText: _passwordVisible,
+        enableSuggestions: !widget.obscureText,
+        autocorrect: !widget.obscureText,
+        cursorColor: widget.color,
+        controller: widget.controller,
+        keyboardType: widget.keyboardType,
         style: coloredTextStyle,
-        validator: validator,
-        onSaved: onSaved,
-        initialValue: initialValue,
+        validator: widget.validator,
+        onSaved: widget.onSaved,
+        initialValue: widget.initialValue,
         decoration: InputDecoration(
-          hintText: hintText,
-          labelText: labelText,
+          hintText: widget.hintText,
+          labelText: widget.labelText,
           labelStyle: coloredTextStyle,
           hintStyle: coloredTextStyle,
           border: coloredOutlineInputBorder,
           enabledBorder: coloredOutlineInputBorder,
           focusedBorder: coloredOutlineInputBorder,
+          suffixIcon: Visibility(
+            visible: widget.obscureText,
+            child: IconButton(
+              icon: Icon(
+                _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                color: widget.color,
+              ),
+              onPressed: () {
+                setState(() {
+                  _passwordVisible = !_passwordVisible;
+                });
+              },
+            ),
+          ),
         ),
       ),
     );
