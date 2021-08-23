@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:infinum_academy_android_flutter/services/authentication_client.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
 import 'package:infinum_academy_android_flutter/ui/login_screen/login_screen.dart';
@@ -13,6 +17,42 @@ final _changeProfilePhotoButtonStateProvider = StateProvider((ref) => ButtonStat
 
 class ProfileBottomSheet extends StatelessWidget {
   const ProfileBottomSheet({Key? key}) : super(key: key);
+
+  Future<ImageSource?> _showImageSourceActionSheet(BuildContext context) {
+    if (Platform.isIOS) {
+      return showCupertinoModalPopup<ImageSource>(
+        context: context,
+        builder: (context) => CupertinoActionSheet(
+          actions: [
+            CupertinoActionSheetAction(
+              onPressed: () => Navigator.pop(context, ImageSource.camera),
+              child: const Text('Camera'),
+            ),
+            CupertinoActionSheetAction(
+              onPressed: () => Navigator.pop(context, ImageSource.gallery),
+              child: const Text('Gallery'),
+            )
+          ],
+        ),
+      );
+    } else {
+      return showModalBottomSheet<ImageSource>(
+        context: context,
+        builder: (context) => Wrap(children: [
+          ListTile(
+            leading: const Icon(Icons.camera_alt),
+            title: const Text('Camera'),
+            onTap: () => Navigator.pop(context, ImageSource.camera),
+          ),
+          ListTile(
+            leading: const Icon(Icons.photo_album),
+            title: const Text('Gallery'),
+            onTap: () => Navigator.pop(context, ImageSource.gallery),
+          ),
+        ]),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +85,26 @@ class ProfileBottomSheet extends StatelessWidget {
               buttonStateProvider: _changeProfilePhotoButtonStateProvider,
               disabledBackgroundColor: Colors.white,
               borderWidth: 2.0,
-              onPressed: () {
+              onPressed: () async {
                 context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.loading;
+
+                // final path = (await getApplicationDocumentsDirectory()).path;
+                // final imagePath = '$path/profile_photo.png';
+
+                final imageSource = await _showImageSourceActionSheet(context);
+
+                if (imageSource == null) {
+                  context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.enabled;
+                  return;
+                }
+
+                // final imageXFile = await ImagePicker().pickImage(source: ImageSource.camera);
+
+                // if (imageXFile != null) {
+                //   imageXFile;
+                // }
+
+                context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.enabled;
               },
             ),
             const SizedBox(height: 16),
