@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infinum_academy_android_flutter/services/authentication_client.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
+import 'package:infinum_academy_android_flutter/ui/login_screen/login_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/email_text.dart';
 import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/profile_photo.dart';
 
@@ -41,8 +43,11 @@ class ProfileBottomSheet extends StatelessWidget {
             LoadingButton(
               title: 'Change profile photo',
               buttonStateProvider: _changeProfilePhotoButtonStateProvider,
+              disabledBackgroundColor: Colors.white,
               borderWidth: 2.0,
-              onPressed: () {},
+              onPressed: () {
+                context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.loading;
+              },
             ),
             const SizedBox(height: 16),
             LoadingButton(
@@ -50,7 +55,22 @@ class ProfileBottomSheet extends StatelessWidget {
               buttonStateProvider: _logoutButtonStateProvider,
               enabledBackgroundColor: Theme.of(context).primaryColor,
               enabledTitleColor: Colors.white,
-              onPressed: () {},
+              loadingIndicatorColor: Colors.white,
+              onPressed: () {
+                context.read(_logoutButtonStateProvider).state = ButtonState.loading;
+                context.read(authProvider).logout().then((isLoggedOut) {
+                  if (isLoggedOut) {
+                    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+                  } else {
+                    context.read(_logoutButtonStateProvider).state = ButtonState.enabled;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("We couldn't logout. Try again later"),
+                      ),
+                    );
+                  }
+                });
+              },
             ),
             const SizedBox(height: 25),
           ],
