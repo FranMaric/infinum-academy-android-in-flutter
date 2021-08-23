@@ -58,15 +58,21 @@ class AuthenticationClient {
     }
   }
 
-  Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
+  Future<bool> logout() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
 
-    prefs.remove(prefsEmailKey);
-    prefs.remove(prefsProfilePhotoUrlKey);
-    prefs.remove(prefsRememberMeKey);
+      prefs.remove(prefsEmailKey);
+      prefs.remove(prefsProfilePhotoUrlKey);
+      prefs.remove(prefsRememberMeKey);
 
-    prefs.remove('access-token');
-    prefs.remove('client');
-    prefs.remove('uid');
+      prefs.remove('access-token');
+      prefs.remove('client');
+      prefs.remove('uid');
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
