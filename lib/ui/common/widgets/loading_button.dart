@@ -3,8 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum ButtonState { enabled, disabled, loading }
 
-final defaultButtonStateProvider =
-    StateProvider<ButtonState>((ref) => ButtonState.enabled);
+final defaultButtonStateProvider = StateProvider<ButtonState>((ref) => ButtonState.enabled);
 
 class LoadingButton extends ConsumerWidget {
   const LoadingButton({
@@ -17,6 +16,8 @@ class LoadingButton extends ConsumerWidget {
     this.disabledTitleColor = const Color(0xFFFFFFFF),
     this.enabledTitleColor = const Color(0xFF52368C),
     this.margin,
+    this.borderColor,
+    this.borderWidth = 0,
   }) : super(key: key);
 
   final StateProvider<ButtonState>? buttonStateProvider;
@@ -28,21 +29,25 @@ class LoadingButton extends ConsumerWidget {
   final Color enabledBackgroundColor;
   final Color disabledTitleColor;
   final Color enabledTitleColor;
+  final Color? borderColor;
+
+  final double borderWidth;
 
   final EdgeInsets? margin;
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final ButtonState buttonState =
-        watch(buttonStateProvider ?? defaultButtonStateProvider).state;
+    final ButtonState buttonState = watch(buttonStateProvider ?? defaultButtonStateProvider).state;
 
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: buttonState == ButtonState.enabled
-            ? enabledBackgroundColor
-            : disabledBackgroundColor,
+        color: buttonState == ButtonState.enabled ? enabledBackgroundColor : disabledBackgroundColor,
         borderRadius: BorderRadius.circular(25),
+        border: Border.all(
+          color: borderColor ?? Theme.of(context).primaryColor,
+          width: borderWidth,
+        ),
       ),
       margin: margin,
       child: MaterialButton(
@@ -54,9 +59,7 @@ class LoadingButton extends ConsumerWidget {
             : Text(
                 title,
                 style: Theme.of(context).textTheme.button?.copyWith(
-                      color: buttonState == ButtonState.enabled
-                          ? enabledTitleColor
-                          : disabledTitleColor,
+                      color: buttonState == ButtonState.enabled ? enabledTitleColor : disabledTitleColor,
                     ),
               ),
       ),
