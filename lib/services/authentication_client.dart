@@ -57,4 +57,16 @@ class AuthenticationClient {
       }
     }
   }
+
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.remove(prefsEmailKey);
+    prefs.remove(prefsProfilePhotoUrlKey);
+    prefs.remove(prefsRememberMeKey);
+
+    prefs.remove('access-token');
+    prefs.remove('client');
+    prefs.remove('uid');
+  }
 }
