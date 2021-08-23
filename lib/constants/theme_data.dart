@@ -33,6 +33,14 @@ final themeData = ThemeData(
       fontWeight: FontWeight.w400,
       letterSpacing: 0.25,
     ),
+
+    /// Used for email text in [ProfileBottomSheet]
+    caption: TextStyle(
+      fontSize: 24.0,
+      color: Colors.black,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.19,
+    ),
   ),
   buttonTheme: const ButtonThemeData(
     buttonColor: Color(0xff00adb5),
