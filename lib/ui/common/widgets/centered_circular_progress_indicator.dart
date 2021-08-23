@@ -25,7 +25,7 @@ class CenteredCircularProgressIndicator extends StatelessWidget {
     return Center(
       child: CircularProgressIndicator(
         backgroundColor: backgroundColor,
-        color: color,
+        color: color ?? Theme.of(context).primaryColor,
         valueColor: valueColor,
         semanticsLabel: semanticsLabel,
         semanticsValue: semanticsValue,
