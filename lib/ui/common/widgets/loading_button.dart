@@ -47,10 +47,12 @@ class LoadingButton extends ConsumerWidget {
       decoration: BoxDecoration(
         color: buttonState == ButtonState.enabled ? enabledBackgroundColor : disabledBackgroundColor,
         borderRadius: BorderRadius.circular(25),
-        border: Border.all(
-          color: borderColor ?? Theme.of(context).primaryColor,
-          width: borderWidth,
-        ),
+        border: borderWidth != 0.0
+            ? Border.all(
+                color: borderColor ?? Theme.of(context).primaryColor,
+                width: borderWidth,
+              )
+            : null,
       ),
       margin: margin,
       child: MaterialButton(
