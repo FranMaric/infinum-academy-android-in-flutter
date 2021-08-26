@@ -7,10 +7,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 final authProvider = Provider((ref) => AuthenticationClient());
 
 class AuthenticationClient {
-  late ApiClient _apiClient;
+  late final ApiClient _apiClient;
+  late final SharedPreferences _prefs;
 
-  set apiClient(ApiClient apiClient) {
+  Future<void> init(ApiClient apiClient) async {
     _apiClient = apiClient;
+    _prefs = await SharedPreferences.getInstance();
   }
 
   Future<String?> register(String email, String password, String confirmationPassword) async {
@@ -35,15 +37,13 @@ class AuthenticationClient {
       final response = await _apiClient.login(email.trim(), password.trim());
 
       if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) >= 200) {
-        final prefs = await SharedPreferences.getInstance();
+        _prefs.setString(prefsEmailKey, response.data['user']['email'].toString());
+        _prefs.setString(prefsProfilePhotoUrlKey, response.data['user']['image_url'].toString());
+        _prefs.setBool(prefsRememberMeKey, isRememberMeChecked);
 
-        prefs.setString(prefsEmailKey, response.data['user']['email'].toString());
-        prefs.setString(prefsProfilePhotoUrlKey, response.data['user']['image_url'].toString());
-        prefs.setBool(prefsRememberMeKey, isRememberMeChecked);
-
-        prefs.setString('access-token', response.headers.value('access-token') ?? '');
-        prefs.setString('client', response.headers.value('client') ?? '');
-        prefs.setString('uid', response.headers.value('uid') ?? '');
+        _prefs.setString('access-token', response.headers.value('access-token') ?? '');
+        _prefs.setString('client', response.headers.value('client') ?? '');
+        _prefs.setString('uid', response.headers.value('uid') ?? '');
 
         return null;
       }
@@ -60,15 +60,13 @@ class AuthenticationClient {
 
   Future<bool> logout() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
+      _prefs.remove(prefsEmailKey);
+      _prefs.remove(prefsProfilePhotoUrlKey);
+      _prefs.remove(prefsRememberMeKey);
 
-      prefs.remove(prefsEmailKey);
-      prefs.remove(prefsProfilePhotoUrlKey);
-      prefs.remove(prefsRememberMeKey);
-
-      prefs.remove('access-token');
-      prefs.remove('client');
-      prefs.remove('uid');
+      _prefs.remove('access-token');
+      _prefs.remove('client');
+      _prefs.remove('uid');
 
       return true;
     } catch (e) {

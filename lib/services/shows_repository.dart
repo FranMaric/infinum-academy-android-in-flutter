@@ -7,10 +7,12 @@ import 'package:infinum_academy_android_flutter/services/shows_exception.dart';
 final showsRepositoryProvider = Provider((ref) => ShowsRepository());
 
 class ShowsRepository {
-  late ApiClient _apiClient;
+  late final ApiClient _apiClient;
+  late final SharedPreferences _prefs;
 
-  set apiClient(ApiClient apiClient) {
+  Future<void> init(ApiClient apiClient) async {
     _apiClient = apiClient;
+    _prefs = await SharedPreferences.getInstance();
   }
 
   Future<List<Show>> getShows({required bool isTopRated}) async {
