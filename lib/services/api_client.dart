@@ -23,7 +23,7 @@ class ApiClient {
         InterceptorsWrapper(
           onRequest: (options, handler) async {
             /// Headers are not needed for login and register
-            if (options.path != '/users' && options.path != '/users/sign_in') {
+            if (!['login', 'register'].contains(options.extra['type'])) {
               final prefs = await SharedPreferences.getInstance();
 
               options.headers.addAll(
@@ -61,6 +61,11 @@ class ApiClient {
         "password": password,
         "password_confirmation": confirmationPassword,
       },
+      options: Options(
+        extra: {
+          'type': 'register',
+        },
+      ),
     );
   }
 
@@ -71,6 +76,11 @@ class ApiClient {
         "email": email,
         "password": password,
       },
+      options: Options(
+        extra: {
+          'type': 'login',
+        },
+      ),
     );
   }
 
@@ -80,5 +90,14 @@ class ApiClient {
 
   Future<Response<dynamic>> getTopRatedShows() async {
     return _dio.get('/shows/top_rated');
+  }
+
+  Future<Response<dynamic>> uploadProfilePhoto(File imageFile) async {
+    final fileName = imageFile.path.split('/').last;
+    final formData = FormData.fromMap({
+      "image": await MultipartFile.fromFile(imageFile.path, filename: fileName),
+    });
+
+    return _dio.put('/users', data: formData);
   }
 }
