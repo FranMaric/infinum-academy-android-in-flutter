@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infinum_academy_android_flutter/extensions/nullable_int_extension.dart';
 import 'package:infinum_academy_android_flutter/constants/shared_prefs_keys.dart';
 import 'package:infinum_academy_android_flutter/services/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +20,7 @@ class AuthenticationClient {
     try {
       final response = await _apiClient.register(email.trim(), password.trim(), confirmationPassword.trim());
 
-      if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) >= 200) {
+      if (response.statusCode.isSuccessful) {
         return null;
       }
     } on DioError catch (error) {
@@ -36,7 +37,7 @@ class AuthenticationClient {
     try {
       final response = await _apiClient.login(email.trim(), password.trim());
 
-      if (300 > (response.statusCode ?? 400) && (response.statusCode ?? 400) >= 200) {
+      if (response.statusCode.isSuccessful) {
         _prefs.setString(prefsEmailKey, response.data['user']['email'].toString());
         _prefs.setString(prefsProfilePhotoUrlKey, response.data['user']['image_url'].toString());
         _prefs.setBool(prefsRememberMeKey, isRememberMeChecked);
