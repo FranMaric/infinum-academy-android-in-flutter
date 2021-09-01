@@ -4,9 +4,13 @@ import 'package:infinum_academy_android_flutter/models/show.dart';
 import 'package:infinum_academy_android_flutter/services/api_client.dart';
 import 'package:infinum_academy_android_flutter/services/shows_exception.dart';
 import 'package:infinum_academy_android_flutter/extensions/nullable_int_extension.dart';
+import 'package:infinum_academy_android_flutter/services/shows_database.dart';
 
+/// [ShowsRepository] singleton provider
 final showsRepositoryProvider = Provider((ref) => ShowsRepository());
 
+/// Used to easily work with shows data
+/// Encapsulates [ApiClient] and [ShowsDatabase] for easy offline/online handling
 class ShowsRepository {
   late final ApiClient _apiClient;
   late final SharedPreferences _prefs;
