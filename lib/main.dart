@@ -16,10 +16,11 @@ class ShowsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final alice = Alice();
+    final apiClient = context.read(apiClientProvider);
 
-    context.read(apiClientProvider).init(alice);
-    context.read(authProvider).init(context.read(apiClientProvider));
-    context.read(showsRepositoryProvider).init(context.read(apiClientProvider));
+    apiClient.init(alice);
+    context.read(authProvider).init(apiClient);
+    context.read(showsRepositoryProvider).init(apiClient);
 
     return MaterialApp(
       navigatorKey: alice.getNavigatorKey(),
