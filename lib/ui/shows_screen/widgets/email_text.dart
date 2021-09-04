@@ -5,7 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class EmailText extends StatelessWidget {
   const EmailText({
     Key? key,
+    this.style,
   }) : super(key: key);
+
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class EmailText extends StatelessWidget {
           if (snap.hasData && snap.data?.getString(prefsEmailKey) != null && snap.data?.getString(prefsEmailKey) != 'null') {
             return Text(
               snap.data!.getString(prefsEmailKey)!,
-              style: Theme.of(context).textTheme.caption,
+              style: style ?? Theme.of(context).textTheme.caption,
             );
           }
           return const Text('');
