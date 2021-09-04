@@ -8,9 +8,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:infinum_academy_android_flutter/services/authentication_client.dart';
 import 'package:infinum_academy_android_flutter/services/shows_repository.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
-import 'package:infinum_academy_android_flutter/ui/login_screen/login_screen.dart';
-import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/email_text.dart';
-import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/profile_photo.dart';
+import 'package:infinum_academy_android_flutter/ui/login/login_screen.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/widgets/email_text.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/widgets/profile_photo.dart';
 import 'package:infinum_academy_android_flutter/extensions/build_context_extenion.dart';
 
 const horizontalPadding = 24.0;

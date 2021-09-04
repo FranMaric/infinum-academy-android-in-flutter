@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/models/show.dart';
 import 'package:infinum_academy_android_flutter/services/shows_exception.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/centered_circular_progress_indicator.dart';
-import 'package:infinum_academy_android_flutter/ui/show_details_screen/widgets/show_details_screen.dart';
-import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/no_shows_widget.dart';
-import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/show_tile.dart';
+import 'package:infinum_academy_android_flutter/ui/show_details/show_details_screen.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/widgets/no_shows_widget.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/widgets/show_tile.dart';
 
 class ShowsList extends ConsumerWidget {
   const ShowsList({

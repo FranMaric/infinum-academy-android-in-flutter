@@ -7,49 +7,58 @@ import 'package:infinum_academy_android_flutter/ui/common/validators/email_valid
 import 'package:infinum_academy_android_flutter/ui/common/validators/password_validator.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/colored_text_form_field.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
-import 'package:infinum_academy_android_flutter/ui/login_screen/login_screen.dart';
+import 'package:infinum_academy_android_flutter/ui/login/widgets/stateful_checkbox_list_tile.dart';
+import 'package:infinum_academy_android_flutter/ui/register/register_screen.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/shows_screen.dart';
 import 'package:infinum_academy_android_flutter/extensions/build_context_extenion.dart';
 
 const horizontalMargin = 20.0;
 
-final _registerButtonStateProvider = StateProvider<ButtonState>((ref) => ButtonState.disabled);
+final _loginButtonStateProvider = StateProvider((ref) => ButtonState.disabled);
+final _registerButtonStateProvider = StateProvider((ref) => ButtonState.enabled);
+final _checkboxProvider = StateProvider((ref) => false);
 
-class RegisterScreen extends StatelessWidget {
-  RegisterScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatelessWidget {
+  LoginScreen({
+    Key? key,
+    this.isFromRegister = false,
+  }) : super(key: key);
 
-  static const routeName = '/register';
+  static const routeName = '/login';
+
+  final bool isFromRegister;
 
   final _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    void checkIfValidFormAndUpdateRegisterButtonState() {
-      if (registerPasswordValidator(_passwordController.text) == null && emailValidator(_emailController.text) == null) {
-        context.read(_registerButtonStateProvider).state = ButtonState.enabled;
-      } else if (context.read(_registerButtonStateProvider).state == ButtonState.enabled) {
-        context.read(_registerButtonStateProvider).state = ButtonState.disabled;
+    void checkIfValidFormAndUpdateLoginButtonState() {
+      if (emailValidator(_emailController.text) == null && passwordValidator(_passwordController.text) == null) {
+        context.read(_loginButtonStateProvider).state = ButtonState.enabled;
+      } else if (context.read(_loginButtonStateProvider).state == ButtonState.enabled) {
+        context.read(_loginButtonStateProvider).state = ButtonState.disabled;
       }
     }
 
-    Future<void> _register() async {
+    Future<void> _login() async {
       final form = _formKey.currentState;
       final isValidForm = form?.validate() ?? false;
 
       if (isValidForm) {
-        context.read(_registerButtonStateProvider).state = ButtonState.loading;
-        final result = await context.read(authProvider).register(_emailController.text, _passwordController.text, _confirmPasswordController.text);
+        context.read(_loginButtonStateProvider).state = ButtonState.loading;
+        final result = await context
+            .read(authProvider)
+            .login(_emailController.text, _passwordController.text, isRememberMeChecked: context.read(_checkboxProvider).state);
 
         if (result == null) {
-          Navigator.of(context)
-              .pushReplacementNamed(LoginScreen.routeName, arguments: true); // arguments = true because it is coming from register screen
+          Navigator.of(context).pushReplacementNamed(ShowsScreen.routeName);
         } else {
           context.showSnackBar(result);
         }
-        context.read(_registerButtonStateProvider).state = ButtonState.disabled;
+        context.read(_loginButtonStateProvider).state = ButtonState.disabled;
       }
     }
 
@@ -59,6 +68,7 @@ class RegisterScreen extends StatelessWidget {
           color: Theme.of(context).backgroundColor,
           child: Stack(
             fit: StackFit.expand,
+            alignment: Alignment.center,
             children: [
               Positioned(
                 top: 0,
@@ -72,15 +82,17 @@ class RegisterScreen extends StatelessWidget {
               ),
               SizedBox.expand(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: horizontalMargin),
-                  margin: const EdgeInsets.only(bottom: 85),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: horizontalMargin,
+                  ),
+                  margin: EdgeInsets.only(bottom: isFromRegister ? 85 : 155),
                   alignment: Alignment.center,
                   child: ScrollConfiguration(
                     behavior: NoGlowScrollBehavior(),
                     child: SingleChildScrollView(
                       child: Form(
-                        onChanged: checkIfValidFormAndUpdateRegisterButtonState,
                         key: _formKey,
+                        onChanged: checkIfValidFormAndUpdateLoginButtonState,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,38 +116,50 @@ class RegisterScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.only(bottom: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
                               child: Text(
-                                'Register',
-                                style: TextStyle(
+                                isFromRegister ? 'Registration successful!' : 'Login',
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 35,
                                 ),
                               ),
                             ),
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                'In order to continue please log in.',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                             ColoredTextFormField(
                               labelText: 'Email',
-                              // hintText: 'imenko.prezimenovic@infinum.com',
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               validator: emailValidator,
-                              margin: const EdgeInsets.only(bottom: 20),
+                            ),
+                            const SizedBox(
+                              height: 20,
                             ),
                             ColoredTextFormField(
                               labelText: 'Password',
                               obscureText: true,
+                              validator: passwordValidator,
                               controller: _passwordController,
-                              validator: registerPasswordValidator,
-                              margin: const EdgeInsets.only(bottom: 20),
                             ),
-                            ColoredTextFormField(
-                              labelText: 'Repeat password',
-                              obscureText: true,
-                              controller: _confirmPasswordController,
-                              validator: registerPasswordValidator,
-                              margin: const EdgeInsets.only(bottom: 20),
+                            StatefulCheckboxListTile(
+                              controlAffinity: ListTileControlAffinity.leading,
+                              title: const Text(
+                                'Remember me',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onChanged: (checked) => context.read(_checkboxProvider).state = checked,
                             ),
                           ],
                         ),
@@ -153,11 +177,27 @@ class RegisterScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                       horizontal: horizontalMargin,
                     ),
-                    child: LoadingButton(
-                      title: 'Register',
-                      buttonStateProvider: _registerButtonStateProvider,
-                      margin: const EdgeInsets.only(bottom: 20),
-                      onPressed: _register,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        LoadingButton(
+                          title: 'Login',
+                          buttonStateProvider: _loginButtonStateProvider,
+                          margin: const EdgeInsets.only(bottom: 20.0),
+                          onPressed: _login,
+                        ),
+                        Visibility(
+                          visible: !isFromRegister,
+                          child: LoadingButton(
+                            title: 'Register',
+                            buttonStateProvider: _registerButtonStateProvider,
+                            margin: const EdgeInsets.only(bottom: 20.0),
+                            enabledBackgroundColor: Theme.of(context).backgroundColor,
+                            enabledTitleColor: Colors.white,
+                            onPressed: () => Navigator.of(context).pushNamed(RegisterScreen.routeName),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -167,13 +207,5 @@ class RegisterScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String? registerPasswordValidator(String? value) {
-    if (_passwordController.text != _confirmPasswordController.text) {
-      return 'Passwords must match';
-    }
-
-    return passwordValidator(value);
   }
 }

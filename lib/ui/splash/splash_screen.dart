@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:infinum_academy_android_flutter/constants/shared_prefs_keys.dart';
-import 'package:infinum_academy_android_flutter/ui/login_screen/login_screen.dart';
-import 'package:infinum_academy_android_flutter/ui/shows_screen/shows_screen.dart';
+import 'package:infinum_academy_android_flutter/ui/login/login_screen.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/shows_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/services/shows_repository.dart';
-import 'package:infinum_academy_android_flutter/ui/shows_screen/profile_bottom_sheet.dart';
-import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/profile_photo.dart';
-import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/shows_list.dart';
-import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/top_rated_chip.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/profile_bottom_sheet.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/widgets/profile_photo.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/widgets/shows_list.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/widgets/top_rated_chip.dart';
 
 final _showsFutureProvider = FutureProvider.autoDispose((ref) async {
   ref.maintainState = true;
