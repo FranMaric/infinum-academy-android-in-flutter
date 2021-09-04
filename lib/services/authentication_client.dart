@@ -61,13 +61,13 @@ class AuthenticationClient {
 
   Future<bool> logout() async {
     try {
-      _prefs.remove(prefsEmailKey);
-      _prefs.remove(prefsProfilePhotoUrlKey);
-      _prefs.remove(prefsRememberMeKey);
+      await _prefs.remove(prefsEmailKey);
+      await _prefs.remove(prefsProfilePhotoUrlKey);
+      await _prefs.remove(prefsRememberMeKey);
 
-      _prefs.remove('access-token');
-      _prefs.remove('client');
-      _prefs.remove('uid');
+      await _prefs.remove('access-token');
+      await _prefs.remove('client');
+      await _prefs.remove('uid');
 
       return true;
     } catch (e) {
