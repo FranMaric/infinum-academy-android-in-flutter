@@ -19,12 +19,10 @@ final showsRepositoryProvider = Provider((ref) => ShowsRepository());
 /// Encapsulates [ApiClient] and [ShowsDatabase] for easy offline/online handling
 class ShowsRepository {
   late final ApiClient _apiClient;
-  late final SharedPreferences _prefs;
 
   /// Call [init] as soon as possible
   Future<void> init(ApiClient apiClient) async {
     _apiClient = apiClient;
-    _prefs = await SharedPreferences.getInstance();
     _checkForOfflinePhotoUpload();
   }
 
