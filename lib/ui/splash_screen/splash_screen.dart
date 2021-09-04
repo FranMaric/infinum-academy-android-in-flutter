@@ -37,22 +37,22 @@ class SplashScreen extends StatelessWidget {
               Positioned(
                 top: 0,
                 left: 0,
-                child: SvgPicture.asset("assets/top_left_illustration.svg"),
+                child: SvgPicture.asset("assets/images/top_left_illustration.svg"),
               ),
               Positioned(
                 top: 0,
                 right: 0,
-                child: SvgPicture.asset("assets/top_right_illustration.svg"),
+                child: SvgPicture.asset("assets/images/top_right_illustration.svg"),
               ),
               Positioned(
                 bottom: 0,
                 right: 0,
-                child: SvgPicture.asset("assets/bottom_right_illustration.svg"),
+                child: SvgPicture.asset("assets/images/bottom_right_illustration.svg"),
               ),
               Positioned(
                 bottom: 0,
                 left: 0,
-                child: SvgPicture.asset("assets/bottom_left_illustration.svg"),
+                child: SvgPicture.asset("assets/images/bottom_left_illustration.svg"),
               ),
               Center(
                 child: Row(
@@ -66,7 +66,7 @@ class SplashScreen extends StatelessWidget {
                         offset: Offset(0, value * 50),
                         child: child,
                       ),
-                      child: SvgPicture.asset("assets/ic_triangle.svg"),
+                      child: SvgPicture.asset("assets/images/triangle_icon.svg"),
                     ),
                     const SizedBox(
                       width: 19,

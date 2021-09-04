@@ -52,12 +52,12 @@ class RegisterScreen extends StatelessWidget {
               Positioned(
                 top: 0,
                 left: 0,
-                child: SvgPicture.asset("assets/top_left_illustration.svg"),
+                child: SvgPicture.asset("assets/images/top_left_illustration.svg"),
               ),
               Positioned(
                 top: 0,
                 right: 0,
-                child: SvgPicture.asset("assets/top_right_illustration.svg"),
+                child: SvgPicture.asset("assets/images/top_right_illustration.svg"),
               ),
               SizedBox.expand(
                 child: Container(
@@ -82,7 +82,7 @@ class RegisterScreen extends StatelessWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  SvgPicture.asset("assets/ic_triangle.svg"),
+                                  SvgPicture.asset("assets/images/triangle_icon.svg"),
                                   const SizedBox(
                                     width: 19,
                                   ),

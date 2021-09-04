@@ -6,7 +6,7 @@ import 'package:infinum_academy_android_flutter/constants/shared_prefs_keys.dart
 import 'package:infinum_academy_android_flutter/services/shows_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const placeHolderImageProvider = AssetImage('assets/avatar_placeholder_icon.png');
+const placeHolderImageProvider = AssetImage('assets/images/avatar_placeholder_icon.png');
 
 final profilePhotoFutureProvider = FutureProvider<ImageProvider>((ref) async {
   final prefs = await SharedPreferences.getInstance();

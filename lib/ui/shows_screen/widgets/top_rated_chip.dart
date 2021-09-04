@@ -33,7 +33,7 @@ class _TopRatedChipState extends State<TopRatedChip> {
         side: BorderSide(color: Theme.of(context).primaryColor),
       ),
       avatar: SvgPicture.asset(
-        'assets/full_heart_icon.svg',
+        'assets/images/heart_icon.svg',
         color: _isChecked ? Colors.white : Theme.of(context).primaryColor,
       ),
       onPressed: () {

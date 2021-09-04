@@ -12,7 +12,7 @@ class NoShowsWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset('assets/no_shows_icon.svg'),
+          SvgPicture.asset('assets/images/no_shows_icon.svg'),
           const SizedBox(height: 26),
           Text(
             'Your shows are not showing. Get it?',
