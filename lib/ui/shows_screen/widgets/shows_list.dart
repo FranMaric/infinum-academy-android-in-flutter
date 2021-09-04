@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:infinum_academy_android_flutter/models/show.dart';
 import 'package:infinum_academy_android_flutter/services/shows_exception.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/centered_circular_progress_indicator.dart';
 import 'package:infinum_academy_android_flutter/ui/show_details_screen/widgets/show_details_screen.dart';
+import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/no_shows_widget.dart';
 import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/show_tile.dart';
 
 class ShowsList extends ConsumerWidget {
@@ -21,29 +21,17 @@ class ShowsList extends ConsumerWidget {
       onRefresh: () => context.refresh(showsFutureProvider),
       child: watch(showsFutureProvider).when(
           loading: () => const CenteredCircularProgressIndicator(),
-          error: (e, s) {
-            if (e is ShowsException) {
+          error: (err, stack) {
+            if (err is ShowsException) {
               return Center(
-                child: Text(e.message),
+                child: Text(err.message),
               );
             }
             return const Text('Oops, something went wrong');
           },
           data: (shows) {
             if (shows.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SvgPicture.asset('assets/no_shows_icon.svg'),
-                    const SizedBox(height: 26),
-                    Text(
-                      'Your shows are not showing. Get it?',
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 18),
-                    ),
-                  ],
-                ),
-              );
+              return const NoShowsWidget();
             }
             return ListView.builder(
               itemCount: shows.length,
