@@ -7,15 +7,21 @@ const margin = 15.0;
 const borderRadius = 8.0;
 
 class ShowTile extends StatelessWidget {
-  const ShowTile({Key? key, required this.show, this.onTap}) : super(key: key);
+  const ShowTile({
+    Key? key,
+    required this.show,
+    this.onPressed,
+    this.showDescription = true,
+  }) : super(key: key);
 
   final Show show;
-  final VoidCallback? onTap;
+  final VoidCallback? onPressed;
+  final bool showDescription;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
+    return MaterialButton(
+      onPressed: onPressed,
       child: Container(
         margin: const EdgeInsets.all(margin),
         child: Material(
@@ -38,7 +44,7 @@ class ShowTile extends StatelessWidget {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
-              if (show.description != null)
+              if (show.description != null && showDescription)
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24.0,
