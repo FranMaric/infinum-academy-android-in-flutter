@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:infinum_academy_android_flutter/models/show.dart';
-import 'package:infinum_academy_android_flutter/ui/common/widgets/centered_circular_progress_indicator.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/widgets/show_image.dart';
 
 const elevation = 5.0;
 const margin = 15.0;
@@ -28,24 +27,7 @@ class ShowTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (show.imageUrl != null)
-                SizedBox(
-                  height: 250.0,
-                  width: double.infinity,
-                  child: CachedNetworkImage(
-                    imageUrl: show.imageUrl!,
-                    fit: BoxFit.fitWidth,
-                    progressIndicatorBuilder: (context, url, downloadProgress) => SizedBox(
-                      height: 100.0,
-                      child: CenteredCircularProgressIndicator(value: downloadProgress.progress),
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                      height: 100.0,
-                      alignment: Alignment.center,
-                      child: const Icon(Icons.error),
-                    ),
-                  ),
-                ),
+              if (show.imageUrl != null) ShowImage(url: show.imageUrl!),
               Padding(
                 padding: const EdgeInsets.only(
                   top: 16.0,
