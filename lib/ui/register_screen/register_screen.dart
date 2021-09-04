@@ -8,6 +8,7 @@ import 'package:infinum_academy_android_flutter/ui/common/validators/password_va
 import 'package:infinum_academy_android_flutter/ui/common/widgets/colored_text_form_field.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
 import 'package:infinum_academy_android_flutter/ui/login_screen/login_screen.dart';
+import 'package:infinum_academy_android_flutter/extensions/build_context_extenion.dart';
 
 const horizontalMargin = 20.0;
 
@@ -34,12 +35,22 @@ class RegisterScreen extends StatelessWidget {
       }
     }
 
-    void showSnackBarNotification(String text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(text),
-        ),
-      );
+    Future<void> _register() async {
+      final form = _formKey.currentState;
+      final isValidForm = form?.validate() ?? false;
+
+      if (isValidForm) {
+        context.read(_registerButtonStateProvider).state = ButtonState.loading;
+        final result = await context.read(authProvider).register(_emailController.text, _passwordController.text, _confirmPasswordController.text);
+
+        if (result == null) {
+          Navigator.of(context)
+              .pushReplacementNamed(LoginScreen.routeName, arguments: true); // arguments = true because it is coming from register screen
+        } else {
+          context.showSnackBar(result);
+        }
+        context.read(_registerButtonStateProvider).state = ButtonState.disabled;
+      }
     }
 
     return Scaffold(
@@ -146,24 +157,7 @@ class RegisterScreen extends StatelessWidget {
                       title: 'Register',
                       buttonStateProvider: _registerButtonStateProvider,
                       margin: const EdgeInsets.only(bottom: 20),
-                      onPressed: () {
-                        final form = _formKey.currentState;
-                        if (form?.validate() ?? false) {
-                          context.read(_registerButtonStateProvider).state = ButtonState.loading;
-                          context
-                              .read(authProvider)
-                              .register(_emailController.text, _passwordController.text, _confirmPasswordController.text)
-                              .then((result) {
-                            if (result == null) {
-                              // arguments = true because it is coming from register screen
-                              Navigator.of(context).pushReplacementNamed(LoginScreen.routeName, arguments: true);
-                            } else {
-                              showSnackBarNotification(result);
-                              context.read(_registerButtonStateProvider).state = ButtonState.disabled;
-                            }
-                          });
-                        }
-                      },
+                      onPressed: _register,
                     ),
                   ),
                 ),
