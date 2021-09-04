@@ -10,6 +10,7 @@ import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button
 import 'package:infinum_academy_android_flutter/ui/login_screen/widgets/stateful_checkbox_list_tile.dart';
 import 'package:infinum_academy_android_flutter/ui/register_screen/register_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/shows_screen/shows_screen.dart';
+import 'package:infinum_academy_android_flutter/extensions/build_context_extenion.dart';
 
 const horizontalMargin = 20.0;
 
@@ -34,18 +35,29 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void showSnackBarNotification(String text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(text),
-        ),
-      );
-    }
-
     void checkIfValidFormAndUpdateLoginButtonState() {
       if (emailValidator(_emailController.text) == null && passwordValidator(_passwordController.text) == null) {
         context.read(_loginButtonStateProvider).state = ButtonState.enabled;
       } else if (context.read(_loginButtonStateProvider).state == ButtonState.enabled) {
+        context.read(_loginButtonStateProvider).state = ButtonState.disabled;
+      }
+    }
+
+    Future<void> _login() async {
+      final form = _formKey.currentState;
+      final isValidForm = form?.validate() ?? false;
+
+      if (isValidForm) {
+        context.read(_loginButtonStateProvider).state = ButtonState.loading;
+        final result = await context
+            .read(authProvider)
+            .login(_emailController.text, _passwordController.text, isRememberMeChecked: context.read(_checkboxProvider).state);
+
+        if (result == null) {
+          Navigator.of(context).pushReplacementNamed(ShowsScreen.routeName);
+        } else {
+          context.showSnackBar(result);
+        }
         context.read(_loginButtonStateProvider).state = ButtonState.disabled;
       }
     }
@@ -172,23 +184,7 @@ class LoginScreen extends StatelessWidget {
                           title: 'Login',
                           buttonStateProvider: _loginButtonStateProvider,
                           margin: const EdgeInsets.only(bottom: 20.0),
-                          onPressed: () {
-                            final form = _formKey.currentState;
-                            if (form?.validate() ?? false) {
-                              context.read(_loginButtonStateProvider).state = ButtonState.loading;
-                              context
-                                  .read(authProvider)
-                                  .login(_emailController.text, _passwordController.text, isRememberMeChecked: context.read(_checkboxProvider).state)
-                                  .then((result) {
-                                if (result == null) {
-                                  Navigator.of(context).pushReplacementNamed(ShowsScreen.routeName);
-                                } else {
-                                  showSnackBarNotification(result);
-                                  context.read(_loginButtonStateProvider).state = ButtonState.disabled;
-                                }
-                              });
-                            }
-                          },
+                          onPressed: _login,
                         ),
                         Visibility(
                           visible: !isFromRegister,
@@ -198,9 +194,7 @@ class LoginScreen extends StatelessWidget {
                             margin: const EdgeInsets.only(bottom: 20.0),
                             enabledBackgroundColor: Theme.of(context).backgroundColor,
                             enabledTitleColor: Colors.white,
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(RegisterScreen.routeName);
-                            },
+                            onPressed: () => Navigator.of(context).pushNamed(RegisterScreen.routeName),
                           ),
                         ),
                       ],
