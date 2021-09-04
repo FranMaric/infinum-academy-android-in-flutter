@@ -2,13 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:infinum_academy_android_flutter/services/authentication_client.dart';
+import 'package:infinum_academy_android_flutter/services/shows_repository.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
 import 'package:infinum_academy_android_flutter/ui/login_screen/login_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/email_text.dart';
 import 'package:infinum_academy_android_flutter/ui/shows_screen/widgets/profile_photo.dart';
+import 'package:infinum_academy_android_flutter/extensions/build_context_extenion.dart';
 
 const horizontalPadding = 24.0;
 
@@ -56,6 +59,56 @@ class ProfileBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _changeProfilePhoto() async {
+      try {
+        context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.loading;
+
+        final imageSource = await _showImageSourceActionSheet(context);
+
+        if (imageSource == null) {
+          context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.enabled;
+          return;
+        }
+
+        final imageXFile = await ImagePicker().pickImage(
+          source: imageSource,
+          maxHeight: 200,
+          maxWidth: 200,
+        );
+
+        if (imageXFile == null) {
+          context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.enabled;
+          return;
+        }
+
+        final imageTemp = File(imageXFile.path);
+
+        context.read(showsRepositoryProvider).uploadProfilePhoto(imageTemp).then((_) {
+          context.refresh(profilePhotoFutureProvider);
+          context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.enabled;
+        }).onError((error, stackTrace) {
+          context.showSnackBar(error.toString());
+          context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.enabled;
+        });
+      } on PlatformException catch (e) {
+        debugPrint('Failed to pick image: ${e.message}');
+        context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.enabled;
+      }
+    }
+
+    Future<void> _logout() async {
+      context.read(_logoutButtonStateProvider).state = ButtonState.loading;
+      final isLoggedOut = await context.read(authProvider).logout();
+
+      if (isLoggedOut) {
+        Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+      } else {
+        context.showSnackBar("We couldn't logout. Try again later");
+      }
+
+      context.read(_logoutButtonStateProvider).state = ButtonState.enabled;
+    }
+
     return Container(
       color: const Color(0xFF737373),
       child: Container(
@@ -71,11 +124,10 @@ class ProfileBottomSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(height: 44),
-            ProfilePhoto(
+            const ProfilePhoto(
               width: 95.0,
               height: 95.0,
               borderWidth: 2.0,
-              borderColor: Theme.of(context).primaryColor,
             ),
             const SizedBox(height: 29),
             const EmailText(),
@@ -85,27 +137,7 @@ class ProfileBottomSheet extends StatelessWidget {
               buttonStateProvider: _changeProfilePhotoButtonStateProvider,
               disabledBackgroundColor: Colors.white,
               borderWidth: 2.0,
-              onPressed: () async {
-                context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.loading;
-
-                // final path = (await getApplicationDocumentsDirectory()).path;
-                // final imagePath = '$path/profile_photo.png';
-
-                final imageSource = await _showImageSourceActionSheet(context);
-
-                if (imageSource == null) {
-                  context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.enabled;
-                  return;
-                }
-
-                // final imageXFile = await ImagePicker().pickImage(source: ImageSource.camera);
-
-                // if (imageXFile != null) {
-                //   imageXFile;
-                // }
-
-                context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.enabled;
-              },
+              onPressed: _changeProfilePhoto,
             ),
             const SizedBox(height: 16),
             LoadingButton(
@@ -114,21 +146,7 @@ class ProfileBottomSheet extends StatelessWidget {
               enabledBackgroundColor: Theme.of(context).primaryColor,
               enabledTitleColor: Colors.white,
               loadingIndicatorColor: Colors.white,
-              onPressed: () {
-                context.read(_logoutButtonStateProvider).state = ButtonState.loading;
-                context.read(authProvider).logout().then((isLoggedOut) {
-                  if (isLoggedOut) {
-                    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
-                  } else {
-                    context.read(_logoutButtonStateProvider).state = ButtonState.enabled;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("We couldn't logout. Try again later"),
-                      ),
-                    );
-                  }
-                });
-              },
+              onPressed: _logout,
             ),
             const SizedBox(height: 25),
           ],
