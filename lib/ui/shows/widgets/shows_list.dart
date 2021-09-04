@@ -19,6 +19,8 @@ class ShowsList extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     return RefreshIndicator(
       onRefresh: () => context.refresh(showsFutureProvider),
+      color: Theme.of(context).primaryColor,
+      strokeWidth: 2.5,
       child: watch(showsFutureProvider).when(
           loading: () => const CenteredCircularProgressIndicator(),
           error: (err, stack) {
@@ -38,9 +40,7 @@ class ShowsList extends ConsumerWidget {
               itemBuilder: (context, index) {
                 return ShowTile(
                   show: shows[index],
-                  onTap: () {
-                    Navigator.of(context).pushNamed(ShowDetailsScreen.routeName, arguments: shows[index]);
-                  },
+                  onTap: () => Navigator.of(context).pushNamed(ShowDetailsScreen.routeName, arguments: shows[index]),
                 );
               },
             );
