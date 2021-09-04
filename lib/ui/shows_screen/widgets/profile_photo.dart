@@ -29,14 +29,15 @@ class ProfilePhoto extends ConsumerWidget {
     this.width = 24.0,
     this.height = 24.0,
     this.borderWidth = 0.0,
-    this.borderColor = Colors.black,
+    this.borderColor,
   }) : super(key: key);
 
   final double width;
   final double height;
   final double borderWidth;
 
-  final Color borderColor;
+  /// If null defaults to Theme.of(context).primaryColor
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
@@ -54,7 +55,7 @@ class ProfilePhoto extends ConsumerWidget {
         ),
         borderRadius: const BorderRadius.all(Radius.circular(50.0)),
         border: Border.all(
-          color: borderColor,
+          color: borderColor ?? Theme.of(context).primaryColor,
           width: borderWidth,
         ),
       ),
