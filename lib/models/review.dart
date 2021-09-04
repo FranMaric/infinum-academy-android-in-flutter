@@ -9,7 +9,12 @@ part 'review.g.dart';
 @freezed
 @immutable
 abstract class Review with _$Review {
-  const factory Review(String id, String comment, int rating,
-      @JsonKey(name: 'show_id') int showId, User user) = _Review;
+  const factory Review(
+    String id,
+    String comment,
+    int rating,
+    @JsonKey(name: 'show_id') int showId,
+    User user,
+  ) = _Review;
   factory Review.fromJson(Map<String, dynamic> json) => _$ReviewFromJson(json);
 }
