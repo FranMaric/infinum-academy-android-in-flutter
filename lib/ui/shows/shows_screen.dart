@@ -24,23 +24,15 @@ class ShowsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void showProfileBottomSheet(BuildContext context) {
-      // TODO: show profile bottom sheet
-      showModalBottomSheet(
-        context: context,
-        builder: (_) => const ProfileBottomSheet(),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         actions: [
-          GestureDetector(
-            onTap: () => showProfileBottomSheet(context),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 20.0),
-              child: ProfilePhoto(),
+          IconButton(
+            onPressed: () => showModalBottomSheet(
+              context: context,
+              builder: (_) => const ProfileBottomSheet(),
             ),
+            icon: const ProfilePhoto(),
           ),
         ],
         bottom: PreferredSize(
