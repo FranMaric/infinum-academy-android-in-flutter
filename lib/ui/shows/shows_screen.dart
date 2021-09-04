@@ -46,10 +46,12 @@ class ShowsScreen extends StatelessWidget {
                   'Shows',
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                TopRatedChip(onPressed: (isTopRated) {
-                  context.read(_isTopRatedProvider).state = isTopRated;
-                  context.refresh(_showsFutureProvider);
-                })
+                TopRatedChip(
+                  onPressed: (isTopRated) {
+                    context.read(_isTopRatedProvider).state = isTopRated;
+                    context.refresh(_showsFutureProvider);
+                  },
+                )
               ],
             ),
           ),
