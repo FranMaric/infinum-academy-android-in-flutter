@@ -111,45 +111,47 @@ class ProfileBottomSheet extends StatelessWidget {
 
     return Container(
       color: const Color(0xFF737373),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
+      child: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
           ),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 44),
-            const ProfilePhoto(
-              width: 95.0,
-              height: 95.0,
-              borderWidth: 2.0,
-            ),
-            const SizedBox(height: 29),
-            const EmailText(),
-            const SizedBox(height: 62),
-            LoadingButton(
-              title: 'Change profile photo',
-              buttonStateProvider: _changeProfilePhotoButtonStateProvider,
-              disabledBackgroundColor: Colors.white,
-              borderWidth: 2.0,
-              onPressed: _changeProfilePhoto,
-            ),
-            const SizedBox(height: 16),
-            LoadingButton(
-              title: 'Logout',
-              buttonStateProvider: _logoutButtonStateProvider,
-              enabledBackgroundColor: Theme.of(context).primaryColor,
-              enabledTitleColor: Colors.white,
-              loadingIndicatorColor: Colors.white,
-              onPressed: _logout,
-            ),
-            const SizedBox(height: 25),
-          ],
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 44),
+              const ProfilePhoto(
+                width: 95.0,
+                height: 95.0,
+                borderWidth: 2.0,
+              ),
+              const SizedBox(height: 29),
+              const EmailText(),
+              const SizedBox(height: 62),
+              LoadingButton(
+                title: 'Change profile photo',
+                buttonStateProvider: _changeProfilePhotoButtonStateProvider,
+                disabledBackgroundColor: Colors.white,
+                borderWidth: 2.0,
+                onPressed: _changeProfilePhoto,
+              ),
+              const SizedBox(height: 16),
+              LoadingButton(
+                title: 'Logout',
+                buttonStateProvider: _logoutButtonStateProvider,
+                enabledBackgroundColor: Theme.of(context).primaryColor,
+                enabledTitleColor: Colors.white,
+                loadingIndicatorColor: Colors.white,
+                onPressed: _logout,
+              ),
+              const SizedBox(height: 25),
+            ],
+          ),
         ),
       ),
     );
