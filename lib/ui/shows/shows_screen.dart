@@ -22,7 +22,7 @@ final _isTopRatedProvider = StateProvider((ref) => false);
 
 enum ShowsLayout { column, grid }
 
-final showsLayoutProvider = StateProvider((ref) => ShowsLayout.grid);
+final showsLayoutProvider = StateProvider((ref) => ShowsLayout.column);
 
 class ShowsScreen extends StatefulWidget {
   const ShowsScreen({Key? key}) : super(key: key);
@@ -44,7 +44,7 @@ class _ShowsScreenState extends State<ShowsScreen> with SingleTickerProviderStat
       duration: const Duration(milliseconds: 600),
       vsync: this,
     );
-    _animation = Tween(begin: 0.0, end: pi / 2).animate(_animationController);
+    _animation = Tween(begin: pi / 2, end: 0.0).animate(_animationController);
   }
 
   @override
@@ -107,10 +107,10 @@ class _ShowsScreenState extends State<ShowsScreen> with SingleTickerProviderStat
       onPressed: () {
         if (context.read(showsLayoutProvider).state == ShowsLayout.column) {
           context.read(showsLayoutProvider).state = ShowsLayout.grid;
-          _animationController.reverse();
+          _animationController.forward();
         } else {
           context.read(showsLayoutProvider).state = ShowsLayout.column;
-          _animationController.forward();
+          _animationController.reverse();
         }
       },
       backgroundColor: Theme.of(context).primaryColor,
