@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:infinum_academy_android_flutter/services/shows_repository.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/profile_bottom_sheet.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/profile_photo.dart';
@@ -17,14 +20,59 @@ final _showsFutureProvider = FutureProvider.autoDispose((ref) async {
 
 final _isTopRatedProvider = StateProvider((ref) => false);
 
-class ShowsScreen extends StatelessWidget {
+enum ShowsLayout { column, grid }
+
+final showsLayoutProvider = StateProvider((ref) => ShowsLayout.column);
+
+class ShowsScreen extends StatefulWidget {
   const ShowsScreen({Key? key}) : super(key: key);
 
   static const routeName = '/shows';
 
   @override
+  _ShowsScreenState createState() => _ShowsScreenState();
+}
+
+class _ShowsScreenState extends State<ShowsScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+    _animation = Tween(begin: pi / 2, end: 0.0).animate(_animationController);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (context.read(showsLayoutProvider).state == ShowsLayout.column) {
+            context.read(showsLayoutProvider).state = ShowsLayout.grid;
+            _animationController.forward();
+          } else {
+            context.read(showsLayoutProvider).state = ShowsLayout.column;
+            _animationController.reverse();
+          }
+        },
+        backgroundColor: Theme.of(context).primaryColor,
+        child: AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) => Transform.rotate(
+            angle: _animation.value,
+            child: child,
+          ),
+          child: SvgPicture.asset(
+            'assets/images/layout_icon.svg',
+            color: Colors.white,
+          ),
+        ),
+      ),
       appBar: AppBar(
         actions: [
           IconButton(
@@ -64,5 +112,11 @@ class ShowsScreen extends StatelessWidget {
       ),
       body: ShowsList(showsFutureProvider: _showsFutureProvider),
     );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 }
