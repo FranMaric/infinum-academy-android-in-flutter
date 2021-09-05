@@ -98,6 +98,13 @@ class ProfileBottomSheet extends StatelessWidget {
 
     Future<void> _logout() async {
       context.read(_logoutButtonStateProvider).state = ButtonState.loading;
+      final shouldLogOut = await context.showYesNoDialog(title: 'LOGOUT', description: 'Are you sure you want to logout?', confirmText: 'LOGOUT');
+
+      if (shouldLogOut != true) {
+        context.read(_logoutButtonStateProvider).state = ButtonState.enabled;
+        return;
+      }
+
       final isLoggedOut = await context.read(authProvider).logout();
 
       if (isLoggedOut) {
