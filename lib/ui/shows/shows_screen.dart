@@ -9,7 +9,7 @@ import 'package:infinum_academy_android_flutter/ui/shows/widgets/profile_photo.d
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/shows_list.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/top_rated_chip.dart';
 
-final _showsFutureProvider = FutureProvider.autoDispose((ref) async {
+final showsFutureProvider = FutureProvider.autoDispose((ref) async {
   ref.maintainState = true;
 
   final showsRepository = ref.read(showsRepositoryProvider);
@@ -22,7 +22,7 @@ final _isTopRatedProvider = StateProvider((ref) => false);
 
 enum ShowsLayout { column, grid }
 
-final showsLayoutProvider = StateProvider((ref) => ShowsLayout.column);
+final showsLayoutProvider = StateProvider((ref) => ShowsLayout.grid);
 
 class ShowsScreen extends StatefulWidget {
   const ShowsScreen({Key? key}) : super(key: key);
@@ -44,7 +44,7 @@ class _ShowsScreenState extends State<ShowsScreen> with SingleTickerProviderStat
       duration: const Duration(milliseconds: 600),
       vsync: this,
     );
-    _animation = Tween(begin: pi / 2, end: 0.0).animate(_animationController);
+    _animation = Tween(begin: 0.0, end: pi / 2).animate(_animationController);
   }
 
   @override
@@ -54,10 +54,10 @@ class _ShowsScreenState extends State<ShowsScreen> with SingleTickerProviderStat
         onPressed: () {
           if (context.read(showsLayoutProvider).state == ShowsLayout.column) {
             context.read(showsLayoutProvider).state = ShowsLayout.grid;
-            _animationController.forward();
+            _animationController.reverse();
           } else {
             context.read(showsLayoutProvider).state = ShowsLayout.column;
-            _animationController.reverse();
+            _animationController.forward();
           }
         },
         backgroundColor: Theme.of(context).primaryColor,
@@ -97,7 +97,7 @@ class _ShowsScreenState extends State<ShowsScreen> with SingleTickerProviderStat
                 TopRatedChip(
                   onPressed: (isTopRated) {
                     context.read(_isTopRatedProvider).state = isTopRated;
-                    context.refresh(_showsFutureProvider);
+                    context.refresh(showsFutureProvider);
                   },
                 )
               ],
@@ -110,7 +110,7 @@ class _ShowsScreenState extends State<ShowsScreen> with SingleTickerProviderStat
         textTheme: Theme.of(context).textTheme,
         titleTextStyle: Theme.of(context).textTheme.headline6,
       ),
-      body: ShowsList(showsFutureProvider: _showsFutureProvider),
+      body: const ShowsList(),
     );
   }
 

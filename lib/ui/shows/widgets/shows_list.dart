@@ -10,10 +10,7 @@ import 'package:infinum_academy_android_flutter/ui/shows/widgets/show_tile.dart'
 class ShowsList extends ConsumerWidget {
   const ShowsList({
     Key? key,
-    required this.showsFutureProvider,
   }) : super(key: key);
-
-  final AutoDisposeFutureProvider<List<Show>> showsFutureProvider;
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
