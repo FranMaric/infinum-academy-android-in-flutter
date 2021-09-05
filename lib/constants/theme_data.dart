@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 final themeData = ThemeData(
   primaryColor: const Color(0xFF52368C),
+  textSelectionTheme: const TextSelectionThemeData(
+    selectionHandleColor: Colors.white,
+  ),
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.white,
   ),
