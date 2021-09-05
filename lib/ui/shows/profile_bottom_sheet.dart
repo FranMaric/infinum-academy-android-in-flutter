@@ -11,7 +11,7 @@ import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button
 import 'package:infinum_academy_android_flutter/ui/login/login_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/email_text.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/profile_photo.dart';
-import 'package:infinum_academy_android_flutter/extensions/build_context_extenion.dart';
+import 'package:infinum_academy_android_flutter/extensions/build_context_extension.dart';
 
 const horizontalPadding = 24.0;
 

@@ -8,7 +8,7 @@ import 'package:infinum_academy_android_flutter/ui/common/validators/password_va
 import 'package:infinum_academy_android_flutter/ui/common/widgets/colored_text_form_field.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
 import 'package:infinum_academy_android_flutter/ui/login/login_screen.dart';
-import 'package:infinum_academy_android_flutter/extensions/build_context_extenion.dart';
+import 'package:infinum_academy_android_flutter/extensions/build_context_extension.dart';
 
 const horizontalMargin = 20.0;
 

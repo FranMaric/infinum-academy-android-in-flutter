@@ -10,7 +10,7 @@ import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button
 import 'package:infinum_academy_android_flutter/ui/login/widgets/stateful_checkbox_list_tile.dart';
 import 'package:infinum_academy_android_flutter/ui/register/register_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/shows_screen.dart';
-import 'package:infinum_academy_android_flutter/extensions/build_context_extenion.dart';
+import 'package:infinum_academy_android_flutter/extensions/build_context_extension.dart';
 
 const horizontalMargin = 20.0;
 
