@@ -50,66 +50,8 @@ class _ShowsScreenState extends State<ShowsScreen> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (context.read(showsLayoutProvider).state == ShowsLayout.column) {
-            context.read(showsLayoutProvider).state = ShowsLayout.grid;
-            _animationController.reverse();
-          } else {
-            context.read(showsLayoutProvider).state = ShowsLayout.column;
-            _animationController.forward();
-          }
-        },
-        backgroundColor: Theme.of(context).primaryColor,
-        child: AnimatedBuilder(
-          animation: _animation,
-          builder: (context, child) => Transform.rotate(
-            angle: _animation.value,
-            child: child,
-          ),
-          child: SvgPicture.asset(
-            'assets/images/layout_icon.svg',
-            color: Colors.white,
-          ),
-        ),
-      ),
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () => showModalBottomSheet(
-              context: context,
-              builder: (_) => const ProfileBottomSheet(),
-            ),
-            icon: const ProfilePhoto(),
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(75.0),
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Shows',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                TopRatedChip(
-                  onPressed: (isTopRated) {
-                    context.read(_isTopRatedProvider).state = isTopRated;
-                    context.refresh(showsFutureProvider);
-                  },
-                )
-              ],
-            ),
-          ),
-        ),
-        toolbarHeight: 150.0,
-        elevation: 0.0,
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        textTheme: Theme.of(context).textTheme,
-        titleTextStyle: Theme.of(context).textTheme.headline6,
-      ),
+      floatingActionButton: _floatingActionButtonBuilder(context),
+      appBar: _appBarBuilder(context),
       body: const ShowsList(),
     );
   }
@@ -118,5 +60,71 @@ class _ShowsScreenState extends State<ShowsScreen> with SingleTickerProviderStat
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+  AppBar _appBarBuilder(BuildContext context) {
+    return AppBar(
+      actions: [
+        IconButton(
+          onPressed: () => showModalBottomSheet(
+            context: context,
+            builder: (_) => const ProfileBottomSheet(),
+          ),
+          icon: const ProfilePhoto(),
+        ),
+      ],
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(75.0),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Shows',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              TopRatedChip(
+                onPressed: (isTopRated) {
+                  context.read(_isTopRatedProvider).state = isTopRated;
+                  context.refresh(showsFutureProvider);
+                },
+              )
+            ],
+          ),
+        ),
+      ),
+      toolbarHeight: 150.0,
+      elevation: 0.0,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+      textTheme: Theme.of(context).textTheme,
+      titleTextStyle: Theme.of(context).textTheme.headline6,
+    );
+  }
+
+  FloatingActionButton _floatingActionButtonBuilder(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        if (context.read(showsLayoutProvider).state == ShowsLayout.column) {
+          context.read(showsLayoutProvider).state = ShowsLayout.grid;
+          _animationController.reverse();
+        } else {
+          context.read(showsLayoutProvider).state = ShowsLayout.column;
+          _animationController.forward();
+        }
+      },
+      backgroundColor: Theme.of(context).primaryColor,
+      child: AnimatedBuilder(
+        animation: _animation,
+        builder: (context, child) => Transform.rotate(
+          angle: _animation.value,
+          child: child,
+        ),
+        child: SvgPicture.asset(
+          'assets/images/layout_icon.svg',
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 }
