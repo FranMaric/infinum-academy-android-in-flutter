@@ -63,7 +63,7 @@ class ShowsList extends ConsumerWidget {
               mainAxisSpacing: 16.0,
               itemCount: shows.length,
               itemBuilder: (BuildContext context, int index) => ShowTile(
-                show: shows[index],
+                shows[index],
                 showDescription: false,
                 onPressed: () => Navigator.of(context).pushNamed(ShowDetailsScreen.routeName, arguments: shows[index]),
               ),
