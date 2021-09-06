@@ -6,9 +6,9 @@ const elevation = 5.0;
 const borderRadius = 8.0;
 
 class ShowTile extends StatelessWidget {
-  const ShowTile({
+  const ShowTile(
+    this.show, {
     Key? key,
-    required this.show,
     this.onPressed,
     this.showDescription = true,
   }) : super(key: key);

@@ -47,7 +47,7 @@ class ShowsList extends ConsumerWidget {
                 itemBuilder: (BuildContext context, int index) => Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: ShowTile(
-                    show: shows[index],
+                    shows[index],
                     onPressed: () => Navigator.of(context).pushNamed(ShowDetailsScreen.routeName, arguments: shows[index]),
                   ),
                 ),
