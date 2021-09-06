@@ -39,16 +39,36 @@ extension BuildContextExtension on BuildContext {
           );
         }
         return AlertDialog(
-          title: Text(title),
-          content: Text(description),
+          title: Text(
+            title,
+            style: const TextStyle(
+              fontSize: 20,
+            ),
+          ),
+          content: Text(
+            description,
+            style: const TextStyle(
+              fontSize: 15,
+            ),
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: Text(declineText),
+              child: Text(
+                declineText,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: Text(confirmText),
+              child: Text(
+                confirmText,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
             )
           ],
         );
