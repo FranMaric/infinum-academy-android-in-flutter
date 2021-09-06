@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:infinum_academy_android_flutter/models/show.dart';
 import 'package:infinum_academy_android_flutter/services/shows_exception.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/centered_circular_progress_indicator.dart';
 import 'package:infinum_academy_android_flutter/ui/show_details/show_details_screen.dart';
