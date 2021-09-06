@@ -12,21 +12,17 @@ class ShowImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250.0,
-      width: double.infinity,
-      child: CachedNetworkImage(
-        imageUrl: url,
-        fit: BoxFit.fitWidth,
-        progressIndicatorBuilder: (context, url, downloadProgress) => SizedBox(
-          height: 100.0,
-          child: CenteredCircularProgressIndicator(value: downloadProgress.progress),
-        ),
-        errorWidget: (context, url, error) => Container(
-          height: 100.0,
-          alignment: Alignment.center,
-          child: const Icon(Icons.error),
-        ),
+    return CachedNetworkImage(
+      imageUrl: url,
+      fit: BoxFit.fitWidth,
+      progressIndicatorBuilder: (context, url, downloadProgress) => SizedBox(
+        height: 100.0,
+        child: CenteredCircularProgressIndicator(value: downloadProgress.progress),
+      ),
+      errorWidget: (context, url, error) => Container(
+        height: 100.0,
+        alignment: Alignment.center,
+        child: const Icon(Icons.error),
       ),
     );
   }

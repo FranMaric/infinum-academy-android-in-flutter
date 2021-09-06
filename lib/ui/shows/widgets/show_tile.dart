@@ -31,7 +31,12 @@ class ShowTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (show.imageUrl != null) ShowImage(url: show.imageUrl!),
+            if (show.imageUrl != null)
+              SizedBox(
+                height: 250.0,
+                width: double.infinity,
+                child: ShowImage(url: show.imageUrl!),
+              ),
             Padding(
               padding: showDescription
                   ? const EdgeInsets.only(
