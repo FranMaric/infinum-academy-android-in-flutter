@@ -100,4 +100,8 @@ class ApiClient {
 
     return _dio.put('/users', data: formData);
   }
+
+  Future<Response<dynamic>> getReviews(int showId) async {
+    return _dio.get('/shows/$showId/reviews');
+  }
 }

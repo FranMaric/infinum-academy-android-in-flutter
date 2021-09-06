@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/constants/shared_prefs_keys.dart';
+import 'package:infinum_academy_android_flutter/models/review.dart';
 import 'package:infinum_academy_android_flutter/models/show.dart';
 import 'package:infinum_academy_android_flutter/models/user.dart';
 import 'package:infinum_academy_android_flutter/services/api_client.dart';
@@ -34,6 +35,21 @@ class ShowsRepository {
         final shows = List<Map<String, dynamic>>.from(response.data['shows'] as List).map((show) => Show.fromJson(show)).toList();
 
         return shows;
+      }
+    } on DioError catch (dioError) {
+      throw ShowsException.fromDioError(dioError);
+    }
+    return [];
+  }
+
+  Future<List<Review>> getReviews({required int showId}) async {
+    try {
+      final response = await _apiClient.getReviews(showId);
+
+      if (response.statusCode.isSuccessful) {
+        final reviews = List<Map<String, dynamic>>.from(response.data['reviews'] as List).map((review) => Review.fromJson(review)).toList();
+
+        return reviews;
       }
     } on DioError catch (dioError) {
       throw ShowsException.fromDioError(dioError);
