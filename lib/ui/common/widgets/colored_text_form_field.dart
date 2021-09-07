@@ -2,14 +2,6 @@ import 'package:flutter/material.dart';
 
 const defaultColor = Colors.white;
 
-const coloredOutlineInputBorder = OutlineInputBorder(
-  borderSide: BorderSide(
-    color: defaultColor,
-  ),
-);
-
-const coloredTextStyle = TextStyle(color: defaultColor);
-
 class ColoredTextFormField extends StatefulWidget {
   const ColoredTextFormField({
     Key? key,
@@ -43,10 +35,21 @@ class ColoredTextFormField extends StatefulWidget {
 class _ColoredTextFormFieldState extends State<ColoredTextFormField> {
   late bool _passwordVisible;
 
+  late final OutlineInputBorder coloredOutlineInputBorder;
+
+  late final TextStyle coloredTextStyle;
+
   @override
   void initState() {
     super.initState();
     _passwordVisible = widget.obscureText;
+
+    coloredOutlineInputBorder = OutlineInputBorder(
+      borderSide: BorderSide(
+        color: widget.color,
+      ),
+    );
+    coloredTextStyle = TextStyle(color: widget.color);
   }
 
   @override
