@@ -36,6 +36,7 @@ class ReviewsList extends ConsumerWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => ReviewTile(
               reviews[index],
+              hasBottomDivider: index != reviews.length - 1,
             ),
           );
         },

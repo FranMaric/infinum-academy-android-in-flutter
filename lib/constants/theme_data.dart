@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+const _primaryColor = Color(0xFF52368C);
 final themeData = ThemeData(
-  primaryColor: const Color(0xFF52368C),
+  primaryColor: _primaryColor,
   textSelectionTheme: const TextSelectionThemeData(
     selectionHandleColor: Colors.white,
   ),
@@ -29,6 +30,13 @@ final themeData = ThemeData(
       letterSpacing: 0.15,
     ),
 
+    bodyText1: TextStyle(
+      fontSize: 15.0,
+      color: Colors.black,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.19,
+    ),
+
     /// Used for [ShowTile] description
     bodyText2: TextStyle(
       fontSize: 14.0,
@@ -41,6 +49,12 @@ final themeData = ThemeData(
     caption: TextStyle(
       fontSize: 24.0,
       color: Colors.black,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.19,
+    ),
+    subtitle2: TextStyle(
+      fontSize: 15.0,
+      color: _primaryColor,
       fontWeight: FontWeight.w500,
       letterSpacing: 0.19,
     ),
