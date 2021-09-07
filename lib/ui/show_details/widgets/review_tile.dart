@@ -45,7 +45,7 @@ class ReviewTile extends StatelessWidget {
                 style: Theme.of(context).textTheme.subtitle2,
               ),
               const SizedBox(width: 1.0),
-              SvgPicture.asset('assets/images/star_icon.svg'),
+              SvgPicture.asset('assets/images/full_star_icon.svg'),
             ],
           ),
           const SizedBox(height: 17.0),
