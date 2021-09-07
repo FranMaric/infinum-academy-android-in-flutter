@@ -46,6 +46,7 @@ class ShowDetailsScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (show.imageUrl != null)
                         Padding(
@@ -55,7 +56,17 @@ class ShowDetailsScreen extends StatelessWidget {
                             child: ShowImage(url: show.imageUrl!),
                           ),
                         ),
-                      if (show.description != null) Text(show.description!),
+                      if (show.description != null)
+                        Text(
+                          show.description!,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      const SizedBox(height: 24.0),
+                      Text(
+                        'Reviews',
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                      const SizedBox(height: 16.0),
                       ReviewsList(showId: int.parse(show.id)),
                     ],
                   ),

@@ -58,6 +58,12 @@ final themeData = ThemeData(
       fontWeight: FontWeight.w500,
       letterSpacing: 0.19,
     ),
+    headline5: TextStyle(
+      fontSize: 24.0,
+      color: Colors.black,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.26,
+    ),
   ),
   buttonTheme: const ButtonThemeData(
     buttonColor: Color(0xff00adb5),
