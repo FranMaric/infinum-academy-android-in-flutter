@@ -1,25 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:infinum_academy_android_flutter/models/review.dart';
 import 'package:infinum_academy_android_flutter/models/show.dart';
-import 'package:infinum_academy_android_flutter/services/shows_repository.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
+import 'package:infinum_academy_android_flutter/ui/show_details/add_review_bottom_sheet.dart';
 import 'package:infinum_academy_android_flutter/ui/show_details/widgets/reviews_list.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/show_image.dart';
-
-final reviewsFutureProvider = FutureProvider.autoDispose((ref) async {
-  ref.maintainState = true; // remove maybe?
-
-  final showId = ref.watch(_showIdProvider).state;
-  if (showId == null) return <Review>[];
-
-  final showsRepository = ref.read(showsRepositoryProvider);
-  final reviews = await showsRepository.getReviews(showId: showId);
-
-  return reviews;
-});
-
-final _showIdProvider = StateProvider<int?>((ref) => 106);
 
 class ShowDetailsScreen extends StatelessWidget {
   const ShowDetailsScreen({Key? key, required this.show}) : super(key: key);
@@ -30,9 +14,7 @@ class ShowDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Future.delayed(const Duration(seconds: 2)).then((value) {
     //   context.read(_showIdProvider).state = int.parse(show.id);
-    // });
 
     return Scaffold(
       body: Column(
@@ -60,9 +42,9 @@ class ShowDetailsScreen extends StatelessWidget {
                   ),
                 ),
               ],
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: SingleChildScrollView(
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     children: [
                       if (show.imageUrl != null)
@@ -74,7 +56,7 @@ class ShowDetailsScreen extends StatelessWidget {
                           ),
                         ),
                       if (show.description != null) Text(show.description!),
-                      const ReviewsList(),
+                      ReviewsList(showId: int.parse(show.id)),
                     ],
                   ),
                 ),
@@ -88,9 +70,10 @@ class ShowDetailsScreen extends StatelessWidget {
               title: 'Write a Review',
               enabledTitleColor: Colors.white,
               enabledBackgroundColor: Theme.of(context).primaryColor,
-              onPressed: () {
-                //TODO: open review bottom sheet
-              },
+              onPressed: () => showModalBottomSheet(
+                context: context,
+                builder: (_) => const AddReviewBottomSheet(),
+              ),
             ),
           )
         ],
