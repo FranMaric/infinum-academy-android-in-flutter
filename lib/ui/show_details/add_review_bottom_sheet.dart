@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infinum_academy_android_flutter/models/new_review.dart';
+import 'package:infinum_academy_android_flutter/ui/common/widgets/colored_text_form_field.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
-import 'package:infinum_academy_android_flutter/ui/shows/widgets/email_text.dart';
-import 'package:infinum_academy_android_flutter/ui/shows/widgets/profile_photo.dart';
+import 'package:infinum_academy_android_flutter/ui/show_details/widgets/rating_bar.dart';
 
-const horizontalPadding = 24.0;
-
-final _logoutButtonStateProvider = StateProvider((ref) => ButtonState.enabled);
-final _changeProfilePhotoButtonStateProvider = StateProvider((ref) => ButtonState.enabled);
+final _submitButtonStateProvider = StateProvider((ref) => ButtonState.enabled);
 
 class AddReviewBottomSheet extends StatelessWidget {
-  const AddReviewBottomSheet({Key? key}) : super(key: key);
+  AddReviewBottomSheet({Key? key}) : super(key: key) {
+    _commentController = TextEditingController();
+    _ratingController = RatingController();
+  }
+
+  late final TextEditingController _commentController;
+  late final RatingController _ratingController;
+
+  void _submitReview() {
+    final newReview = NewReview(rating: _ratingController.rating, comment: _commentController.text);
+
+    //TODO: submit new review
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +28,7 @@ class AddReviewBottomSheet extends StatelessWidget {
       color: const Color(0xFF737373),
       child: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
@@ -29,30 +39,36 @@ class AddReviewBottomSheet extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 44),
-              const ProfilePhoto(
-                width: 95.0,
-                height: 95.0,
-                borderWidth: 2.0,
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 40.0,
+                    ),
+                    child: Text(
+                      'Reviews',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 29),
-              const EmailText(),
-              const SizedBox(height: 62),
-              LoadingButton(
-                title: 'Change profile photo',
-                buttonStateProvider: _changeProfilePhotoButtonStateProvider,
-                disabledBackgroundColor: Colors.white,
-                borderWidth: 2.0,
-                onPressed: () {},
+              RatingBar(
+                ratingController: _ratingController,
+              ),
+              const SizedBox(height: 16),
+              ColoredTextFormField(
+                labelText: 'Comment',
+                controller: _commentController,
+                color: Theme.of(context).primaryColor,
               ),
               const SizedBox(height: 16),
               LoadingButton(
-                title: 'Logout',
-                buttonStateProvider: _logoutButtonStateProvider,
+                title: 'Submit',
+                buttonStateProvider: _submitButtonStateProvider,
                 enabledBackgroundColor: Theme.of(context).primaryColor,
                 enabledTitleColor: Colors.white,
                 loadingIndicatorColor: Colors.white,
-                onPressed: () {},
+                onPressed: _submitReview,
               ),
               const SizedBox(height: 25),
             ],
