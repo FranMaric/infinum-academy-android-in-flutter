@@ -53,9 +53,11 @@ class AddReviewBottomSheet extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline5,
                       ),
                     ),
-                    child: Text(
-                      'Reviews',
-                      style: Theme.of(context).textTheme.headline5,
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(
+                        Icons.close,
+                      ),
                     ),
                   ],
                 ),

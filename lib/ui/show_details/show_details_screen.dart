@@ -83,6 +83,7 @@ class ShowDetailsScreen extends StatelessWidget {
               enabledBackgroundColor: Theme.of(context).primaryColor,
               onPressed: () => showModalBottomSheet(
                 context: context,
+                isScrollControlled: true,
                 builder: (_) => AddReviewBottomSheet(),
               ),
             ),
