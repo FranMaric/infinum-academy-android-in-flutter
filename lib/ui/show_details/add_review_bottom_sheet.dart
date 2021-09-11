@@ -26,52 +26,60 @@ class AddReviewBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: const Color(0xFF737373),
-      child: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 40.0,
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 40.0,
+                      ),
+                      child: Text(
+                        'Write a review',
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
                     ),
                     child: Text(
                       'Reviews',
                       style: Theme.of(context).textTheme.headline5,
                     ),
-                  ),
-                ],
-              ),
-              RatingBar(
-                ratingController: _ratingController,
-              ),
-              const SizedBox(height: 16),
-              ColoredTextFormField(
-                labelText: 'Comment',
-                controller: _commentController,
-                color: Theme.of(context).primaryColor,
-              ),
-              const SizedBox(height: 16),
-              LoadingButton(
-                title: 'Submit',
-                buttonStateProvider: _submitButtonStateProvider,
-                enabledBackgroundColor: Theme.of(context).primaryColor,
-                enabledTitleColor: Colors.white,
-                loadingIndicatorColor: Colors.white,
-                onPressed: _submitReview,
-              ),
-              const SizedBox(height: 25),
-            ],
+                  ],
+                ),
+                RatingBar(
+                  ratingController: _ratingController,
+                ),
+                const SizedBox(height: 16),
+                ColoredTextFormField(
+                  labelText: 'Comment',
+                  controller: _commentController,
+                  color: Theme.of(context).primaryColor,
+                ),
+                const SizedBox(height: 16),
+                LoadingButton(
+                  title: 'Submit',
+                  buttonStateProvider: _submitButtonStateProvider,
+                  enabledBackgroundColor: Theme.of(context).primaryColor,
+                  enabledTitleColor: Colors.white,
+                  loadingIndicatorColor: Colors.white,
+                  onPressed: _submitReview,
+                ),
+                const SizedBox(height: 25),
+              ],
+            ),
           ),
         ),
       ),
