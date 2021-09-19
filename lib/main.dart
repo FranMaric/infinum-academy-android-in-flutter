@@ -28,7 +28,7 @@ class ShowsApp extends StatelessWidget {
       title: 'Shows',
       theme: themeData,
       initialRoute: SplashScreen.routeName,
-      onGenerateRoute: RouteGenerator.generateRoute,
+      onGenerateRoute: generateRoute,
     );
   }
 }
