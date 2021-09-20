@@ -15,6 +15,7 @@ class ColoredTextFormField extends StatefulWidget {
     this.onSaved,
     this.controller,
     this.margin,
+    this.maxLines,
   }) : super(key: key);
 
   final bool obscureText;
@@ -27,6 +28,7 @@ class ColoredTextFormField extends StatefulWidget {
   final void Function(String?)? onSaved;
   final TextEditingController? controller;
   final EdgeInsets? margin;
+  final int? maxLines;
 
   @override
   _ColoredTextFormFieldState createState() => _ColoredTextFormFieldState();
@@ -57,6 +59,7 @@ class _ColoredTextFormFieldState extends State<ColoredTextFormField> {
     return Container(
       margin: widget.margin,
       child: TextFormField(
+        maxLines: widget.maxLines,
         obscureText: _passwordVisible,
         enableSuggestions: !widget.obscureText,
         autocorrect: !widget.obscureText,
