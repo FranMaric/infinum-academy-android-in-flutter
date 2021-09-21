@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/constants/shared_prefs_keys.dart';
+import 'package:infinum_academy_android_flutter/models/new_review.dart';
 import 'package:infinum_academy_android_flutter/models/review.dart';
 import 'package:infinum_academy_android_flutter/models/show.dart';
 import 'package:infinum_academy_android_flutter/models/user.dart';
@@ -122,5 +123,27 @@ class ShowsRepository {
         uploadProfilePhoto(file);
       } catch (_) {}
     }
+  }
+
+  Future<void> postReview(NewReview newReview) async {
+    try {
+      final hasInternetConnection = await _apiClient.hasInternetConnection();
+
+      if (!hasInternetConnection) {
+        _saveNewReviewToDB(newReview);
+      }
+
+      final response = await _apiClient.postReview(newReview);
+
+      if (!response.statusCode.isSuccessful) {
+        _saveNewReviewToDB(newReview);
+      }
+    } on DioError catch (dioError) {
+      throw ShowsException.fromDioError(dioError);
+    }
+  }
+
+  void _saveNewReviewToDB(NewReview newReview) {
+    // TODO: make it happen
   }
 }
