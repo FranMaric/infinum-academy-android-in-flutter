@@ -7,23 +7,26 @@ import 'package:infinum_academy_android_flutter/ui/show_details/widgets/rating_b
 
 final _submitButtonStateProvider = StateProvider((ref) => ButtonState.enabled);
 
-class AddReviewBottomSheet extends StatelessWidget {
-  AddReviewBottomSheet({Key? key}) : super(key: key) {
-    _commentController = TextEditingController();
-    _ratingController = RatingController();
-  }
+class AddReviewBottomSheet extends StatefulWidget {
+  const AddReviewBottomSheet({Key? key}) : super(key: key);
 
-  late final TextEditingController _commentController;
-  late final RatingController _ratingController;
+  @override
+  State<AddReviewBottomSheet> createState() => _AddReviewBottomSheetState();
+}
 
-  void _submitReview() {
-    final newReview = NewReview(rating: _ratingController.rating, comment: _commentController.text);
+class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
+  final TextEditingController _commentController = TextEditingController();
 
-    //TODO: submit new review
-  }
+  final RatingController _ratingController = RatingController();
 
   @override
   Widget build(BuildContext context) {
+    void _submitReview() {
+      final newReview = NewReview(rating: _ratingController.rating.round(), comment: _commentController.text);
+
+      //TODO: submit new review
+    }
+
     return Container(
       color: const Color(0xFF737373),
       child: Container(
@@ -40,6 +43,7 @@ class AddReviewBottomSheet extends StatelessWidget {
             padding: MediaQuery.of(context).viewInsets,
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,9 +70,12 @@ class AddReviewBottomSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 ColoredTextFormField(
+                  key: const ValueKey('comment'),
                   labelText: 'Comment',
                   controller: _commentController,
                   color: Theme.of(context).primaryColor,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 4,
                 ),
                 const SizedBox(height: 16),
                 LoadingButton(
