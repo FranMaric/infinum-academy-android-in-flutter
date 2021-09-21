@@ -8,9 +8,9 @@ part of 'new_review.dart';
 
 _$_NewReview _$_$_NewReviewFromJson(Map<String, dynamic> json) {
   return _$_NewReview(
-    json['rating'] as int,
-    json['comment'] as String,
-    json['show_id'] as int,
+    rating: json['rating'] as int,
+    comment: json['comment'] as String,
+    showId: json['show_id'] as int,
   );
 }
 

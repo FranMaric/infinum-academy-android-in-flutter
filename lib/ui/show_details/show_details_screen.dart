@@ -84,7 +84,7 @@ class ShowDetailsScreen extends StatelessWidget {
               onPressed: () => showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                builder: (_) => AddReviewBottomSheet(),
+                builder: (_) => AddReviewBottomSheet(showId: int.parse(show.id)),
               ),
             ),
           )

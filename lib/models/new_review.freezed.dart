@@ -21,11 +21,13 @@ class _$NewReviewTearOff {
   const _$NewReviewTearOff();
 
   _NewReview call(
-      int rating, String comment, @JsonKey(name: 'show_id') int showId) {
+      {required int rating,
+      required String comment,
+      @JsonKey(name: 'show_id') required int showId}) {
     return _NewReview(
-      rating,
-      comment,
-      showId,
+      rating: rating,
+      comment: comment,
+      showId: showId,
     );
   }
 
@@ -113,15 +115,15 @@ class __$NewReviewCopyWithImpl<$Res> extends _$NewReviewCopyWithImpl<$Res>
     Object? showId = freezed,
   }) {
     return _then(_NewReview(
-      rating == freezed
+      rating: rating == freezed
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as int,
-      comment == freezed
+      comment: comment == freezed
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String,
-      showId == freezed
+      showId: showId == freezed
           ? _value.showId
           : showId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -133,7 +135,9 @@ class __$NewReviewCopyWithImpl<$Res> extends _$NewReviewCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_NewReview with DiagnosticableTreeMixin implements _NewReview {
   const _$_NewReview(
-      this.rating, this.comment, @JsonKey(name: 'show_id') this.showId);
+      {required this.rating,
+      required this.comment,
+      @JsonKey(name: 'show_id') required this.showId});
 
   factory _$_NewReview.fromJson(Map<String, dynamic> json) =>
       _$_$_NewReviewFromJson(json);
@@ -194,8 +198,9 @@ class _$_NewReview with DiagnosticableTreeMixin implements _NewReview {
 
 abstract class _NewReview implements NewReview {
   const factory _NewReview(
-          int rating, String comment, @JsonKey(name: 'show_id') int showId) =
-      _$_NewReview;
+      {required int rating,
+      required String comment,
+      @JsonKey(name: 'show_id') required int showId}) = _$_NewReview;
 
   factory _NewReview.fromJson(Map<String, dynamic> json) =
       _$_NewReview.fromJson;

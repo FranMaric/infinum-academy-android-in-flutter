@@ -8,7 +8,9 @@ import 'package:infinum_academy_android_flutter/ui/show_details/widgets/rating_b
 final _submitButtonStateProvider = StateProvider((ref) => ButtonState.enabled);
 
 class AddReviewBottomSheet extends StatefulWidget {
-  const AddReviewBottomSheet({Key? key}) : super(key: key);
+  const AddReviewBottomSheet({Key? key, required this.showId}) : super(key: key);
+
+  final int showId;
 
   @override
   State<AddReviewBottomSheet> createState() => _AddReviewBottomSheetState();
@@ -22,7 +24,7 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
   @override
   Widget build(BuildContext context) {
     void _submitReview() {
-      final newReview = NewReview(rating: _ratingController.rating.round(), comment: _commentController.text);
+      final newReview = NewReview(rating: _ratingController.rating.round(), comment: _commentController.text, showId: widget.showId);
 
       //TODO: submit new review
     }
