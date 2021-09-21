@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infinum_academy_android_flutter/models/reviews_info.dart';
 import 'package:infinum_academy_android_flutter/models/show.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
 import 'package:infinum_academy_android_flutter/ui/show_details/add_review_bottom_sheet.dart';
+import 'package:infinum_academy_android_flutter/ui/show_details/reviews_notifier.dart';
+import 'package:infinum_academy_android_flutter/ui/show_details/widgets/rating_bar.dart';
 import 'package:infinum_academy_android_flutter/ui/show_details/widgets/reviews_list.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/show_image.dart';
 
+final reviewsNotifierProvider = ChangeNotifierProvider((ref) => ReviewsNotifier());
+
+final reviewsInfoProvider = Provider((ref) {
+  final reviews = ref.watch(reviewsNotifierProvider).reviews;
+  final averageRating = double.parse((reviews.map((review) => review.rating).reduce((a, b) => a + b) / reviews.length).toStringAsFixed(2));
+
+  return ReviewsInfo(reviewsCount: reviews.length, averageRating: averageRating);
+});
+
 class ShowDetailsScreen extends StatelessWidget {
-  const ShowDetailsScreen({Key? key, required this.show}) : super(key: key);
+  ShowDetailsScreen({Key? key, required this.show}) : super(key: key);
 
   static const routeName = '/details';
 
   final Show show;
 
+  final RatingController _ratingController = RatingController();
+
   @override
   Widget build(BuildContext context) {
-    //   context.read(_showIdProvider).state = int.parse(show.id);
+    context.read(reviewsNotifierProvider).getReviews(int.parse(show.id), context);
 
     return Scaffold(
       body: Column(
@@ -67,7 +82,29 @@ class ShowDetailsScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline5,
                       ),
                       const SizedBox(height: 16.0),
-                      ReviewsList(showId: int.parse(show.id)),
+                      Consumer(
+                        builder: (context, watch, child) {
+                          final reviewsInfo = watch(reviewsInfoProvider);
+
+                          _ratingController.rating = reviewsInfo.averageRating;
+
+                          return Text(
+                            '${reviewsInfo.reviewsCount} REVIEWS, ${reviewsInfo.averageRating} AVERAGE',
+                            style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                                  letterSpacing: 0.15,
+                                  color: const Color(0xFF999999),
+                                ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 6.0),
+                      RatingBar(
+                        ratingController: _ratingController,
+                        ignoreGestures: true,
+                        itemSize: 23,
+                        lineWidth: 2,
+                      ),
+                      const ReviewsList(),
                     ],
                   ),
                 ),
