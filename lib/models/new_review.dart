@@ -6,4 +6,7 @@ class NewReview {
 
   final int rating;
   final String comment;
+
+  @override
+  String toString() => 'NewReview(rating: $rating, comment: $comment )';
 }
