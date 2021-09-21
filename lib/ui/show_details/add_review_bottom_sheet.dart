@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/models/new_review.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/colored_text_form_field.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
+import 'package:infinum_academy_android_flutter/ui/show_details/show_details_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/show_details/widgets/rating_bar.dart';
 
 final _submitButtonStateProvider = StateProvider((ref) => ButtonState.enabled);
@@ -26,7 +27,9 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
     void _submitReview() {
       final newReview = NewReview(rating: _ratingController.rating.round(), comment: _commentController.text, showId: widget.showId);
 
-      //TODO: submit new review
+      context.read(reviewsNotifierProvider).addReview(newReview, context);
+
+      Navigator.pop(context);
     }
 
     return Container(
