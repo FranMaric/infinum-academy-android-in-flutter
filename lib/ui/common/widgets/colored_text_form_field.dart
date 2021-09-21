@@ -15,7 +15,7 @@ class ColoredTextFormField extends StatefulWidget {
     this.onSaved,
     this.controller,
     this.margin,
-    this.maxLines,
+    this.maxLines = 1,
   }) : super(key: key);
 
   final bool obscureText;
