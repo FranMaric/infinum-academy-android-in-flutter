@@ -22,19 +22,19 @@ class _$ShowTearOff {
   const _$ShowTearOff();
 
   _Show call(
-      String id,
-      @JsonKey(name: 'average_rating') double? averageRating,
-      String? description,
-      @JsonKey(name: 'image_url') String? imageUrl,
-      @JsonKey(name: 'no_of_reviews') int noOfReviews,
-      String title) {
+      {required String id,
+      @JsonKey(name: 'average_rating') required double? averageRating,
+      required String? description,
+      @JsonKey(name: 'image_url') required String? imageUrl,
+      @JsonKey(name: 'no_of_reviews') required int noOfReviews,
+      required String title}) {
     return _Show(
-      id,
-      averageRating,
-      description,
-      imageUrl,
-      noOfReviews,
-      title,
+      id: id,
+      averageRating: averageRating,
+      description: description,
+      imageUrl: imageUrl,
+      noOfReviews: noOfReviews,
+      title: title,
     );
   }
 
@@ -155,27 +155,27 @@ class __$ShowCopyWithImpl<$Res> extends _$ShowCopyWithImpl<$Res>
     Object? title = freezed,
   }) {
     return _then(_Show(
-      id == freezed
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      averageRating == freezed
+      averageRating: averageRating == freezed
           ? _value.averageRating
           : averageRating // ignore: cast_nullable_to_non_nullable
               as double?,
-      description == freezed
+      description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      imageUrl == freezed
+      imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      noOfReviews == freezed
+      noOfReviews: noOfReviews == freezed
           ? _value.noOfReviews
           : noOfReviews // ignore: cast_nullable_to_non_nullable
               as int,
-      title == freezed
+      title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
@@ -187,12 +187,12 @@ class __$ShowCopyWithImpl<$Res> extends _$ShowCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Show with DiagnosticableTreeMixin implements _Show {
   const _$_Show(
-      this.id,
-      @JsonKey(name: 'average_rating') this.averageRating,
-      this.description,
-      @JsonKey(name: 'image_url') this.imageUrl,
-      @JsonKey(name: 'no_of_reviews') this.noOfReviews,
-      this.title);
+      {required this.id,
+      @JsonKey(name: 'average_rating') required this.averageRating,
+      required this.description,
+      @JsonKey(name: 'image_url') required this.imageUrl,
+      @JsonKey(name: 'no_of_reviews') required this.noOfReviews,
+      required this.title});
 
   factory _$_Show.fromJson(Map<String, dynamic> json) => _$$_ShowFromJson(json);
 
@@ -275,12 +275,12 @@ class _$_Show with DiagnosticableTreeMixin implements _Show {
 
 abstract class _Show implements Show {
   const factory _Show(
-      String id,
-      @JsonKey(name: 'average_rating') double? averageRating,
-      String? description,
-      @JsonKey(name: 'image_url') String? imageUrl,
-      @JsonKey(name: 'no_of_reviews') int noOfReviews,
-      String title) = _$_Show;
+      {required String id,
+      @JsonKey(name: 'average_rating') required double? averageRating,
+      required String? description,
+      @JsonKey(name: 'image_url') required String? imageUrl,
+      @JsonKey(name: 'no_of_reviews') required int noOfReviews,
+      required String title}) = _$_Show;
 
   factory _Show.fromJson(Map<String, dynamic> json) = _$_Show.fromJson;
 

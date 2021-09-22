@@ -21,14 +21,14 @@ class ReviewsNotifier extends ChangeNotifier {
     _reviews.insert(
       0,
       Review(
-        'none',
-        newReview.comment,
-        newReview.rating,
-        newReview.showId,
-        User(
-          '',
-          prefs.getString(prefsEmailKey) ?? '',
-          prefs.getString(prefsProfilePhotoUrlKey),
+        id: 'none',
+        comment: newReview.comment,
+        rating: newReview.rating,
+        showId: newReview.showId,
+        user: User(
+          id: '',
+          email: prefs.getString(prefsEmailKey) ?? '',
+          imageUrl: prefs.getString(prefsProfilePhotoUrlKey),
         ),
       ),
     );

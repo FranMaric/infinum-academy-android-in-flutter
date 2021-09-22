@@ -8,10 +8,10 @@ part 'user.g.dart';
 @freezed
 @immutable
 abstract class User with _$User {
-  const factory User(
-    String id,
-    String email,
-    @JsonKey(name: 'image_url') String? imageUrl,
-  ) = _User;
+  const factory User({
+    required String id,
+    required String email,
+    @JsonKey(name: 'image_url') required String? imageUrl,
+  }) = _User;
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

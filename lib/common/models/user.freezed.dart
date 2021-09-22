@@ -22,11 +22,13 @@ class _$UserTearOff {
   const _$UserTearOff();
 
   _User call(
-      String id, String email, @JsonKey(name: 'image_url') String? imageUrl) {
+      {required String id,
+      required String email,
+      @JsonKey(name: 'image_url') required String? imageUrl}) {
     return _User(
-      id,
-      email,
-      imageUrl,
+      id: id,
+      email: email,
+      imageUrl: imageUrl,
     );
   }
 
@@ -114,15 +116,15 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? imageUrl = freezed,
   }) {
     return _then(_User(
-      id == freezed
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      email == freezed
+      email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl == freezed
+      imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -133,7 +135,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_User with DiagnosticableTreeMixin implements _User {
-  const _$_User(this.id, this.email, @JsonKey(name: 'image_url') this.imageUrl);
+  const _$_User(
+      {required this.id,
+      required this.email,
+      @JsonKey(name: 'image_url') required this.imageUrl});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -192,8 +197,10 @@ class _$_User with DiagnosticableTreeMixin implements _User {
 }
 
 abstract class _User implements User {
-  const factory _User(String id, String email,
-      @JsonKey(name: 'image_url') String? imageUrl) = _$_User;
+  const factory _User(
+      {required String id,
+      required String email,
+      @JsonKey(name: 'image_url') required String? imageUrl}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 

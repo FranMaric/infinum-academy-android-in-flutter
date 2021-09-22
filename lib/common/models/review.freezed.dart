@@ -21,14 +21,18 @@ Review _$ReviewFromJson(Map<String, dynamic> json) {
 class _$ReviewTearOff {
   const _$ReviewTearOff();
 
-  _Review call(String id, String comment, int rating,
-      @JsonKey(name: 'show_id') int showId, User user) {
+  _Review call(
+      {required String id,
+      required String comment,
+      required int rating,
+      @JsonKey(name: 'show_id') required int showId,
+      required User user}) {
     return _Review(
-      id,
-      comment,
-      rating,
-      showId,
-      user,
+      id: id,
+      comment: comment,
+      rating: rating,
+      showId: showId,
+      user: user,
     );
   }
 
@@ -150,23 +154,23 @@ class __$ReviewCopyWithImpl<$Res> extends _$ReviewCopyWithImpl<$Res>
     Object? user = freezed,
   }) {
     return _then(_Review(
-      id == freezed
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      comment == freezed
+      comment: comment == freezed
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String,
-      rating == freezed
+      rating: rating == freezed
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as int,
-      showId == freezed
+      showId: showId == freezed
           ? _value.showId
           : showId // ignore: cast_nullable_to_non_nullable
               as int,
-      user == freezed
+      user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
@@ -177,8 +181,12 @@ class __$ReviewCopyWithImpl<$Res> extends _$ReviewCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Review with DiagnosticableTreeMixin implements _Review {
-  const _$_Review(this.id, this.comment, this.rating,
-      @JsonKey(name: 'show_id') this.showId, this.user);
+  const _$_Review(
+      {required this.id,
+      required this.comment,
+      required this.rating,
+      @JsonKey(name: 'show_id') required this.showId,
+      required this.user});
 
   factory _$_Review.fromJson(Map<String, dynamic> json) =>
       _$$_ReviewFromJson(json);
@@ -250,8 +258,12 @@ class _$_Review with DiagnosticableTreeMixin implements _Review {
 }
 
 abstract class _Review implements Review {
-  const factory _Review(String id, String comment, int rating,
-      @JsonKey(name: 'show_id') int showId, User user) = _$_Review;
+  const factory _Review(
+      {required String id,
+      required String comment,
+      required int rating,
+      @JsonKey(name: 'show_id') required int showId,
+      required User user}) = _$_Review;
 
   factory _Review.fromJson(Map<String, dynamic> json) = _$_Review.fromJson;
 

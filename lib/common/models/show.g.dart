@@ -7,12 +7,12 @@ part of 'show.dart';
 // **************************************************************************
 
 _$_Show _$$_ShowFromJson(Map<String, dynamic> json) => _$_Show(
-      json['id'] as String,
-      (json['average_rating'] as num?)?.toDouble(),
-      json['description'] as String?,
-      json['image_url'] as String?,
-      json['no_of_reviews'] as int,
-      json['title'] as String,
+      id: json['id'] as String,
+      averageRating: (json['average_rating'] as num?)?.toDouble(),
+      description: json['description'] as String?,
+      imageUrl: json['image_url'] as String?,
+      noOfReviews: json['no_of_reviews'] as int,
+      title: json['title'] as String,
     );
 
 Map<String, dynamic> _$$_ShowToJson(_$_Show instance) => <String, dynamic>{
