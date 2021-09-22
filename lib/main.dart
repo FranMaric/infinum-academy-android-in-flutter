@@ -1,9 +1,9 @@
 import 'package:alice/alice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:infinum_academy_android_flutter/services/api_client.dart';
-import 'package:infinum_academy_android_flutter/services/authentication_client.dart';
-import 'package:infinum_academy_android_flutter/services/shows_repository.dart';
+import 'package:infinum_academy_android_flutter/source_remote/api_client.dart';
+import 'package:infinum_academy_android_flutter/domain/authentication_client.dart';
+import 'package:infinum_academy_android_flutter/domain/shows_repository.dart';
 import 'package:infinum_academy_android_flutter/ui/splash/splash_screen.dart';
 import 'constants/theme_data.dart';
 import 'constants/route_generator.dart';

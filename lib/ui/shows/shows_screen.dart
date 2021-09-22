@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:infinum_academy_android_flutter/services/shows_repository.dart';
+import 'package:infinum_academy_android_flutter/domain/shows_repository.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/profile_bottom_sheet.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/profile_photo.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/shows_list.dart';

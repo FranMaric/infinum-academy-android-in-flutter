@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:infinum_academy_android_flutter/constants/shared_prefs_keys.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_prefs_keys.dart';
 import 'package:infinum_academy_android_flutter/models/new_review.dart';
 import 'package:infinum_academy_android_flutter/models/review.dart';
 import 'package:infinum_academy_android_flutter/models/user.dart';
-import 'package:infinum_academy_android_flutter/services/shows_repository.dart';
+import 'package:infinum_academy_android_flutter/domain/shows_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReviewsNotifier extends ChangeNotifier {

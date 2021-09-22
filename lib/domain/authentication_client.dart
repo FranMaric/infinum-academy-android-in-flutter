@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/extensions/nullable_int_extension.dart';
-import 'package:infinum_academy_android_flutter/constants/shared_prefs_keys.dart';
-import 'package:infinum_academy_android_flutter/services/api_client.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_prefs_keys.dart';
+import 'package:infinum_academy_android_flutter/source_remote/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final authProvider = Provider((ref) => AuthenticationClient());
