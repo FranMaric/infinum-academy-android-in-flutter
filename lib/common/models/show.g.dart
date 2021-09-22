@@ -6,18 +6,16 @@ part of 'show.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Show _$_$_ShowFromJson(Map<String, dynamic> json) {
-  return _$_Show(
-    json['id'] as String,
-    (json['average_rating'] as num?)?.toDouble(),
-    json['description'] as String?,
-    json['image_url'] as String?,
-    json['no_of_reviews'] as int,
-    json['title'] as String,
-  );
-}
+_$_Show _$$_ShowFromJson(Map<String, dynamic> json) => _$_Show(
+      json['id'] as String,
+      (json['average_rating'] as num?)?.toDouble(),
+      json['description'] as String?,
+      json['image_url'] as String?,
+      json['no_of_reviews'] as int,
+      json['title'] as String,
+    );
 
-Map<String, dynamic> _$_$_ShowToJson(_$_Show instance) => <String, dynamic>{
+Map<String, dynamic> _$$_ShowToJson(_$_Show instance) => <String, dynamic>{
       'id': instance.id,
       'average_rating': instance.averageRating,
       'description': instance.description,
