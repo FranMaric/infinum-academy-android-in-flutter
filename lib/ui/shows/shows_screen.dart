@@ -12,8 +12,10 @@ import 'package:infinum_academy_android_flutter/ui/shows/widgets/top_rated_chip.
 final showsFutureProvider = FutureProvider.autoDispose((ref) async {
   ref.maintainState = true;
 
-  final showsRepository = ref.read(showsRepositoryProvider);
-  final shows = await showsRepository.getShows(isTopRated: ref.read(_isTopRatedProvider).state);
+  final showsRepository = ref.watch(showsRepositoryProvider);
+  final isTopRated = ref.watch(_isTopRatedProvider).state;
+
+  final shows = await showsRepository.getShows(isTopRated: isTopRated);
 
   return shows;
 });
@@ -85,10 +87,7 @@ class _ShowsScreenState extends State<ShowsScreen> with SingleTickerProviderStat
                 style: Theme.of(context).textTheme.headline6,
               ),
               TopRatedChip(
-                onPressed: (isTopRated) {
-                  context.read(_isTopRatedProvider).state = isTopRated;
-                  context.refresh(showsFutureProvider);
-                },
+                onPressed: (isTopRated) => context.read(_isTopRatedProvider).state = isTopRated,
               )
             ],
           ),
