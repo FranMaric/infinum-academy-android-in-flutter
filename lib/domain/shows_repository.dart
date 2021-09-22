@@ -4,13 +4,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/source_local/shared_prefs_keys.dart';
 import 'package:infinum_academy_android_flutter/common/models/new_review.dart';
-import 'package:infinum_academy_android_flutter/common/models/review.dart';
+import 'package:infinum_academy_android_flutter/common/models/review.dart' show Review;
 import 'package:infinum_academy_android_flutter/common/models/show.dart';
 import 'package:infinum_academy_android_flutter/common/models/user.dart';
 import 'package:infinum_academy_android_flutter/source_remote/api_client.dart';
 import 'package:infinum_academy_android_flutter/domain/shows_exception.dart';
 import 'package:infinum_academy_android_flutter/extensions/nullable_int_extension.dart';
-import 'package:infinum_academy_android_flutter/source_local/shows_database.dart';
+import 'package:infinum_academy_android_flutter/source_local/database/shows_database.dart' show ShowsDatabase;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
