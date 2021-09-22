@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:infinum_academy_android_flutter/models/reviews_info.dart';
-import 'package:infinum_academy_android_flutter/models/show.dart';
+import 'package:infinum_academy_android_flutter/common/models/reviews_info.dart';
+import 'package:infinum_academy_android_flutter/common/models/show.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
 import 'package:infinum_academy_android_flutter/ui/show_details/add_review_bottom_sheet.dart';
 import 'package:infinum_academy_android_flutter/ui/show_details/reviews_notifier.dart';

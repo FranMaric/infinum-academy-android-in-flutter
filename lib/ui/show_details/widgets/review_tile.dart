@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:infinum_academy_android_flutter/models/review.dart';
+import 'package:infinum_academy_android_flutter/common/models/review.dart';
 
 class ReviewTile extends StatelessWidget {
   const ReviewTile(

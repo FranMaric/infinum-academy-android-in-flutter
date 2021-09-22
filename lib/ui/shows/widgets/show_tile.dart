@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:infinum_academy_android_flutter/models/show.dart';
+import 'package:infinum_academy_android_flutter/common/models/show.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/show_image.dart';
 
 const elevation = 5.0;

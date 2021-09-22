@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:alice/alice.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:infinum_academy_android_flutter/models/new_review.dart';
+import 'package:infinum_academy_android_flutter/common/models/new_review.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final apiClientProvider = Provider((ref) => ApiClient());

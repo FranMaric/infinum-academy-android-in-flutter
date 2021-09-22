@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:infinum_academy_android_flutter/models/show.dart';
+import 'package:infinum_academy_android_flutter/common/models/show.dart';
 import 'package:infinum_academy_android_flutter/ui/login/login_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/register/register_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/show_details/show_details_screen.dart';

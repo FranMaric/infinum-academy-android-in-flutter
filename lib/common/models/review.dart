@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:infinum_academy_android_flutter/models/user.dart';
+import 'package:infinum_academy_android_flutter/common/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter/foundation.dart';
 
