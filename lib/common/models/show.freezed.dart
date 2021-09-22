@@ -22,7 +22,7 @@ class _$ShowTearOff {
 
   _Show call(
       String id,
-      @JsonKey(name: 'average_rating') int? averageRating,
+      @JsonKey(name: 'average_rating') double? averageRating,
       String? description,
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'no_of_reviews') int noOfReviews,
@@ -49,7 +49,7 @@ const $Show = _$ShowTearOff();
 mixin _$Show {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'average_rating')
-  int? get averageRating => throw _privateConstructorUsedError;
+  double? get averageRating => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   @JsonKey(name: 'image_url')
   String? get imageUrl => throw _privateConstructorUsedError;
@@ -68,7 +68,7 @@ abstract class $ShowCopyWith<$Res> {
       _$ShowCopyWithImpl<$Res>;
   $Res call(
       {String id,
-      @JsonKey(name: 'average_rating') int? averageRating,
+      @JsonKey(name: 'average_rating') double? averageRating,
       String? description,
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'no_of_reviews') int noOfReviews,
@@ -100,7 +100,7 @@ class _$ShowCopyWithImpl<$Res> implements $ShowCopyWith<$Res> {
       averageRating: averageRating == freezed
           ? _value.averageRating
           : averageRating // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -128,7 +128,7 @@ abstract class _$ShowCopyWith<$Res> implements $ShowCopyWith<$Res> {
   @override
   $Res call(
       {String id,
-      @JsonKey(name: 'average_rating') int? averageRating,
+      @JsonKey(name: 'average_rating') double? averageRating,
       String? description,
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'no_of_reviews') int noOfReviews,
@@ -161,7 +161,7 @@ class __$ShowCopyWithImpl<$Res> extends _$ShowCopyWithImpl<$Res>
       averageRating == freezed
           ? _value.averageRating
           : averageRating // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -200,7 +200,7 @@ class _$_Show with DiagnosticableTreeMixin implements _Show {
   final String id;
   @override
   @JsonKey(name: 'average_rating')
-  final int? averageRating;
+  final double? averageRating;
   @override
   final String? description;
   @override
@@ -276,7 +276,7 @@ class _$_Show with DiagnosticableTreeMixin implements _Show {
 abstract class _Show implements Show {
   const factory _Show(
       String id,
-      @JsonKey(name: 'average_rating') int? averageRating,
+      @JsonKey(name: 'average_rating') double? averageRating,
       String? description,
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'no_of_reviews') int noOfReviews,
@@ -288,7 +288,7 @@ abstract class _Show implements Show {
   String get id => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'average_rating')
-  int? get averageRating => throw _privateConstructorUsedError;
+  double? get averageRating => throw _privateConstructorUsedError;
   @override
   String? get description => throw _privateConstructorUsedError;
   @override

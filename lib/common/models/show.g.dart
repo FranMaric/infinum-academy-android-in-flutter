@@ -9,7 +9,7 @@ part of 'show.dart';
 _$_Show _$_$_ShowFromJson(Map<String, dynamic> json) {
   return _$_Show(
     json['id'] as String,
-    json['average_rating'] as int?,
+    (json['average_rating'] as num?)?.toDouble(),
     json['description'] as String?,
     json['image_url'] as String?,
     json['no_of_reviews'] as int,

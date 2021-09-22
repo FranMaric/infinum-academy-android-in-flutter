@@ -10,7 +10,7 @@ part 'show.g.dart';
 abstract class Show with _$Show {
   const factory Show(
     String id,
-    @JsonKey(name: 'average_rating') int? averageRating,
+    @JsonKey(name: 'average_rating') double? averageRating,
     String? description,
     @JsonKey(name: 'image_url') String? imageUrl,
     @JsonKey(name: 'no_of_reviews') int noOfReviews,
