@@ -7,24 +7,24 @@ part of 'shows_database.dart';
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
-class Show extends DataClass implements Insertable<Show> {
+class DBShow extends DataClass implements Insertable<DBShow> {
   final int id;
   final double? averageRating;
   final String? description;
   final String? imageUrl;
   final int noOfReviews;
   final String title;
-  Show(
+  DBShow(
       {required this.id,
       this.averageRating,
       this.description,
       this.imageUrl,
       required this.noOfReviews,
       required this.title});
-  factory Show.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  factory DBShow.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    return Show(
+    return DBShow(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       averageRating: const RealType()
@@ -74,10 +74,10 @@ class Show extends DataClass implements Insertable<Show> {
     );
   }
 
-  factory Show.fromJson(Map<String, dynamic> json,
+  factory DBShow.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return Show(
+    return DBShow(
       id: serializer.fromJson<int>(json['id']),
       averageRating: serializer.fromJson<double?>(json['averageRating']),
       description: serializer.fromJson<String?>(json['description']),
@@ -99,14 +99,14 @@ class Show extends DataClass implements Insertable<Show> {
     };
   }
 
-  Show copyWith(
+  DBShow copyWith(
           {int? id,
           double? averageRating,
           String? description,
           String? imageUrl,
           int? noOfReviews,
           String? title}) =>
-      Show(
+      DBShow(
         id: id ?? this.id,
         averageRating: averageRating ?? this.averageRating,
         description: description ?? this.description,
@@ -116,7 +116,7 @@ class Show extends DataClass implements Insertable<Show> {
       );
   @override
   String toString() {
-    return (StringBuffer('Show(')
+    return (StringBuffer('DBShow(')
           ..write('id: $id, ')
           ..write('averageRating: $averageRating, ')
           ..write('description: $description, ')
@@ -139,7 +139,7 @@ class Show extends DataClass implements Insertable<Show> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Show &&
+      (other is DBShow &&
           other.id == this.id &&
           other.averageRating == this.averageRating &&
           other.description == this.description &&
@@ -148,7 +148,7 @@ class Show extends DataClass implements Insertable<Show> {
           other.title == this.title);
 }
 
-class ShowsCompanion extends UpdateCompanion<Show> {
+class ShowsCompanion extends UpdateCompanion<DBShow> {
   final Value<int> id;
   final Value<double?> averageRating;
   final Value<String?> description;
@@ -172,7 +172,7 @@ class ShowsCompanion extends UpdateCompanion<Show> {
     required String title,
   })  : noOfReviews = Value(noOfReviews),
         title = Value(title);
-  static Insertable<Show> custom({
+  static Insertable<DBShow> custom({
     Expression<int>? id,
     Expression<double?>? averageRating,
     Expression<String?>? description,
@@ -245,7 +245,7 @@ class ShowsCompanion extends UpdateCompanion<Show> {
   }
 }
 
-class $ShowsTable extends Shows with TableInfo<$ShowsTable, Show> {
+class $ShowsTable extends Shows with TableInfo<$ShowsTable, DBShow> {
   final GeneratedDatabase _db;
   final String? _alias;
   $ShowsTable(this._db, [this._alias]);
@@ -286,7 +286,7 @@ class $ShowsTable extends Shows with TableInfo<$ShowsTable, Show> {
   @override
   String get actualTableName => 'shows';
   @override
-  VerificationContext validateIntegrity(Insertable<Show> instance,
+  VerificationContext validateIntegrity(Insertable<DBShow> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -329,8 +329,8 @@ class $ShowsTable extends Shows with TableInfo<$ShowsTable, Show> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Show map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return Show.fromData(data, _db,
+  DBShow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return DBShow.fromData(data, _db,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 

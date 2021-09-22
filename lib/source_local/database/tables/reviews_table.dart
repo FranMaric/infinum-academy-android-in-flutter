@@ -1,5 +1,6 @@
 import 'package:moor/moor.dart';
 
+@DataClassName('DBReview')
 class Reviews extends Table {
   IntColumn get id => integer().autoIncrement()();
 
