@@ -340,11 +340,256 @@ class $ShowsTable extends Shows with TableInfo<$ShowsTable, DBShow> {
   }
 }
 
+class DBReview extends DataClass implements Insertable<DBReview> {
+  final int id;
+  final String comment;
+  final int rating;
+  final int showId;
+  DBReview(
+      {required this.id,
+      required this.comment,
+      required this.rating,
+      required this.showId});
+  factory DBReview.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return DBReview(
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      comment: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}comment'])!,
+      rating: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}rating'])!,
+      showId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}show_id'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['comment'] = Variable<String>(comment);
+    map['rating'] = Variable<int>(rating);
+    map['show_id'] = Variable<int>(showId);
+    return map;
+  }
+
+  ReviewsCompanion toCompanion(bool nullToAbsent) {
+    return ReviewsCompanion(
+      id: Value(id),
+      comment: Value(comment),
+      rating: Value(rating),
+      showId: Value(showId),
+    );
+  }
+
+  factory DBReview.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return DBReview(
+      id: serializer.fromJson<int>(json['id']),
+      comment: serializer.fromJson<String>(json['comment']),
+      rating: serializer.fromJson<int>(json['rating']),
+      showId: serializer.fromJson<int>(json['showId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'comment': serializer.toJson<String>(comment),
+      'rating': serializer.toJson<int>(rating),
+      'showId': serializer.toJson<int>(showId),
+    };
+  }
+
+  DBReview copyWith({int? id, String? comment, int? rating, int? showId}) =>
+      DBReview(
+        id: id ?? this.id,
+        comment: comment ?? this.comment,
+        rating: rating ?? this.rating,
+        showId: showId ?? this.showId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('DBReview(')
+          ..write('id: $id, ')
+          ..write('comment: $comment, ')
+          ..write('rating: $rating, ')
+          ..write('showId: $showId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(id.hashCode,
+      $mrjc(comment.hashCode, $mrjc(rating.hashCode, showId.hashCode))));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DBReview &&
+          other.id == this.id &&
+          other.comment == this.comment &&
+          other.rating == this.rating &&
+          other.showId == this.showId);
+}
+
+class ReviewsCompanion extends UpdateCompanion<DBReview> {
+  final Value<int> id;
+  final Value<String> comment;
+  final Value<int> rating;
+  final Value<int> showId;
+  const ReviewsCompanion({
+    this.id = const Value.absent(),
+    this.comment = const Value.absent(),
+    this.rating = const Value.absent(),
+    this.showId = const Value.absent(),
+  });
+  ReviewsCompanion.insert({
+    this.id = const Value.absent(),
+    required String comment,
+    required int rating,
+    required int showId,
+  })  : comment = Value(comment),
+        rating = Value(rating),
+        showId = Value(showId);
+  static Insertable<DBReview> custom({
+    Expression<int>? id,
+    Expression<String>? comment,
+    Expression<int>? rating,
+    Expression<int>? showId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (comment != null) 'comment': comment,
+      if (rating != null) 'rating': rating,
+      if (showId != null) 'show_id': showId,
+    });
+  }
+
+  ReviewsCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? comment,
+      Value<int>? rating,
+      Value<int>? showId}) {
+    return ReviewsCompanion(
+      id: id ?? this.id,
+      comment: comment ?? this.comment,
+      rating: rating ?? this.rating,
+      showId: showId ?? this.showId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (comment.present) {
+      map['comment'] = Variable<String>(comment.value);
+    }
+    if (rating.present) {
+      map['rating'] = Variable<int>(rating.value);
+    }
+    if (showId.present) {
+      map['show_id'] = Variable<int>(showId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReviewsCompanion(')
+          ..write('id: $id, ')
+          ..write('comment: $comment, ')
+          ..write('rating: $rating, ')
+          ..write('showId: $showId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ReviewsTable extends Reviews with TableInfo<$ReviewsTable, DBReview> {
+  final GeneratedDatabase _db;
+  final String? _alias;
+  $ReviewsTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _commentMeta = const VerificationMeta('comment');
+  late final GeneratedColumn<String?> comment = GeneratedColumn<String?>(
+      'comment', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
+  final VerificationMeta _ratingMeta = const VerificationMeta('rating');
+  late final GeneratedColumn<int?> rating = GeneratedColumn<int?>(
+      'rating', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
+  final VerificationMeta _showIdMeta = const VerificationMeta('showId');
+  late final GeneratedColumn<int?> showId = GeneratedColumn<int?>(
+      'show_id', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, comment, rating, showId];
+  @override
+  String get aliasedName => _alias ?? 'reviews';
+  @override
+  String get actualTableName => 'reviews';
+  @override
+  VerificationContext validateIntegrity(Insertable<DBReview> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('comment')) {
+      context.handle(_commentMeta,
+          comment.isAcceptableOrUnknown(data['comment']!, _commentMeta));
+    } else if (isInserting) {
+      context.missing(_commentMeta);
+    }
+    if (data.containsKey('rating')) {
+      context.handle(_ratingMeta,
+          rating.isAcceptableOrUnknown(data['rating']!, _ratingMeta));
+    } else if (isInserting) {
+      context.missing(_ratingMeta);
+    }
+    if (data.containsKey('show_id')) {
+      context.handle(_showIdMeta,
+          showId.isAcceptableOrUnknown(data['show_id']!, _showIdMeta));
+    } else if (isInserting) {
+      context.missing(_showIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DBReview map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return DBReview.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $ReviewsTable createAlias(String alias) {
+    return $ReviewsTable(_db, alias);
+  }
+}
+
 abstract class _$ShowsDatabase extends GeneratedDatabase {
   _$ShowsDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $ShowsTable shows = $ShowsTable(this);
+  late final $ReviewsTable reviews = $ReviewsTable(this);
+  late final ShowDao showDao = ShowDao(this as ShowsDatabase);
+  late final ReviewDao reviewDao = ReviewDao(this as ShowsDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [shows];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [shows, reviews];
 }
