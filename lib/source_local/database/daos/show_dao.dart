@@ -10,7 +10,7 @@ class ShowDao extends DatabaseAccessor<ShowsDatabase> with _$ShowDaoMixin {
 
   Future<List<DBShow>> getAllShows() => select(shows).get();
 
-  Future<void> addShows(List<DBShow> newShows) async {
+  Future<void> addShows(List<Insertable<DBShow>> newShows) async {
     await batch((batch) => batch.insertAll(shows, newShows, mode: InsertMode.replace));
   }
 }

@@ -2,7 +2,10 @@ import 'package:moor/moor.dart';
 
 @DataClassName('DBReview')
 class Reviews extends Table {
-  IntColumn get id => integer().autoIncrement()();
+  @override
+  Set<Column> get primaryKey => {id};
+
+  TextColumn get id => text()();
 
   TextColumn get comment => text()();
 
@@ -10,5 +13,9 @@ class Reviews extends Table {
 
   IntColumn get showId => integer()();
 
-  //TODO: Missing user :(
+  TextColumn get userId => text()();
+
+  TextColumn get userEmail => text()();
+
+  TextColumn get userImageUrl => text().nullable()();
 }

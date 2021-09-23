@@ -341,20 +341,26 @@ class $ShowsTable extends Shows with TableInfo<$ShowsTable, DBShow> {
 }
 
 class DBReview extends DataClass implements Insertable<DBReview> {
-  final int id;
+  final String id;
   final String comment;
   final int rating;
   final int showId;
+  final String userId;
+  final String userEmail;
+  final String? userImageUrl;
   DBReview(
       {required this.id,
       required this.comment,
       required this.rating,
-      required this.showId});
+      required this.showId,
+      required this.userId,
+      required this.userEmail,
+      this.userImageUrl});
   factory DBReview.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return DBReview(
-      id: const IntType()
+      id: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       comment: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}comment'])!,
@@ -362,15 +368,26 @@ class DBReview extends DataClass implements Insertable<DBReview> {
           .mapFromDatabaseResponse(data['${effectivePrefix}rating'])!,
       showId: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}show_id'])!,
+      userId: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}user_id'])!,
+      userEmail: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}user_email'])!,
+      userImageUrl: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}user_image_url']),
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
+    map['id'] = Variable<String>(id);
     map['comment'] = Variable<String>(comment);
     map['rating'] = Variable<int>(rating);
     map['show_id'] = Variable<int>(showId);
+    map['user_id'] = Variable<String>(userId);
+    map['user_email'] = Variable<String>(userEmail);
+    if (!nullToAbsent || userImageUrl != null) {
+      map['user_image_url'] = Variable<String?>(userImageUrl);
+    }
     return map;
   }
 
@@ -380,6 +397,11 @@ class DBReview extends DataClass implements Insertable<DBReview> {
       comment: Value(comment),
       rating: Value(rating),
       showId: Value(showId),
+      userId: Value(userId),
+      userEmail: Value(userEmail),
+      userImageUrl: userImageUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(userImageUrl),
     );
   }
 
@@ -387,29 +409,45 @@ class DBReview extends DataClass implements Insertable<DBReview> {
       {ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return DBReview(
-      id: serializer.fromJson<int>(json['id']),
+      id: serializer.fromJson<String>(json['id']),
       comment: serializer.fromJson<String>(json['comment']),
       rating: serializer.fromJson<int>(json['rating']),
       showId: serializer.fromJson<int>(json['showId']),
+      userId: serializer.fromJson<String>(json['userId']),
+      userEmail: serializer.fromJson<String>(json['userEmail']),
+      userImageUrl: serializer.fromJson<String?>(json['userImageUrl']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
+      'id': serializer.toJson<String>(id),
       'comment': serializer.toJson<String>(comment),
       'rating': serializer.toJson<int>(rating),
       'showId': serializer.toJson<int>(showId),
+      'userId': serializer.toJson<String>(userId),
+      'userEmail': serializer.toJson<String>(userEmail),
+      'userImageUrl': serializer.toJson<String?>(userImageUrl),
     };
   }
 
-  DBReview copyWith({int? id, String? comment, int? rating, int? showId}) =>
+  DBReview copyWith(
+          {String? id,
+          String? comment,
+          int? rating,
+          int? showId,
+          String? userId,
+          String? userEmail,
+          String? userImageUrl}) =>
       DBReview(
         id: id ?? this.id,
         comment: comment ?? this.comment,
         rating: rating ?? this.rating,
         showId: showId ?? this.showId,
+        userId: userId ?? this.userId,
+        userEmail: userEmail ?? this.userEmail,
+        userImageUrl: userImageUrl ?? this.userImageUrl,
       );
   @override
   String toString() {
@@ -417,14 +455,25 @@ class DBReview extends DataClass implements Insertable<DBReview> {
           ..write('id: $id, ')
           ..write('comment: $comment, ')
           ..write('rating: $rating, ')
-          ..write('showId: $showId')
+          ..write('showId: $showId, ')
+          ..write('userId: $userId, ')
+          ..write('userEmail: $userEmail, ')
+          ..write('userImageUrl: $userImageUrl')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(comment.hashCode, $mrjc(rating.hashCode, showId.hashCode))));
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          comment.hashCode,
+          $mrjc(
+              rating.hashCode,
+              $mrjc(
+                  showId.hashCode,
+                  $mrjc(userId.hashCode,
+                      $mrjc(userEmail.hashCode, userImageUrl.hashCode)))))));
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -432,52 +481,79 @@ class DBReview extends DataClass implements Insertable<DBReview> {
           other.id == this.id &&
           other.comment == this.comment &&
           other.rating == this.rating &&
-          other.showId == this.showId);
+          other.showId == this.showId &&
+          other.userId == this.userId &&
+          other.userEmail == this.userEmail &&
+          other.userImageUrl == this.userImageUrl);
 }
 
 class ReviewsCompanion extends UpdateCompanion<DBReview> {
-  final Value<int> id;
+  final Value<String> id;
   final Value<String> comment;
   final Value<int> rating;
   final Value<int> showId;
+  final Value<String> userId;
+  final Value<String> userEmail;
+  final Value<String?> userImageUrl;
   const ReviewsCompanion({
     this.id = const Value.absent(),
     this.comment = const Value.absent(),
     this.rating = const Value.absent(),
     this.showId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.userEmail = const Value.absent(),
+    this.userImageUrl = const Value.absent(),
   });
   ReviewsCompanion.insert({
-    this.id = const Value.absent(),
+    required String id,
     required String comment,
     required int rating,
     required int showId,
-  })  : comment = Value(comment),
+    required String userId,
+    required String userEmail,
+    this.userImageUrl = const Value.absent(),
+  })  : id = Value(id),
+        comment = Value(comment),
         rating = Value(rating),
-        showId = Value(showId);
+        showId = Value(showId),
+        userId = Value(userId),
+        userEmail = Value(userEmail);
   static Insertable<DBReview> custom({
-    Expression<int>? id,
+    Expression<String>? id,
     Expression<String>? comment,
     Expression<int>? rating,
     Expression<int>? showId,
+    Expression<String>? userId,
+    Expression<String>? userEmail,
+    Expression<String?>? userImageUrl,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (comment != null) 'comment': comment,
       if (rating != null) 'rating': rating,
       if (showId != null) 'show_id': showId,
+      if (userId != null) 'user_id': userId,
+      if (userEmail != null) 'user_email': userEmail,
+      if (userImageUrl != null) 'user_image_url': userImageUrl,
     });
   }
 
   ReviewsCompanion copyWith(
-      {Value<int>? id,
+      {Value<String>? id,
       Value<String>? comment,
       Value<int>? rating,
-      Value<int>? showId}) {
+      Value<int>? showId,
+      Value<String>? userId,
+      Value<String>? userEmail,
+      Value<String?>? userImageUrl}) {
     return ReviewsCompanion(
       id: id ?? this.id,
       comment: comment ?? this.comment,
       rating: rating ?? this.rating,
       showId: showId ?? this.showId,
+      userId: userId ?? this.userId,
+      userEmail: userEmail ?? this.userEmail,
+      userImageUrl: userImageUrl ?? this.userImageUrl,
     );
   }
 
@@ -485,7 +561,7 @@ class ReviewsCompanion extends UpdateCompanion<DBReview> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<int>(id.value);
+      map['id'] = Variable<String>(id.value);
     }
     if (comment.present) {
       map['comment'] = Variable<String>(comment.value);
@@ -496,6 +572,15 @@ class ReviewsCompanion extends UpdateCompanion<DBReview> {
     if (showId.present) {
       map['show_id'] = Variable<int>(showId.value);
     }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (userEmail.present) {
+      map['user_email'] = Variable<String>(userEmail.value);
+    }
+    if (userImageUrl.present) {
+      map['user_image_url'] = Variable<String?>(userImageUrl.value);
+    }
     return map;
   }
 
@@ -505,7 +590,10 @@ class ReviewsCompanion extends UpdateCompanion<DBReview> {
           ..write('id: $id, ')
           ..write('comment: $comment, ')
           ..write('rating: $rating, ')
-          ..write('showId: $showId')
+          ..write('showId: $showId, ')
+          ..write('userId: $userId, ')
+          ..write('userEmail: $userEmail, ')
+          ..write('userImageUrl: $userImageUrl')
           ..write(')'))
         .toString();
   }
@@ -516,11 +604,9 @@ class $ReviewsTable extends Reviews with TableInfo<$ReviewsTable, DBReview> {
   final String? _alias;
   $ReviewsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+  late final GeneratedColumn<String?> id = GeneratedColumn<String?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER',
-      requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _commentMeta = const VerificationMeta('comment');
   late final GeneratedColumn<String?> comment = GeneratedColumn<String?>(
       'comment', aliasedName, false,
@@ -533,8 +619,22 @@ class $ReviewsTable extends Reviews with TableInfo<$ReviewsTable, DBReview> {
   late final GeneratedColumn<int?> showId = GeneratedColumn<int?>(
       'show_id', aliasedName, false,
       typeName: 'INTEGER', requiredDuringInsert: true);
+  final VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  late final GeneratedColumn<String?> userId = GeneratedColumn<String?>(
+      'user_id', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
+  final VerificationMeta _userEmailMeta = const VerificationMeta('userEmail');
+  late final GeneratedColumn<String?> userEmail = GeneratedColumn<String?>(
+      'user_email', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
+  final VerificationMeta _userImageUrlMeta =
+      const VerificationMeta('userImageUrl');
+  late final GeneratedColumn<String?> userImageUrl = GeneratedColumn<String?>(
+      'user_image_url', aliasedName, true,
+      typeName: 'TEXT', requiredDuringInsert: false);
   @override
-  List<GeneratedColumn> get $columns => [id, comment, rating, showId];
+  List<GeneratedColumn> get $columns =>
+      [id, comment, rating, showId, userId, userEmail, userImageUrl];
   @override
   String get aliasedName => _alias ?? 'reviews';
   @override
@@ -546,6 +646,8 @@ class $ReviewsTable extends Reviews with TableInfo<$ReviewsTable, DBReview> {
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
     }
     if (data.containsKey('comment')) {
       context.handle(_commentMeta,
@@ -564,6 +666,24 @@ class $ReviewsTable extends Reviews with TableInfo<$ReviewsTable, DBReview> {
           showId.isAcceptableOrUnknown(data['show_id']!, _showIdMeta));
     } else if (isInserting) {
       context.missing(_showIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('user_email')) {
+      context.handle(_userEmailMeta,
+          userEmail.isAcceptableOrUnknown(data['user_email']!, _userEmailMeta));
+    } else if (isInserting) {
+      context.missing(_userEmailMeta);
+    }
+    if (data.containsKey('user_image_url')) {
+      context.handle(
+          _userImageUrlMeta,
+          userImageUrl.isAcceptableOrUnknown(
+              data['user_image_url']!, _userImageUrlMeta));
     }
     return context;
   }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infinum_academy_android_flutter/source_local/mapper/db_review_mapper.dart';
 import 'package:infinum_academy_android_flutter/source_local/mapper/db_show_mapper.dart';
 import 'package:infinum_academy_android_flutter/source_local/shared_prefs_keys.dart';
 import 'package:infinum_academy_android_flutter/common/models/new_review.dart';
@@ -12,6 +13,7 @@ import 'package:infinum_academy_android_flutter/source_remote/api_client.dart';
 import 'package:infinum_academy_android_flutter/domain/shows_exception.dart';
 import 'package:infinum_academy_android_flutter/extensions/nullable_int_extension.dart';
 import 'package:infinum_academy_android_flutter/source_local/database/shows_database.dart';
+import 'package:infinum_academy_android_flutter/source_remote/mapper/review_mapper.dart';
 import 'package:infinum_academy_android_flutter/source_remote/mapper/show_mapper.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -74,17 +76,36 @@ class ShowsRepository {
 
   Future<List<Review>> getReviews({required int showId}) async {
     try {
+      final hasInternetConnection = await _apiClient.hasInternetConnection();
+
+      if (!hasInternetConnection) {
+        return _getReviewsFromDB(showId);
+      }
+
       final response = await _apiClient.getReviews(showId);
 
       if (response.statusCode.isSuccessful) {
         final reviews = List<Map<String, dynamic>>.from(response.data['reviews'] as List).map((review) => Review.fromJson(review)).toList();
+
+        _addReviewsToDB(reviews);
 
         return reviews;
       }
     } on DioError catch (dioError) {
       throw ShowsException.fromDioError(dioError);
     }
-    return [];
+
+    return _getReviewsFromDB(showId);
+  }
+
+  Future<List<Review>> _getReviewsFromDB(int showId) async {
+    final dbReviews = await _database.reviewDao.getReviews(showId);
+
+    return ReviewMapper.mapFromListOfDBReviews(dbReviews);
+  }
+
+  Future<void> _addReviewsToDB(List<Review> reviews) async {
+    _database.reviewDao.addReviews(DBReviewMapper.mapFromListOfReviews(reviews));
   }
 
   Future<void> uploadProfilePhoto(File tempFile) async {

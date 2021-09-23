@@ -7,4 +7,12 @@ part 'review_dao.g.dart';
 @UseDao(tables: [Reviews])
 class ReviewDao extends DatabaseAccessor<ShowsDatabase> with _$ReviewDaoMixin {
   ReviewDao(ShowsDatabase db) : super(db);
+
+  Future<List<DBReview>> getReviews(int showId) => (select(reviews)..where((r) => r.showId.equals(showId))).get();
+
+  Future<void> addReviews(List<Insertable<DBReview>> newReviews) async {
+    await batch((batch) => batch.insertAll(reviews, newReviews, mode: InsertMode.replace));
+  }
+
+  Future<void> addReview(Insertable<DBReview> review) => into(reviews).insert(review);
 }
