@@ -59,14 +59,17 @@ class ShowsScreen extends StatelessWidget {
         ),
       ],
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(75.0),
+        preferredSize: const Size.fromHeight(25.0),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 15.0,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                ' Shows',
+                'Shows',
                 style: Theme.of(context).textTheme.headline6,
               ),
               TopRatedChip(
