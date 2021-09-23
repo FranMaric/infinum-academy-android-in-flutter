@@ -12,7 +12,6 @@ class ShowsDatabase extends _$ShowsDatabase {
       : super(
           FlutterQueryExecutor.inDatabaseFolder(
             path: 'db.sqlite',
-            logStatements: true,
           ),
         );
 
