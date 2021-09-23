@@ -120,11 +120,7 @@ class LoginScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(bottom: 10),
                               child: Text(
                                 isFromRegister ? 'Registration successful!' : 'Login',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 35,
-                                ),
+                                style: Theme.of(context).textTheme.headline2?.copyWith(fontWeight: FontWeight.w900),
                               ),
                             ),
                             const Padding(
@@ -153,11 +149,12 @@ class LoginScreen extends StatelessWidget {
                             ),
                             StatefulCheckboxListTile(
                               controlAffinity: ListTileControlAffinity.leading,
-                              title: const Text(
+                              title: Text(
                                 'Remember me',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
+                                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      fontSize: 17,
+                                      color: Colors.white,
+                                    ),
                               ),
                               onChanged: (checked) => context.read(_checkboxProvider).state = checked,
                             ),

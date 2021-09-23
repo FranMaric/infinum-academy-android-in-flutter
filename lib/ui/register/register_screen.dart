@@ -104,15 +104,11 @@ class RegisterScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.only(bottom: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
                               child: Text(
                                 'Register',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 35,
-                                ),
+                                style: Theme.of(context).textTheme.headline2?.copyWith(fontWeight: FontWeight.w900),
                               ),
                             ),
                             ColoredTextFormField(

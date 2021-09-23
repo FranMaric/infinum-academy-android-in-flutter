@@ -6,7 +6,7 @@ class StatefulCheckboxListTile extends StatefulWidget {
     required this.onChanged,
     this.title,
     this.controlAffinity = ListTileControlAffinity.platform,
-    this.contentPadding = const EdgeInsets.all(0),
+    this.contentPadding = EdgeInsets.zero,
     this.startingValue = false,
     this.checkColor,
     this.activeColor,
