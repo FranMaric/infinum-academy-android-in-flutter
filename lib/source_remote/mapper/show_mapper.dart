@@ -14,4 +14,8 @@ class ShowMapper {
       imageUrl: show.imageUrl,
     );
   }
+
+  static List<Show> mapFromListOfDBShow(List<DBShow> dbShows) {
+    return dbShows.map((dbShow) => mapFromDBShow(dbShow)).toList();
+  }
 }

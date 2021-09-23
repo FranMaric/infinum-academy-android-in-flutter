@@ -65,11 +65,11 @@ class ShowsRepository {
   Future<List<Show>> _getShowsFromDB() async {
     final dbShows = await _database.showDao.getAllShows();
 
-    return dbShows.map((dbShow) => ShowMapper.mapFromDBShow(dbShow)).toList();
+    return ShowMapper.mapFromListOfDBShow(dbShows);
   }
 
   Future<void> _addShowsToDB(List<Show> shows) async {
-    _database.showDao.addShows(shows.map((show) => DBShowMapper.mapFromShow(show)).toList());
+    _database.showDao.addShows(DBShowMapper.mapFromListOfShow(shows));
   }
 
   Future<List<Review>> getReviews({required int showId}) async {
