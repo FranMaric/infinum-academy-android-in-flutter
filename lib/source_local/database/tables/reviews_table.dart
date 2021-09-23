@@ -3,7 +3,7 @@ import 'package:moor/moor.dart';
 @DataClassName('DBReview')
 class Reviews extends Table {
   @override
-  Set<Column> get primaryKey => {id};
+  Set<Column> get primaryKey => {id, showId};
 
   TextColumn get id => text()();
 

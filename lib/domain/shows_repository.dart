@@ -32,6 +32,7 @@ class ShowsRepository {
     _apiClient = apiClient;
     _database = database;
     _checkForOfflinePhotoUpload();
+    _chcekForOfflineReviews();
   }
 
   Future<List<Show>> getShows({required bool isTopRated}) async {
@@ -175,25 +176,66 @@ class ShowsRepository {
     }
   }
 
-  Future<void> postReview(NewReview newReview) async {
+  Future<void> postReview(Review review) async {
     try {
       final hasInternetConnection = await _apiClient.hasInternetConnection();
 
       if (!hasInternetConnection) {
-        _saveNewReviewToDB(newReview);
+        return _saveNewReviewToDB(review);
       }
 
+      final newReview = NewReview(
+        rating: review.rating,
+        comment: review.comment,
+        showId: review.showId,
+      );
       final response = await _apiClient.postReview(newReview);
 
-      if (!response.statusCode.isSuccessful) {
-        _saveNewReviewToDB(newReview);
+      if (response.statusCode.isSuccessful) {
+        return;
       }
     } on DioError catch (dioError) {
       throw ShowsException.fromDioError(dioError);
     }
+
+    _saveNewReviewToDB(review);
   }
 
-  void _saveNewReviewToDB(NewReview newReview) {
-    // TODO: make it happen
+  void _saveNewReviewToDB(Review review) {
+    _database.reviewDao.addReview(DBReviewMapper.mapFromReview(review));
+  }
+
+  Future<int> _chcekForOfflineReviews() async {
+    final hasInternetConnection = await _apiClient.hasInternetConnection();
+
+    if (!hasInternetConnection) {
+      return 0;
+    }
+
+    final offlineReviews = await _database.reviewDao.getOfflineReviews();
+    int count = 0;
+
+    for (final offlineDBReview in offlineReviews) {
+      final newReview = NewReview(
+        rating: offlineDBReview.rating,
+        comment: offlineDBReview.comment,
+        showId: offlineDBReview.showId,
+      );
+
+      final response = await _apiClient.postReview(newReview);
+
+      if (response.statusCode.isSuccessful) {
+        await _database.reviewDao.deleteReview(offlineDBReview);
+
+        final dbReview = DBReviewMapper.mapFromReview(
+          Review.fromJson(response.data['review'] as Map<String, dynamic>),
+        );
+        await _database.reviewDao.addReview(dbReview);
+
+        count++;
+      }
+    }
+
+    return count;
   }
 }

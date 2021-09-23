@@ -14,24 +14,22 @@ class ReviewsNotifier extends ChangeNotifier {
   List<Review> get reviews => _reviews;
 
   Future<void> addReview(NewReview newReview, BuildContext context) async {
-    context.read(showsRepositoryProvider).postReview(newReview);
-
     final prefs = await SharedPreferences.getInstance();
-
-    _reviews.insert(
-      0,
-      Review(
-        id: 'none',
-        comment: newReview.comment,
-        rating: newReview.rating,
-        showId: newReview.showId,
-        user: User(
-          id: '',
-          email: prefs.getString(prefsEmailKey) ?? '',
-          imageUrl: prefs.getString(prefsProfilePhotoUrlKey),
-        ),
+    final review = Review(
+      id: 'offline',
+      comment: newReview.comment,
+      rating: newReview.rating,
+      showId: newReview.showId,
+      user: User(
+        id: '',
+        email: prefs.getString(prefsEmailKey) ?? '',
+        imageUrl: prefs.getString(prefsProfilePhotoUrlKey),
       ),
     );
+
+    _reviews.insert(0, review);
+    context.read(showsRepositoryProvider).postReview(review);
+
     notifyListeners();
   }
 

@@ -15,4 +15,8 @@ class ReviewDao extends DatabaseAccessor<ShowsDatabase> with _$ReviewDaoMixin {
   }
 
   Future<void> addReview(Insertable<DBReview> review) => into(reviews).insert(review);
+
+  Future<List<DBReview>> getOfflineReviews() => (select(reviews)..where((r) => r.id.equals('offline'))).get();
+
+  Future<void> deleteReview(Insertable<DBReview> review) => delete(reviews).delete(review);
 }
