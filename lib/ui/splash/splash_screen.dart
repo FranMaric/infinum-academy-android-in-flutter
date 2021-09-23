@@ -81,9 +81,7 @@ class SplashScreen extends StatelessWidget {
                       ),
                       child: Text(
                         "Shows",
-                        style: Theme.of(context).textTheme.headline2?.copyWith(
-                              color: Colors.white,
-                            ),
+                        style: Theme.of(context).textTheme.headline2,
                       ),
                     )
                   ],

@@ -64,6 +64,12 @@ final themeData = ThemeData(
       fontWeight: FontWeight.w700,
       letterSpacing: 0.26,
     ),
+    headline2: TextStyle(
+      fontSize: 34.0,
+      color: Colors.white,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.37,
+    ),
   ),
   buttonTheme: const ButtonThemeData(
     buttonColor: Color(0xff00adb5),
