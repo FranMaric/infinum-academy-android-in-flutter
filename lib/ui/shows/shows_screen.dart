@@ -66,7 +66,7 @@ class ShowsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Shows',
+                ' Shows',
                 style: Theme.of(context).textTheme.headline6,
               ),
               TopRatedChip(
