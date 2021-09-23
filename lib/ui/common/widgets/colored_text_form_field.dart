@@ -39,7 +39,7 @@ class _ColoredTextFormFieldState extends State<ColoredTextFormField> {
 
   late final OutlineInputBorder coloredOutlineInputBorder;
 
-  late final TextStyle coloredTextStyle;
+  late final TextStyle? coloredTextStyle;
 
   @override
   void initState() {
@@ -51,7 +51,12 @@ class _ColoredTextFormFieldState extends State<ColoredTextFormField> {
         color: widget.color,
       ),
     );
-    coloredTextStyle = TextStyle(color: widget.color);
+    coloredTextStyle = TextStyle(
+      color: widget.color,
+      fontWeight: FontWeight.w400,
+      fontSize: 16,
+      letterSpacing: 0.15,
+    );
   }
 
   @override
