@@ -5,9 +5,15 @@ import 'package:infinum_academy_android_flutter/source_local/shared_prefs_keys.d
 import 'package:infinum_academy_android_flutter/source_remote/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final authProvider = Provider((ref) => AuthenticationClient());
+final authProvider = Provider((ref) => AuthenticationClientImpl());
 
-class AuthenticationClient {
+abstract class AuthenticationClient {
+  Future<String?> register(String email, String password, String confirmationPassword);
+  Future<String?> login(String email, String password, {required bool isRememberMeChecked});
+  Future<bool> logout();
+}
+
+class AuthenticationClientImpl implements AuthenticationClient {
   late final ApiClient _apiClient;
   late final SharedPreferences _prefs;
 
@@ -16,6 +22,7 @@ class AuthenticationClient {
     _prefs = await SharedPreferences.getInstance();
   }
 
+  @override
   Future<String?> register(String email, String password, String confirmationPassword) async {
     try {
       final response = await _apiClient.register(email.trim(), password.trim(), confirmationPassword.trim());
@@ -33,6 +40,7 @@ class AuthenticationClient {
     return 'Something went wrong';
   }
 
+  @override
   Future<String?> login(String email, String password, {required bool isRememberMeChecked}) async {
     try {
       final response = await _apiClient.login(email.trim(), password.trim());
@@ -59,6 +67,7 @@ class AuthenticationClient {
     }
   }
 
+  @override
   Future<bool> logout() async {
     try {
       await _prefs.remove(prefsEmailKey);

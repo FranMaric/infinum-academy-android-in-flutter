@@ -19,11 +19,18 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// [ShowsRepository] singleton provider
-final showsRepositoryProvider = Provider((ref) => ShowsRepository());
+final showsRepositoryProvider = Provider((ref) => ShowsRepositoryImpl());
+
+abstract class ShowsRepository {
+  Future<List<Show>> getShows({required bool isTopRated});
+  Future<List<Review>> getReviews({required int showId});
+  Future<void> uploadProfilePhoto(File tempFile);
+  Future<void> postReview(Review review);
+}
 
 /// Used to easily work with shows data
 /// Encapsulates [ApiClient] and [ShowsDatabase] for easy offline/online handling
-class ShowsRepository {
+class ShowsRepositoryImpl implements ShowsRepository {
   late final ApiClient _apiClient;
   late final ShowsDatabase _database;
 
@@ -35,6 +42,7 @@ class ShowsRepository {
     _chcekForOfflineReviews();
   }
 
+  @override
   Future<List<Show>> getShows({required bool isTopRated}) async {
     try {
       final hasInternetConnection = await _apiClient.hasInternetConnection();
@@ -75,6 +83,7 @@ class ShowsRepository {
     _database.showDao.addShows(DBShowMapper.mapFromListOfShow(shows));
   }
 
+  @override
   Future<List<Review>> getReviews({required int showId}) async {
     try {
       final hasInternetConnection = await _apiClient.hasInternetConnection();
@@ -109,6 +118,7 @@ class ShowsRepository {
     _database.reviewDao.addReviews(DBReviewMapper.mapFromListOfReviews(reviews));
   }
 
+  @override
   Future<void> uploadProfilePhoto(File tempFile) async {
     try {
       final hasInternetConnection = await _apiClient.hasInternetConnection();
@@ -176,6 +186,7 @@ class ShowsRepository {
     }
   }
 
+  @override
   Future<void> postReview(Review review) async {
     try {
       final hasInternetConnection = await _apiClient.hasInternetConnection();
