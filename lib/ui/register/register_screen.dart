@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:infinum_academy_android_flutter/domain/authentication_client.dart';
+import 'package:infinum_academy_android_flutter/domain/auth_repository.dart';
 import 'package:infinum_academy_android_flutter/ui/common/no_glow_scroll_behavior.dart';
 import 'package:infinum_academy_android_flutter/ui/common/validators/email_validator.dart';
 import 'package:infinum_academy_android_flutter/ui/common/validators/password_validator.dart';

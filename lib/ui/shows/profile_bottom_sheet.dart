@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:infinum_academy_android_flutter/domain/authentication_client.dart';
+import 'package:infinum_academy_android_flutter/domain/auth_repository.dart';
 import 'package:infinum_academy_android_flutter/domain/shows_repository.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
 import 'package:infinum_academy_android_flutter/ui/login/login_screen.dart';
