@@ -5,15 +5,15 @@ import 'package:infinum_academy_android_flutter/source_local/shared_prefs_keys.d
 import 'package:infinum_academy_android_flutter/source_remote/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final authProvider = Provider((ref) => AuthenticationClientImpl());
+final authProvider = Provider((ref) => AuthRepositoryImpl());
 
-abstract class AuthenticationClient {
+abstract class AuthRepository {
   Future<String?> register(String email, String password, String confirmationPassword);
   Future<String?> login(String email, String password, {required bool isRememberMeChecked});
   Future<bool> logout();
 }
 
-class AuthenticationClientImpl implements AuthenticationClient {
+class AuthRepositoryImpl implements AuthRepository {
   late final ApiClient _apiClient;
   late final SharedPreferences _prefs;
 
