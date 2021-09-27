@@ -20,7 +20,6 @@ final themeData = ThemeData(
       color: Colors.black,
       fontWeight: FontWeight.w700,
       letterSpacing: 0.37,
-      height: 32,
     ),
 
     /// Used for [ShowTile] title
