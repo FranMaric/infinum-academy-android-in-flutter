@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/extensions/nullable_int_extension.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_preferences_provider.dart';
 import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_prefs_keys.dart';
 import 'package:infinum_academy_android_flutter/source_remote/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final authProvider = Provider((ref) => AuthRepositoryImpl());
+final authProvider = Provider(
+  (ref) => AuthRepositoryImpl(ref.watch(apiClientProvider), ref.watch(sharedPreferencesProvider)),
+);
 
 abstract class AuthRepository {
   Future<String?> register(String email, String password, String confirmationPassword);
@@ -14,13 +17,10 @@ abstract class AuthRepository {
 }
 
 class AuthRepositoryImpl implements AuthRepository {
-  late final ApiClient _apiClient;
-  late final SharedPreferences _prefs;
+  AuthRepositoryImpl(this._apiClient, this._prefs);
 
-  Future<void> init(ApiClient apiClient) async {
-    _apiClient = apiClient;
-    _prefs = await SharedPreferences.getInstance();
-  }
+  final ApiClient _apiClient;
+  final SharedPreferences _prefs;
 
   @override
   Future<String?> register(String email, String password, String confirmationPassword) async {

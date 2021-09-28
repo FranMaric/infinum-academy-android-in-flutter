@@ -19,7 +19,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// [ShowsRepository] singleton provider
-final showsRepositoryProvider = Provider((ref) => ShowsRepositoryImpl());
+final showsRepositoryProvider = Provider(
+  (ref) => ShowsRepositoryImpl(ref.watch(apiClientProvider), ref.watch(showsDatabaseProvider)),
+);
 
 abstract class ShowsRepository {
   Future<List<Show>> getShows({required bool isTopRated});
@@ -31,13 +33,14 @@ abstract class ShowsRepository {
 /// Used to easily work with shows data
 /// Encapsulates [ApiClient] and [ShowsDatabase] for easy offline/online handling
 class ShowsRepositoryImpl implements ShowsRepository {
-  late final ApiClient _apiClient;
-  late final ShowsDatabase _database;
+  ShowsRepositoryImpl(this._apiClient, this._database) {
+    startup();
+  }
 
-  /// Call [init] as soon as possible
-  Future<void> init(ApiClient apiClient, ShowsDatabase database) async {
-    _apiClient = apiClient;
-    _database = database;
+  final ApiClient _apiClient;
+  final ShowsDatabase _database;
+
+  void startup() {
     _checkForOfflinePhotoUpload();
     _chcekForOfflineReviews();
   }

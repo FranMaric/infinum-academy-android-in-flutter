@@ -9,9 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 final apiClientProvider = Provider((ref) => ApiClient());
 
 class ApiClient {
-  late Dio _dio;
-
-  void init(Alice alice) {
+  ApiClient() {
+    _alice = Alice();
     _dio = Dio(
       BaseOptions(
         baseUrl: 'https://tv-shows.infinum.academy/',
@@ -40,10 +39,15 @@ class ApiClient {
             return handler.next(options);
           },
         ),
-        alice.getDioInterceptor()
+        _alice.getDioInterceptor()
       ],
     );
   }
+
+  late final Dio _dio;
+  late final Alice _alice;
+
+  Alice get alice => _alice;
 
   Future<bool> hasInternetConnection() async {
     try {
