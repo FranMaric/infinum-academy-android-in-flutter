@@ -84,7 +84,7 @@ class ProfileBottomSheet extends StatelessWidget {
         final imageTemp = File(imageXFile.path);
 
         context.read(showsRepositoryProvider).uploadProfilePhoto(imageTemp).then((_) {
-          context.refresh(profilePhotoFutureProvider);
+          context.refresh(profilePhotoProvider);
           context.read(_changeProfilePhotoButtonStateProvider).state = ButtonState.enabled;
         }).onError((error, stackTrace) {
           context.showSnackBar(error.toString());

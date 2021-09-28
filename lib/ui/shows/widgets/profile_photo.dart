@@ -2,18 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_preferences_provider.dart';
 import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_prefs_keys.dart';
-import 'package:infinum_academy_android_flutter/domain/shows_exception.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-const placeHolderImageProvider = AssetImage('assets/images/avatar_placeholder_icon.png');
-
-final profilePhotoFutureProvider = FutureProvider<ImageProvider>((ref) async {
-  final prefs = await SharedPreferences.getInstance();
+final profilePhotoProvider = Provider<ImageProvider>((ref) {
+  final prefs = ref.watch(sharedPreferencesProvider);
   final url = prefs.getString(prefsProfilePhotoUrlKey);
 
   if (url == null || url.trim().isEmpty) {
-    throw ShowsException('Empty image url');
+    return const AssetImage('assets/images/avatar_placeholder_icon.png');
   }
 
   if (url.startsWith('http')) {
@@ -46,11 +43,7 @@ class ProfilePhoto extends ConsumerWidget {
       height: height,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: watch(profilePhotoFutureProvider).when(
-            data: (imageProvider) => imageProvider,
-            loading: () => placeHolderImageProvider,
-            error: (e, st) => placeHolderImageProvider,
-          ),
+          image: watch(profilePhotoProvider),
           fit: BoxFit.cover,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(50.0)),

@@ -11,6 +11,7 @@ import 'package:infinum_academy_android_flutter/ui/login/widgets/stateful_checkb
 import 'package:infinum_academy_android_flutter/ui/register/register_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/shows_screen.dart';
 import 'package:infinum_academy_android_flutter/extensions/build_context_extension.dart';
+import 'package:infinum_academy_android_flutter/ui/shows/widgets/profile_photo.dart';
 
 const horizontalMargin = 20.0;
 
@@ -54,6 +55,7 @@ class LoginScreen extends StatelessWidget {
             .login(_emailController.text, _passwordController.text, isRememberMeChecked: context.read(_checkboxProvider).state);
 
         if (result == null) {
+          context.refresh(profilePhotoProvider);
           Navigator.of(context).pushReplacementNamed(ShowsScreen.routeName);
         } else {
           context.showSnackBar(result);
