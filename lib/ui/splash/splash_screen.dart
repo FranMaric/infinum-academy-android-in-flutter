@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_preferences_provider.dart';
 import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_prefs_keys.dart';
 import 'package:infinum_academy_android_flutter/ui/login/login_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/shows_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   static const routeName = '/';
 
-  Future<void> checkRememberMeAndNavigateAppropriately(BuildContext context) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final isLoggedIn = prefs.getBool(prefsRememberMeKey) ?? false;
-    if (isLoggedIn) {
-      Navigator.of(context).pushReplacementNamed(ShowsScreen.routeName);
-    } else {
-      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    Future<void> checkRememberMeAndNavigateAppropriately() async {
+      final prefs = context.read(sharedPreferencesProvider);
+
+      final isLoggedIn = prefs.getBool(prefsRememberMeKey) ?? false;
+      if (isLoggedIn) {
+        Navigator.of(context).pushReplacementNamed(ShowsScreen.routeName);
+      } else {
+        Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+      }
+    }
+
     Future.delayed(const Duration(seconds: 2)).then((_) {
-      checkRememberMeAndNavigateAppropriately(context);
+      checkRememberMeAndNavigateAppropriately();
     });
 
     return Scaffold(
