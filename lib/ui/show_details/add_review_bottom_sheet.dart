@@ -27,7 +27,7 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
     void _submitReview() {
       final newReview = NewReview(rating: _ratingController.rating.round(), comment: _commentController.text, showId: widget.showId);
 
-      context.read(reviewsNotifierProvider).addReview(newReview, context);
+      context.read(reviewsNotifierProvider).addReview(newReview);
 
       Navigator.pop(context);
     }

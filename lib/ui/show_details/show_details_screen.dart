@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/common/models/reviews_info.dart';
 import 'package:infinum_academy_android_flutter/common/models/show.dart';
+import 'package:infinum_academy_android_flutter/domain/shows_repository.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_preferences_provider.dart';
 import 'package:infinum_academy_android_flutter/ui/common/widgets/loading_button.dart';
 import 'package:infinum_academy_android_flutter/ui/show_details/add_review_bottom_sheet.dart';
 import 'package:infinum_academy_android_flutter/ui/show_details/reviews_notifier.dart';
@@ -9,7 +11,9 @@ import 'package:infinum_academy_android_flutter/ui/show_details/widgets/rating_b
 import 'package:infinum_academy_android_flutter/ui/show_details/widgets/reviews_list.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/show_image.dart';
 
-final reviewsNotifierProvider = ChangeNotifierProvider((ref) => ReviewsNotifier());
+final reviewsNotifierProvider = ChangeNotifierProvider(
+  (ref) => ReviewsNotifier(ref.watch(showsRepositoryProvider), ref.watch(sharedPreferencesProvider)),
+);
 
 final reviewsInfoProvider = Provider((ref) {
   final reviews = ref.watch(reviewsNotifierProvider).reviews;
@@ -33,7 +37,7 @@ class ShowDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read(reviewsNotifierProvider).getReviews(int.parse(show.id), context);
+    context.read(reviewsNotifierProvider).getReviews(int.parse(show.id));
 
     return Scaffold(
       body: Column(

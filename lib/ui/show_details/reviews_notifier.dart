@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_prefs_keys.dart';
 import 'package:infinum_academy_android_flutter/common/models/new_review.dart';
 import 'package:infinum_academy_android_flutter/common/models/review.dart';
@@ -8,13 +7,16 @@ import 'package:infinum_academy_android_flutter/domain/shows_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReviewsNotifier extends ChangeNotifier {
-  final container = ProviderContainer();
+  ReviewsNotifier(this._showsRepository, this._prefs);
+
+  final ShowsRepository _showsRepository;
+  final SharedPreferences _prefs;
+
   List<Review> _reviews = [];
 
   List<Review> get reviews => _reviews;
 
-  Future<void> addReview(NewReview newReview, BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
+  void addReview(NewReview newReview) {
     final review = Review(
       id: 'offline',
       comment: newReview.comment,
@@ -22,19 +24,19 @@ class ReviewsNotifier extends ChangeNotifier {
       showId: newReview.showId,
       user: User(
         id: '',
-        email: prefs.getString(prefsEmailKey) ?? '',
-        imageUrl: prefs.getString(prefsProfilePhotoUrlKey),
+        email: _prefs.getString(prefsEmailKey) ?? '',
+        imageUrl: _prefs.getString(prefsProfilePhotoUrlKey),
       ),
     );
 
     _reviews.insert(0, review);
-    context.read(showsRepositoryProvider).postReview(review);
+    _showsRepository.postReview(review);
 
     notifyListeners();
   }
 
-  Future<void> getReviews(int showId, BuildContext context) async {
-    _reviews = await context.read(showsRepositoryProvider).getReviews(showId: showId);
+  Future<void> getReviews(int showId) async {
+    _reviews = await _showsRepository.getReviews(showId: showId);
     notifyListeners();
   }
 }
