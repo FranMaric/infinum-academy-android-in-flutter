@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_preferences_provider.dart';
 import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_prefs_keys.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class EmailText extends StatelessWidget {
+class EmailText extends ConsumerWidget {
   const EmailText({
     Key? key,
     this.style,
@@ -11,17 +12,12 @@ class EmailText extends StatelessWidget {
   final TextStyle? style;
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<SharedPreferences>(
-        future: SharedPreferences.getInstance(),
-        builder: (context, snap) {
-          if (snap.hasData && snap.data?.getString(prefsEmailKey) != null && snap.data?.getString(prefsEmailKey) != 'null') {
-            return Text(
-              snap.data!.getString(prefsEmailKey)!,
-              style: style ?? Theme.of(context).textTheme.caption,
-            );
-          }
-          return const Text('');
-        });
+  Widget build(BuildContext context, ScopedReader watch) {
+    final prefs = watch(sharedPreferencesProvider);
+
+    return Text(
+      prefs.getString(prefsEmailKey) ?? '',
+      style: style ?? Theme.of(context).textTheme.caption,
+    );
   }
 }
