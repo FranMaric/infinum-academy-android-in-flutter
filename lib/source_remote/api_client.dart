@@ -4,12 +4,13 @@ import 'package:alice/alice.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/common/models/new_review.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_preferences_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final apiClientProvider = Provider((ref) => ApiClient());
+final apiClientProvider = Provider((ref) => ApiClient(ref.watch(sharedPreferencesProvider)));
 
 class ApiClient {
-  ApiClient() {
+  ApiClient(this._prefs) {
     _alice = Alice();
     _dio = Dio(
       BaseOptions(
@@ -21,16 +22,14 @@ class ApiClient {
     _dio.interceptors.addAll(
       [
         InterceptorsWrapper(
-          onRequest: (options, handler) async {
+          onRequest: (options, handler) {
             /// Headers are not needed for login and register
             if (!['login', 'register'].contains(options.extra['type'])) {
-              final prefs = await SharedPreferences.getInstance();
-
               options.headers.addAll(
                 <String, String>{
-                  'access-token': prefs.getString('access-token') ?? '',
-                  'client': prefs.getString('client') ?? '',
-                  'uid': prefs.getString('uid') ?? '',
+                  'access-token': _prefs.getString('access-token') ?? '',
+                  'client': _prefs.getString('client') ?? '',
+                  'uid': _prefs.getString('uid') ?? '',
                   'token-type': 'Bearer',
                 },
               );
@@ -46,6 +45,7 @@ class ApiClient {
 
   late final Dio _dio;
   late final Alice _alice;
+  final SharedPreferences _prefs;
 
   Alice get alice => _alice;
 

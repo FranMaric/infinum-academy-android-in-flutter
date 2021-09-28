@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/source_local/mapper/db_review_mapper.dart';
 import 'package:infinum_academy_android_flutter/source_local/mapper/db_show_mapper.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_preferences_provider.dart';
 import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_prefs_keys.dart';
 import 'package:infinum_academy_android_flutter/common/models/new_review.dart';
 import 'package:infinum_academy_android_flutter/common/models/review.dart' show Review;
@@ -20,7 +21,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// [ShowsRepository] singleton provider
 final showsRepositoryProvider = Provider(
-  (ref) => ShowsRepositoryImpl(ref.watch(apiClientProvider), ref.watch(showsDatabaseProvider)),
+  (ref) => ShowsRepositoryImpl(ref.watch(apiClientProvider), ref.watch(showsDatabaseProvider), ref.watch(sharedPreferencesProvider)),
 );
 
 abstract class ShowsRepository {
@@ -33,12 +34,13 @@ abstract class ShowsRepository {
 /// Used to easily work with shows data
 /// Encapsulates [ApiClient] and [ShowsDatabase] for easy offline/online handling
 class ShowsRepositoryImpl implements ShowsRepository {
-  ShowsRepositoryImpl(this._apiClient, this._database) {
+  ShowsRepositoryImpl(this._apiClient, this._database, this._prefs) {
     startup();
   }
 
   final ApiClient _apiClient;
   final ShowsDatabase _database;
+  final SharedPreferences _prefs;
 
   void startup() {
     _checkForOfflinePhotoUpload();
@@ -163,8 +165,7 @@ class ShowsRepositoryImpl implements ShowsRepository {
   }
 
   Future<void> _setPrefsProfilePhotoUrl(String profilePhotoUrl) async {
-    final prefs = await SharedPreferences.getInstance();
-    final hasSetPrefsProfilePhotoUrl = await prefs.setString(prefsProfilePhotoUrlKey, profilePhotoUrl);
+    final hasSetPrefsProfilePhotoUrl = await _prefs.setString(prefsProfilePhotoUrlKey, profilePhotoUrl);
 
     if (!hasSetPrefsProfilePhotoUrl) {
       throw ShowsException("Couldn't set profile photo url to prefs");
@@ -172,8 +173,7 @@ class ShowsRepositoryImpl implements ShowsRepository {
   }
 
   Future<void> _checkForOfflinePhotoUpload() async {
-    final prefs = await SharedPreferences.getInstance();
-    final url = prefs.getString(prefsProfilePhotoUrlKey);
+    final url = _prefs.getString(prefsProfilePhotoUrlKey);
 
     if (url == null) {
       return;
