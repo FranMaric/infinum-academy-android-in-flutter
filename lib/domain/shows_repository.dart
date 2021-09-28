@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinum_academy_android_flutter/source_local/mapper/db_review_mapper.dart';
 import 'package:infinum_academy_android_flutter/source_local/mapper/db_show_mapper.dart';
-import 'package:infinum_academy_android_flutter/source_local/shared_prefs_keys.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_prefs_keys.dart';
 import 'package:infinum_academy_android_flutter/common/models/new_review.dart';
 import 'package:infinum_academy_android_flutter/common/models/review.dart' show Review;
 import 'package:infinum_academy_android_flutter/common/models/show.dart';

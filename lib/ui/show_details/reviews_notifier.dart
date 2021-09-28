@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:infinum_academy_android_flutter/source_local/shared_prefs_keys.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_prefs_keys.dart';
 import 'package:infinum_academy_android_flutter/common/models/new_review.dart';
 import 'package:infinum_academy_android_flutter/common/models/review.dart';
 import 'package:infinum_academy_android_flutter/common/models/user.dart';

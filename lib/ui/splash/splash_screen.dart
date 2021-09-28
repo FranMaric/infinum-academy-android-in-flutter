@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:infinum_academy_android_flutter/source_local/shared_prefs_keys.dart';
+import 'package:infinum_academy_android_flutter/source_local/shared_preferences/shared_prefs_keys.dart';
 import 'package:infinum_academy_android_flutter/ui/login/login_screen.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/shows_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
