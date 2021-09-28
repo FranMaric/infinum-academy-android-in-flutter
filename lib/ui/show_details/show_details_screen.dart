@@ -13,6 +13,10 @@ final reviewsNotifierProvider = ChangeNotifierProvider((ref) => ReviewsNotifier(
 
 final reviewsInfoProvider = Provider((ref) {
   final reviews = ref.watch(reviewsNotifierProvider).reviews;
+  if (reviews.isEmpty) {
+    return const ReviewsInfo(reviewsCount: 0, averageRating: 0);
+  }
+
   final averageRating = double.parse((reviews.map((review) => review.rating).reduce((a, b) => a + b) / reviews.length).toStringAsFixed(2));
 
   return ReviewsInfo(reviewsCount: reviews.length, averageRating: averageRating);
