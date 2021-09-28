@@ -6,18 +6,9 @@ import 'package:infinum_academy_android_flutter/ui/shows/widgets/layout_fab.dart
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/profile_photo.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/shows_list.dart';
 import 'package:infinum_academy_android_flutter/ui/shows/widgets/top_rated_chip.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-var _isFirstLoad = true;
 
 final showsFutureProvider = FutureProvider.autoDispose((ref) async {
   ref.maintainState = true;
-
-  if (_isFirstLoad) {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.reload();
-    _isFirstLoad = false;
-  }
 
   final showsRepository = ref.watch(showsRepositoryProvider);
   final isTopRated = ref.watch(_isTopRatedProvider).state;
