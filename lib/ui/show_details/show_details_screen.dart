@@ -94,8 +94,6 @@ class ShowDetailsScreen extends StatelessWidget {
                         builder: (context, watch, child) {
                           final reviewsInfo = watch(reviewsInfoProvider);
 
-                          _ratingController.rating = reviewsInfo.averageRating;
-
                           return Text(
                             '${reviewsInfo.reviewsCount} REVIEWS, ${reviewsInfo.averageRating} AVERAGE',
                             style: Theme.of(context).textTheme.bodyText2?.copyWith(
@@ -106,11 +104,15 @@ class ShowDetailsScreen extends StatelessWidget {
                         },
                       ),
                       const SizedBox(height: 6.0),
-                      RatingBar(
-                        ratingController: _ratingController,
-                        ignoreGestures: true,
-                        itemSize: 23,
-                        lineWidth: 2,
+                      ProviderListener<ReviewsInfo>(
+                        provider: reviewsInfoProvider,
+                        onChange: (_, reviewsInfo) => _ratingController.rating = reviewsInfo.averageRating,
+                        child: RatingBar(
+                          ratingController: _ratingController,
+                          ignoreGestures: true,
+                          itemSize: 23,
+                          lineWidth: 2,
+                        ),
                       ),
                       const ReviewsList(),
                     ],
