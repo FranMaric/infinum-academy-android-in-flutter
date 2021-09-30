@@ -2,7 +2,7 @@
     package="com.example.infinum_academy_android_flutter">
    <application
         android:label="infinum_academy_android_flutter"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
