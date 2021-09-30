@@ -22,10 +22,8 @@ Future<void> runShowsApp() async {
 class ShowsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final apiClient = context.read(apiClientProvider);
-
     return MaterialApp(
-      navigatorKey: apiClient.alice.getNavigatorKey(),
+      navigatorKey: useAlice ? context.read(apiClientProvider).alice.getNavigatorKey() : null,
       debugShowCheckedModeBanner: false,
       title: 'Shows',
       theme: themeData,

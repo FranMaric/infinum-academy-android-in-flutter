@@ -9,9 +9,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final apiClientProvider = Provider((ref) => ApiClient(ref.watch(sharedPreferencesProvider)));
 
+const bool useAlice = false;
+
 class ApiClient {
   ApiClient(this._prefs) {
-    _alice = Alice();
+    if (useAlice) {
+      _alice = Alice();
+    }
     _dio = Dio(
       BaseOptions(
         baseUrl: 'https://tv-shows.infinum.academy/',
@@ -38,7 +42,7 @@ class ApiClient {
             return handler.next(options);
           },
         ),
-        _alice.getDioInterceptor()
+        if (useAlice) _alice.getDioInterceptor()
       ],
     );
   }
