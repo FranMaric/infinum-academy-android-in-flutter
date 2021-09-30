@@ -32,7 +32,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
     } on DioError catch (error) {
       try {
-        return error.response?.data['errors'][0].toString();
+        return error.response?.data['errors'][0].toString() ?? 'Something went wrong';
       } catch (e) {
         return 'Something went wrong';
       }
@@ -60,7 +60,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return 'Something went wrong';
     } on DioError catch (error) {
       try {
-        return error.response?.data['errors'][0].toString();
+        return error.response?.data['errors'][0].toString() ?? 'Something went wrong';
       } catch (e) {
         return 'Something went wrong';
       }
