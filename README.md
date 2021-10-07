@@ -1,4 +1,15 @@
 # Infinum Academy Android in Flutter
+
+## Packages used:
+  - flutter_svg - all assets are in svg format for easy and crisp image scaling
+  - cached_network_image - easy image caching
+  - freezed - data classes to everyone
+  - shared_preferences - persisting user data
+  - flutter_riverpod - best state management
+  - dio & alice - most powerful http client + easy http debugging
+  - moor - awesome sql ORM
+
+## Screenshots
 <div>
   <img src="/screenshots/screenshot1.jpg" alt="Login" width="200"/>
   <img src="/screenshots/screenshot2.jpg" alt="Shows column" width="200"/>
