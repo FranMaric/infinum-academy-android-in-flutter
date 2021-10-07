@@ -1,5 +1,5 @@
 name: infinum_academy_android_flutter
-description: Flutter >= Android
+description: Flutter >= Android > IOS
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
